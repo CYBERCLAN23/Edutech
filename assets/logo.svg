@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!-- Background rounded square -->
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#bgGrad)"/>
+  <!-- Brain/mind node: central hexagon -->
+  <path d="M256 128L336 176V272L256 320L176 272V176L256 128Z" stroke="white" stroke-width="12" stroke-linejoin="round" fill="none" opacity="0.9"/>
+  <!-- AI circuit lines -->
+  <line x1="256" y1="320" x2="256" y2="384" stroke="white" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+  <line x1="256" y1="384" x2="208" y2="416" stroke="white" stroke-width="6" stroke-linecap="round" opacity="0.5"/>
+  <line x1="256" y1="384" x2="304" y2="416" stroke="white" stroke-width="6" stroke-linecap="round" opacity="0.5"/>
+  <!-- Book pages (education) -->
+  <path d="M168 200L256 248L344 200" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.6"/>
+  <!-- Small accent dots representing nodes -->
+  <circle cx="208" cy="416" r="6" fill="#F59E0B"/>
+  <circle cx="304" cy="416" r="6" fill="#F59E0B"/>
+  <circle cx="256" cy="128" r="8" fill="#4F46E5"/>
+  <!-- AI sparkle top-right -->
+  <path d="M360 120L368 96L392 88L368 80L360 56L352 80L328 88L352 96L360 120Z" fill="#F59E0B" opacity="0.8"/>
+  <!-- Graduate cap base -->
+  <path d="M196 280L256 312L316 280" stroke="white" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.4"/>
+  <!-- Gradient definition -->
+  <defs>
+    <linearGradient id="bgGrad" x1="64" y1="64" x2="448" y2="448" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4F46E5"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+</svg>

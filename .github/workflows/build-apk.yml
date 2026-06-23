@@ -1,0 +1,93 @@
+name: Build EduCam APK
+
+on:
+  push:
+    branches: [main, master, dev]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      build_mode:
+        description: 'Build mode'
+        required: true
+        default: 'debug'
+        type: choice
+        options:
+          - debug
+          - release
+
+env:
+  FLUTTER_VERSION: '3.22.x'
+
+jobs:
+  build:
+    name: Build Flutter APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: ☕ Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: 🎯 Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: 'stable'
+          cache: true
+
+      - name: 📦 Install dependencies
+        run: flutter pub get
+
+      - name: 🧹 Analyze code
+        run: flutter analyze --no-fatal-infos --no-fatal-warnings
+
+      - name: 🧪 Run tests
+        run: flutter test || true
+
+      - name: 🔧 Build APK
+        run: flutter build apk ${{ github.event.inputs.build_mode == 'release' && '--release' || '--debug' }} --split-per-abi
+
+      - name: 📤 Upload APK (armeabi-v7a)
+        uses: actions/upload-artifact@v4
+        with:
+          name: educam-apk-armv7-${{ github.event.inputs.build_mode || 'debug' }}
+          path: build/app/outputs/flutter-apk/app-armeabi-v7a-${{ github.event.inputs.build_mode || 'debug' }}.apk
+          if-no-files-found: warn
+
+      - name: 📤 Upload APK (arm64-v8a)
+        uses: actions/upload-artifact@v4
+        with:
+          name: educam-apk-arm64-${{ github.event.inputs.build_mode || 'debug' }}
+          path: build/app/outputs/flutter-apk/app-arm64-v8a-${{ github.event.inputs.build_mode || 'debug' }}.apk
+          if-no-files-found: warn
+
+      - name: 📤 Upload APK (x86_64)
+        uses: actions/upload-artifact@v4
+        with:
+          name: educam-apk-x86_64-${{ github.event.inputs.build_mode || 'debug' }}
+          path: build/app/outputs/flutter-apk/app-x86_64-${{ github.event.inputs.build_mode || 'debug' }}.apk
+          if-no-files-found: warn
+
+      - name: 📦 Upload universal APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: educam-apk-universal-${{ github.event.inputs.build_mode || 'debug' }}
+          path: build/app/outputs/flutter-apk/app-${{ github.event.inputs.build_mode || 'debug' }}.apk
+          if-no-files-found: warn
+
+      - name: 💬 Summary
+        run: |
+          echo "## ✅ Build Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Architecture | File |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------------|------|" >> $GITHUB_STEP_SUMMARY
+          echo "| armeabi-v7a | \`app-armeabi-v7a-${{ github.event.inputs.build_mode || 'debug' }}.apk\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| arm64-v8a   | \`app-arm64-v8a-${{ github.event.inputs.build_mode || 'debug' }}.apk\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| x86_64      | \`app-x86_64-${{ github.event.inputs.build_mode || 'debug' }}.apk\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Universal   | \`app-${{ github.event.inputs.build_mode || 'debug' }}.apk\` |" >> $GITHUB_STEP_SUMMARY
