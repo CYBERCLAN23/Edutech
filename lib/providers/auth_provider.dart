@@ -15,6 +15,7 @@ class AuthState {
   final String? error;
   final bool isTeacher;
   final bool isStudent;
+  final bool isAdmin;
 
   const AuthState({
     this.status = AuthStatus.initial,
@@ -22,6 +23,7 @@ class AuthState {
     this.error,
     this.isTeacher = false,
     this.isStudent = false,
+    this.isAdmin = false,
   });
 
   AuthState copyWith({
@@ -30,6 +32,7 @@ class AuthState {
     String? error,
     bool? isTeacher,
     bool? isStudent,
+    bool? isAdmin,
   }) {
     return AuthState(
       status: status ?? this.status,
@@ -37,6 +40,7 @@ class AuthState {
       error: error,
       isTeacher: isTeacher ?? this.isTeacher,
       isStudent: isStudent ?? this.isStudent,
+      isAdmin: isAdmin ?? this.isAdmin,
     );
   }
 }
@@ -56,6 +60,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
         user: user,
         isTeacher: user['role'] == 'teacher',
         isStudent: user['role'] == 'student',
+        isAdmin: user['role'] == 'admin',
       );
     } catch (e) {
       state = state.copyWith(
@@ -87,6 +92,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
         user: user,
         isTeacher: user['role'] == 'teacher',
         isStudent: user['role'] == 'student',
+        isAdmin: user['role'] == 'admin',
       );
     } catch (e) {
       state = state.copyWith(
@@ -106,6 +112,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
         user: user,
         isTeacher: user?['role'] == 'teacher',
         isStudent: user?['role'] == 'student',
+        isAdmin: user?['role'] == 'admin',
       );
     } catch (e) {
       state = const AuthState(status: AuthStatus.unauthenticated);

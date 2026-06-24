@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:educam_ai/services/course_service.dart';
+import 'package:educam_ai/services/local_storage_service.dart';
 
 final courseServiceProvider = Provider<CourseService>((ref) => CourseService());
 
@@ -9,6 +10,7 @@ final coursesProvider = StateNotifierProvider<CoursesNotifier, AsyncValue<List<M
 
 class CoursesNotifier extends StateNotifier<AsyncValue<List<Map<String, dynamic>>>> {
   final CourseService _service;
+  bool _hasCached = false;
 
   CoursesNotifier(this._service) : super(const AsyncValue.loading());
 
@@ -16,11 +18,21 @@ class CoursesNotifier extends StateNotifier<AsyncValue<List<Map<String, dynamic>
     state = const AsyncValue.loading();
     try {
       final courses = await _service.getCourses();
+      _hasCached = true;
+      LocalStorageService().cacheCourses(courses);
       state = AsyncValue.data(courses);
     } catch (e, st) {
-      state = AsyncValue.error(e, st);
+      final cached = LocalStorageService().getCachedCourses();
+      if (cached.isNotEmpty) {
+        _hasCached = true;
+        state = AsyncValue.data(cached);
+      } else {
+        state = AsyncValue.error(e, st);
+      }
     }
   }
+
+  bool get hasCached => _hasCached;
 
   Future<void> createCourse(Map<String, dynamic> course) async {
     try {
@@ -99,6 +111,7 @@ class CourseContentNotifier extends StateNotifier<AsyncValue<List<Map<String, dy
           break;
         case 'quizzes':
           data = await _service.getQuizzes(courseId);
+          LocalStorageService().cacheQuizzesForCourse(courseId, data);
           break;
         case 'exams':
           data = await _service.getExams(courseId);
@@ -108,6 +121,13 @@ class CourseContentNotifier extends StateNotifier<AsyncValue<List<Map<String, dy
       }
       state = AsyncValue.data(data);
     } catch (e, st) {
+      if (type == 'quizzes') {
+        final cached = LocalStorageService().getCachedQuizzesForCourse(courseId);
+        if (cached.isNotEmpty) {
+          state = AsyncValue.data(cached);
+          return;
+        }
+      }
       state = AsyncValue.error(e, st);
     }
   }

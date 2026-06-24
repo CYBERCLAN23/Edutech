@@ -6,6 +6,9 @@ import 'package:educam_ai/screens/splash_screen.dart';
 import 'package:educam_ai/screens/onboarding_screen.dart';
 import 'package:educam_ai/screens/role_select_screen.dart';
 import 'package:educam_ai/screens/main_shell.dart';
+import 'package:educam_ai/services/local_storage_service.dart';
+import 'package:educam_ai/services/offline_service.dart';
+import 'package:educam_ai/services/sync_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +22,11 @@ void main() async {
     systemNavigationBarColor: EduCamColors.surface,
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
+
+  await LocalStorageService().init();
+  await OfflineService().init();
+  SyncService().init();
+
   runApp(const ProviderScope(child: EduCamApp()));
 }
 

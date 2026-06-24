@@ -11,7 +11,10 @@ import 'package:educam_ai/screens/student/student_documents.dart';
 import 'package:educam_ai/screens/student/student_course_detail.dart';
 import 'package:educam_ai/providers/course_provider.dart';
 import 'package:educam_ai/providers/auth_provider.dart';
+import 'package:educam_ai/providers/connectivity_provider.dart';
 import 'package:educam_ai/services/course_service.dart';
+import 'package:educam_ai/services/local_storage_service.dart';
+import 'package:educam_ai/services/offline_service.dart';
 import 'package:educam_ai/services/notification_service.dart';
 
 class StudentDashboard extends ConsumerStatefulWidget {

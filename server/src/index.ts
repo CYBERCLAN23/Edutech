@@ -11,6 +11,7 @@ import notificationRoutes from './routes/notifications';
 import videoRoutes from './routes/video';
 import contentRoutes from './routes/content';
 import uploadRoutes from './routes/upload';
+import adminRoutes from './routes/admin';
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/video', videoRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Error handling
 app.use(notFound);

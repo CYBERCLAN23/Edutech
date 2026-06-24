@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:educam_ai/theme/app_theme.dart';
 import 'package:educam_ai/widgets/stagger_item.dart';
+import 'package:educam_ai/services/local_storage_service.dart';
 
 class StudentDocuments extends StatefulWidget {
   const StudentDocuments({super.key});
@@ -24,9 +25,33 @@ class _StudentDocumentsState extends State<StudentDocuments> {
   ];
 
   List<Map<String, dynamic>> get _filtered {
-    if (_category == 'Tous') return _docs;
-    return _docs.where((d) => d['cat'] == _category).toList();
+    final offlineDocs = LocalStorageService().getAllResources().map((r) => {
+      'name': r['title'] ?? r['id'],
+      'cat': 'Hors ligne',
+      'date': _formatDate(r['download_time']),
+      'size': 'Stocke localement',
+      'icon': Icons.offline_pin_rounded,
+      'color': EduCamColors.success,
+      'isOffline': true,
+    }).toList();
+
+    final all = [...offlineDocs, ..._docs];
+    if (_category == 'Tous') return all;
+    if (_category == 'Hors ligne') return offlineDocs;
+    return all.where((d) => d['cat'] == _category).toList();
   }
+
+  String _formatDate(String? iso) {
+    if (iso == null) return '';
+    try {
+      final dt = DateTime.parse(iso);
+      return '${dt.day} ${_months[dt.month - 1]} ${dt.year}';
+    } catch (_) {
+      return iso;
+    }
+  }
+
+  static const _months = ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Juil', 'Aou', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   Future<void> _onRefresh() async {
     setState(() {});
@@ -108,10 +133,10 @@ class _StudentDocumentsState extends State<StudentDocuments> {
                     height: 34,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemCount: 4,
+                      itemCount: 5,
                       separatorBuilder: (_, __) => const SizedBox(width: 8),
                       itemBuilder: (_, i) {
-                        final labels = ['Tous', 'Cours', 'Exercices', 'Notes'];
+                        final labels = ['Tous', 'Hors ligne', 'Cours', 'Exercices', 'Notes'];
                         final label = labels[i];
                         final selected = label == _category;
                         return GestureDetector(

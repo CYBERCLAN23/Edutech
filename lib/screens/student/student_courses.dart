@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:educam_ai/theme/app_theme.dart';
 import 'package:educam_ai/widgets/stagger_item.dart';
+import 'package:educam_ai/widgets/offline_pill.dart';
+import 'package:educam_ai/providers/connectivity_provider.dart';
+import 'package:educam_ai/services/local_storage_service.dart';
 import 'package:educam_ai/screens/student/student_course_detail.dart';
 
-class StudentCourses extends StatelessWidget {
+class StudentCourses extends ConsumerWidget {
   const StudentCourses({super.key});
 
   Future<void> _onRefresh() async {
@@ -12,7 +16,11 @@ class StudentCourses extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isOnline = ref.watch(isOnlineProvider);
+    final cached = LocalStorageService().getCachedCourses();
+    final cachedCount = cached.length;
+
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
@@ -23,10 +31,21 @@ class StudentCourses extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const StaggerItem(index: 0, child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text('Mes cours', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: EduCamColors.primary)),
-                  SizedBox(height: 4),
-                  Text('6 cours inscrits cette annee', style: TextStyle(fontSize: 14, color: EduCamColors.secondaryText)),
+                StaggerItem(index: 0, child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Mes cours', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: EduCamColors.primary)),
+                      OfflinePill(compact: true),
+                    ],
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    isOnline
+                        ? '6 cours inscrits cette annee'
+                        : '$cachedCount cours disponibles hors ligne',
+                    style: const TextStyle(fontSize: 14, color: EduCamColors.secondaryText),
+                  ),
                 ])),
                 const SizedBox(height: 20),
                 StaggerItem(index: 1, child: Container(

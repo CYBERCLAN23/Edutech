@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:educam_ai/theme/app_theme.dart';
 import 'package:educam_ai/widgets/stagger_item.dart';
+import 'package:educam_ai/widgets/offline_pill.dart';
 import 'package:educam_ai/models/data_store.dart';
 import 'package:educam_ai/models/content_models.dart';
+import 'package:educam_ai/services/local_storage_service.dart';
 import 'package:educam_ai/screens/student/student_take_quiz.dart';
 
 class StudentCourseDetail extends StatefulWidget {
@@ -204,36 +206,47 @@ class _StudentCourseDetailState extends State<StudentCourseDetail> {
             final q = e.value;
             return Padding(
               padding: const EdgeInsets.only(bottom: 10),
-              child: GestureDetector(
-                onTap: () {
-                  HapticFeedback.mediumImpact();
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (_) => StudentTakeQuiz(quiz: q, courseColor: widget.courseColor),
-                  ));
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: EduCamColors.surface,
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: EduCamColors.cardBorder, width: 0.5),
-                  ),
-                  child: Row(children: [
-                    Container(
-                      width: 40, height: 40,
-                      decoration: BoxDecoration(color: widget.courseColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
-                      child: Icon(Icons.quiz_rounded, size: 18, color: widget.courseColor),
+                  child: GestureDetector(
+                    onTap: () {
+                      HapticFeedback.mediumImpact();
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (_) => StudentTakeQuiz(
+                          quiz: q,
+                          courseColor: widget.courseColor,
+                          courseId: widget.courseId,
+                        ),
+                      ));
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: EduCamColors.surface,
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: EduCamColors.cardBorder, width: 0.5),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(children: [
+                            Container(
+                              width: 40, height: 40,
+                              decoration: BoxDecoration(color: widget.courseColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
+                              child: Icon(Icons.quiz_rounded, size: 18, color: widget.courseColor),
+                            ),
+                            const SizedBox(width: 14),
+                            Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                              Text(q.title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
+                              const SizedBox(height: 2),
+                              Text('${q.questions.length} questions - ${q.timeLimitMinutes} min', style: const TextStyle(fontSize: 12, color: EduCamColors.secondaryText)),
+                            ])),
+                            const Icon(Icons.chevron_right_rounded, size: 18, color: EduCamColors.secondaryText),
+                          ]),
+                          const SizedBox(height: 8),
+                          _buildResourceOfflineIndicator(q.id),
+                        ],
+                      ),
                     ),
-                    const SizedBox(width: 14),
-                    Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                      Text(q.title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
-                      const SizedBox(height: 2),
-                      Text('${q.questions.length} questions - ${q.timeLimitMinutes} min', style: const TextStyle(fontSize: 12, color: EduCamColors.secondaryText)),
-                    ])),
-                    const Icon(Icons.chevron_right_rounded, size: 18, color: EduCamColors.secondaryText),
-                  ]),
-                ),
-              ),
+                  ),
             );
           }),
       ],
@@ -294,6 +307,68 @@ class _StudentCourseDetailState extends State<StudentCourseDetail> {
               ),
             );
           }),
+      ],
+    );
+  }
+
+  Widget _buildResourceOfflineIndicator(String resourceId) {
+    final resource = LocalStorageService().getResource(resourceId);
+    final isOffline = resource != null;
+    return Row(
+      children: [
+        if (isOffline)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            decoration: BoxDecoration(
+              color: EduCamColors.success.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(4),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.offline_pin_rounded, size: 10, color: EduCamColors.success),
+                const SizedBox(width: 3),
+                Text('Disponible hors ligne', style: TextStyle(fontSize: 9, color: EduCamColors.success)),
+              ],
+            ),
+          )
+        else
+          GestureDetector(
+            onTap: () async {
+              HapticFeedback.lightImpact();
+              final storage = LocalStorageService();
+              await storage.saveResource({
+                'id': resourceId,
+                'type': 'quiz',
+                'download_time': DateTime.now().toIso8601String(),
+              });
+              if (mounted) {
+                setState(() {});
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: const Text('Quiz disponible hors ligne'),
+                  behavior: SnackBarBehavior.floating,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  backgroundColor: EduCamColors.success,
+                  margin: const EdgeInsets.fromLTRB(16, 0, 16, 20),
+                ));
+              }
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: EduCamColors.accent.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.download_rounded, size: 10, color: EduCamColors.accent),
+                  const SizedBox(width: 3),
+                  Text('Hors ligne', style: TextStyle(fontSize: 9, color: EduCamColors.accent)),
+                ],
+              ),
+            ),
+          ),
       ],
     );
   }

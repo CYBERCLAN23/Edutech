@@ -1,45 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:educam_ai/theme/app_theme.dart';
+import 'package:educam_ai/providers/connectivity_provider.dart';
+import 'package:educam_ai/services/offline_service.dart';
 
-class OfflinePill extends StatelessWidget {
-  final bool isOfflineReady;
+class OfflinePill extends ConsumerWidget {
+  final bool compact;
 
-  const OfflinePill({
-    super.key,
-    this.isOfflineReady = true,
-  });
+  const OfflinePill({super.key, this.compact = false});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final connectivity = ref.watch(connectivityStatusProvider);
+    final isOnline = connectivity.valueOrNull == ConnectivityStatus.online;
+
+    final bgColor = isOnline ? EduCamColors.success : EduCamColors.highlight;
+    final label = isOnline ? 'En ligne' : 'Hors ligne';
+    final borderColor = isOnline
+        ? EduCamColors.success.withValues(alpha: 0.3)
+        : EduCamColors.highlight.withValues(alpha: 0.3);
+
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: compact ? 8 : 10, vertical: compact ? 3 : 4),
       decoration: BoxDecoration(
         color: EduCamColors.surface,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(
-          color: isOfflineReady ? EduCamColors.success.withValues(alpha: 0.3) : EduCamColors.highlight.withValues(alpha: 0.3),
-          width: 1,
-        ),
+        border: Border.all(color: borderColor, width: 1),
         boxShadow: EduCamTheme.softShadow,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            width: 8,
-            height: 8,
+            width: compact ? 6 : 8,
+            height: compact ? 6 : 8,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: isOfflineReady ? EduCamColors.success : EduCamColors.highlight,
+              color: bgColor,
             ),
           ),
           const SizedBox(width: 6),
           Text(
-            isOfflineReady ? 'Offline ready' : 'Syncing',
+            label,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w500,
-              color: isOfflineReady ? EduCamColors.success : EduCamColors.highlight,
+              color: bgColor,
             ),
           ),
         ],

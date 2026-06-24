@@ -1,23 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:educam_ai/theme/app_theme.dart';
 import 'package:educam_ai/models/content_models.dart';
+import 'package:educam_ai/services/local_storage_service.dart';
+import 'package:educam_ai/services/offline_service.dart';
+import 'package:educam_ai/providers/connectivity_provider.dart';
 
-class StudentTakeQuiz extends StatefulWidget {
+class StudentTakeQuiz extends ConsumerStatefulWidget {
   final Quiz quiz;
   final Color courseColor;
+  final String? courseId;
 
-  const StudentTakeQuiz({super.key, required this.quiz, required this.courseColor});
+  const StudentTakeQuiz({
+    super.key,
+    required this.quiz,
+    required this.courseColor,
+    this.courseId,
+  });
 
   @override
-  State<StudentTakeQuiz> createState() => _StudentTakeQuizState();
+  ConsumerState<StudentTakeQuiz> createState() => _StudentTakeQuizState();
 }
 
-class _StudentTakeQuizState extends State<StudentTakeQuiz> {
+class _StudentTakeQuizState extends ConsumerState<StudentTakeQuiz> {
   int _currentQ = 0;
   final Map<int, int> _answers = {};
   bool _submitted = false;
   int _score = 0;
+  int _correctCount = 0;
+  bool _savingOffline = false;
 
   Quiz get _quiz => widget.quiz;
   Color get _cc => widget.courseColor;
@@ -27,11 +39,37 @@ class _StudentTakeQuizState extends State<StudentTakeQuiz> {
     for (int i = 0; i < _quiz.questions.length; i++) {
       if (_answers[i] == _quiz.questions[i].correctIndex) correct++;
     }
+    _correctCount = correct;
     setState(() {
       _submitted = true;
       _score = (correct / _quiz.questions.length * 20).round();
     });
     HapticFeedback.mediumImpact();
+    _saveResult();
+  }
+
+  Future<void> _saveResult() async {
+    final isOnline = ref.read(offlineServiceProvider).isOnline;
+    final storage = LocalStorageService();
+    final answers = _answers.map((k, v) => MapEntry(k.toString(), v));
+
+    try {
+      if (!isOnline) {
+        setState(() => _savingOffline = true);
+        await storage.saveQuizAnswer({
+          'quiz_id': _quiz.id,
+          'course_id': widget.courseId ?? _quiz.courseId,
+          'answers': answers,
+          'score': _score,
+          'correct': _correctCount,
+          'total': _quiz.questions.length,
+          'time_spent': 0,
+        });
+        setState(() => _savingOffline = false);
+      }
+    } catch (_) {
+      setState(() => _savingOffline = false);
+    }
   }
 
   @override
@@ -75,6 +113,25 @@ class _StudentTakeQuizState extends State<StudentTakeQuiz> {
                 const SizedBox(height: 4),
                 Text('${_score >= 10 ? _score ~/ 2 : _score} bonnes reponses sur $total questions',
                   style: const TextStyle(fontSize: 14, color: EduCamColors.secondaryText)),
+                if (_savingOffline)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 12),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                      decoration: BoxDecoration(
+                        color: EduCamColors.highlight.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: EduCamColors.highlight)),
+                          const SizedBox(width: 8),
+                          const Text('Sauvegarde locale...', style: TextStyle(fontSize: 12, color: EduCamColors.highlight)),
+                        ],
+                      ),
+                    ),
+                  ),
                 if (!passed) ...[
                   const SizedBox(height: 24),
                   Container(
