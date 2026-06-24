@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:educam_ai/theme/app_theme.dart';
 import 'package:educam_ai/screens/splash_screen.dart';
 import 'package:educam_ai/screens/onboarding_screen.dart';
@@ -11,6 +12,8 @@ import 'package:educam_ai/screens/main_shell.dart';
 import 'package:educam_ai/services/local_storage_service.dart';
 import 'package:educam_ai/services/offline_service.dart';
 import 'package:educam_ai/services/sync_service.dart';
+import 'package:educam_ai/services/theme_provider.dart';
+import 'package:educam_ai/services/locale_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,17 +35,30 @@ void main() async {
   runApp(const ProviderScope(child: EduCamApp()));
 }
 
-class EduCamApp extends StatelessWidget {
+class EduCamApp extends ConsumerWidget {
   const EduCamApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
+    final locale = ref.watch(localeProvider);
+
     return MaterialApp(
       title: 'EduCam AI',
       debugShowCheckedModeBanner: false,
       theme: EduCamTheme.lightTheme,
       darkTheme: EduCamTheme.darkTheme,
-      themeMode: ThemeMode.light,
+      themeMode: themeMode,
+      locale: locale,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('fr'),
+        Locale('en'),
+      ],
       initialRoute: '/',
       onGenerateRoute: (settings) {
         switch (settings.name) {

@@ -12,6 +12,7 @@ class LocalStorageService {
   static const _resourcesBox = 'offline_resources';
   static const _syncQueueBox = 'sync_queue';
   static const _cacheBox = 'api_cache';
+  static const _prefsBox = 'app_prefs';
 
   late Box<String> _courses;
   late Box<String> _quizzes;
@@ -19,6 +20,7 @@ class LocalStorageService {
   late Box<String> _resources;
   late Box<String> _syncQueue;
   late Box<String> _cache;
+  late Box<String> _prefs;
 
   Future<void> init() async {
     try {
@@ -33,6 +35,7 @@ class LocalStorageService {
     _resources = await Hive.openBox<String>(_resourcesBox);
     _syncQueue = await Hive.openBox<String>(_syncQueueBox);
     _cache = await Hive.openBox<String>(_cacheBox);
+    _prefs = await Hive.openBox<String>(_prefsBox);
   }
 
   Map<String, dynamic>? _decode(String raw) {
@@ -221,6 +224,10 @@ class LocalStorageService {
     return entry['data'] as Map<String, dynamic>?;
   }
 
+  // --- Preferences (theme, locale) ---
+  String? getPref(String key) => _prefs.get(key);
+  Future<void> setPref(String key, String value) async => _prefs.put(key, value);
+
   Future<void> clearAll() async {
     await _courses.clear();
     await _quizzes.clear();
@@ -228,5 +235,6 @@ class LocalStorageService {
     await _resources.clear();
     await _syncQueue.clear();
     await _cache.clear();
+    await _prefs.clear();
   }
 }

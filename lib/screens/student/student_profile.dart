@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:educam_ai/theme/app_theme.dart';
-import 'package:educam_ai/widgets/language_toggle.dart';
 import 'package:educam_ai/widgets/stagger_item.dart';
+import 'package:educam_ai/services/theme_provider.dart';
+import 'package:educam_ai/services/locale_provider.dart';
+import 'package:educam_ai/services/translations.dart';
 
 class StudentProfile extends StatefulWidget {
   const StudentProfile({super.key});
@@ -54,7 +57,7 @@ class _StudentProfileState extends State<StudentProfile> {
                 const SizedBox(height: 12),
                 StaggerItem(index: 10, child: _SettingsSection(offlineMode: _offlineMode, notificationsEnabled: _notificationsEnabled, onChanged: (offline, notif) => setState(() { _offlineMode = offline; _notificationsEnabled = notif; }))),
                 const SizedBox(height: 14),
-                const StaggerItem(index: 11, child: _LanguageSection()),
+                const StaggerItem(index: 11, child: _LocaleSection()),
                 const SizedBox(height: 14),
                 StaggerItem(index: 12, child: _AboutRow(icon: Icons.download_rounded, label: 'Stockage utilise', value: '180 MB')),
                 const SizedBox(height: 8),
@@ -173,14 +176,17 @@ class _StatsCard extends StatelessWidget {
   }
 }
 
-class _SettingsSection extends StatelessWidget {
+class _SettingsSection extends ConsumerWidget {
   final bool offlineMode;
   final bool notificationsEnabled;
   final void Function(bool, bool) onChanged;
   const _SettingsSection({required this.offlineMode, required this.notificationsEnabled, required this.onChanged});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
+    final isDark = themeMode == ThemeMode.dark;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -193,17 +199,52 @@ class _SettingsSection extends StatelessWidget {
           _SettingToggle(icon: Icons.wifi_off_rounded, title: 'Mode hors-ligne', value: offlineMode, onChanged: (v) => onChanged(v, notificationsEnabled)),
           const SizedBox(height: 14),
           _SettingToggle(icon: Icons.notifications_outlined, title: 'Notifications', value: notificationsEnabled, onChanged: (v) => onChanged(offlineMode, v)),
+          const SizedBox(height: 14),
+          _ThemeToggleTile(isDark: isDark),
         ],
       ),
     );
   }
 }
 
-class _LanguageSection extends StatelessWidget {
-  const _LanguageSection();
+class _ThemeToggleTile extends StatelessWidget {
+  final bool isDark;
+  const _ThemeToggleTile({required this.isDark});
 
   @override
   Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        context.read(themeModeProvider.notifier).toggle();
+      },
+      child: Row(
+        children: [
+          Container(
+            width: 36, height: 36,
+            decoration: BoxDecoration(
+              color: EduCamColors.highlight.withOpacity(0.08),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded, size: 18, color: EduCamColors.highlight),
+          ),
+          const SizedBox(width: 12),
+          Expanded(child: Text(isDark ? 'Mode sombre' : 'Mode clair', style: const TextStyle(fontSize: 14, color: EduCamColors.primary))),
+          _Switch(value: isDark, onChanged: (_) => context.read(themeModeProvider.notifier).toggle()),
+        ],
+      ),
+    );
+  }
+}
+
+class _LocaleSection extends ConsumerWidget {
+  const _LocaleSection();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
+    final isFr = locale.languageCode == 'fr';
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -214,10 +255,53 @@ class _LanguageSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Langue d\'apprentissage', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
+          const Text('Langue', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
           const SizedBox(height: 10),
-          const LanguageToggle(),
+          Row(
+            children: [
+              _LocaleChip(label: 'FR', selected: isFr, onTap: () => ref.read(localeProvider.notifier).setFr()),
+              const SizedBox(width: 8),
+              _LocaleChip(label: 'EN', selected: !isFr, onTap: () => ref.read(localeProvider.notifier).setEn()),
+            ],
+          ),
         ],
+      ),
+    );
+  }
+}
+
+class _LocaleChip extends StatelessWidget {
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+  const _LocaleChip({required this.label, required this.selected, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        onTap();
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: selected ? EduCamColors.accent.withOpacity(0.1) : Colors.transparent,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: selected ? EduCamColors.accent : EduCamColors.cardBorder,
+            width: selected ? 1.5 : 1,
+          ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
+            color: selected ? EduCamColors.accent : EduCamColors.secondaryText,
+          ),
+        ),
       ),
     );
   }

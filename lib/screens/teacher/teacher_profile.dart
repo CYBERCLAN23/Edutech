@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:educam_ai/theme/app_theme.dart';
 import 'package:educam_ai/widgets/stagger_item.dart';
+import 'package:educam_ai/services/theme_provider.dart';
+import 'package:educam_ai/services/locale_provider.dart';
+import 'package:educam_ai/services/translations.dart';
 
 class TeacherProfile extends StatelessWidget {
   const TeacherProfile({super.key});
@@ -38,23 +42,21 @@ class TeacherProfile extends StatelessWidget {
                 const SizedBox(height: 24),
                 const StaggerItem(
                   index: 7,
-                  child: Text('Parametres', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
+                  child: _ThemeToggle(),
                 ),
-                const SizedBox(height: 12),
-                StaggerItem(index: 8, child: _MenuTile(icon: Icons.notifications_outlined, label: 'Notifications', value: 'Activees')),
                 const SizedBox(height: 8),
-                StaggerItem(index: 9, child: _MenuTile(icon: Icons.download_rounded, label: 'Stockage utilise', value: '2.4 GB')),
-                const SizedBox(height: 8),
-                StaggerItem(index: 10, child: _MenuTile(icon: Icons.info_outline, label: 'Version', value: '1.0.0')),
-                const SizedBox(height: 8),
-                StaggerItem(index: 11, child: _MenuTile(icon: Icons.mail_outline, label: 'Contact', value: 'support@educam.cm')),
-                const SizedBox(height: 8),
-                StaggerItem(index: 12, child: _MenuTile(icon: Icons.description_outlined, label: 'Conditions d\'utilisation', value: null, hasArrow: true)),
-                const SizedBox(height: 8),
-                StaggerItem(index: 13, child: _MenuTile(icon: Icons.shield_outlined, label: 'Politique de confidentialite', value: null, hasArrow: true)),
+                const StaggerItem(
+                  index: 8,
+                  child: _LocaleToggle(),
+                ),
+                const SizedBox(height: 24),
+                const StaggerItem(
+                  index: 9,
+                  child: _AboutSection(),
+                ),
                 const SizedBox(height: 24),
                 StaggerItem(
-                  index: 14,
+                  index: 10,
                   child: Center(
                     child: TextButton(
                       onPressed: () {
@@ -75,6 +77,146 @@ class TeacherProfile extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ThemeToggle extends ConsumerWidget {
+  const _ThemeToggle();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
+    final t = ref.watch(translationsProvider);
+    final isDark = themeMode == ThemeMode.dark;
+
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        ref.read(themeModeProvider.notifier).toggle();
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: EduCamColors.surface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: EduCamColors.cardBorder, width: 0.5),
+        ),
+        child: Row(
+          children: [
+            Icon(isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded, size: 18, color: EduCamColors.highlight),
+            const SizedBox(width: 12),
+            Expanded(child: Text(isDark ? t.darkMode : t.lightMode, style: const TextStyle(fontSize: 14, color: EduCamColors.primary))),
+            Container(
+              width: 44, height: 26,
+              decoration: BoxDecoration(
+                color: isDark ? EduCamColors.accent : EduCamColors.cardBorder,
+                borderRadius: BorderRadius.circular(13),
+              ),
+              padding: const EdgeInsets.all(2),
+              child: AnimatedAlign(
+                duration: const Duration(milliseconds: 200),
+                alignment: isDark ? Alignment.centerRight : Alignment.centerLeft,
+                child: Container(
+                  width: 22, height: 22,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(11),
+                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 3)],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LocaleToggle extends ConsumerWidget {
+  const _LocaleToggle();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
+    final t = ref.watch(translationsProvider);
+    final isFr = locale.languageCode == 'fr';
+
+    return GestureDetector(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        ref.read(localeProvider.notifier).toggle();
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: EduCamColors.surface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: EduCamColors.cardBorder, width: 0.5),
+        ),
+        child: Row(
+          children: [
+            const Icon(Icons.language_rounded, size: 18, color: EduCamColors.secondaryText),
+            const SizedBox(width: 12),
+            Expanded(child: Text(t.language, style: const TextStyle(fontSize: 14, color: EduCamColors.primary))),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+              decoration: BoxDecoration(
+                color: EduCamColors.accent.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(color: EduCamColors.accent, width: 1),
+              ),
+              child: Text(
+                isFr ? 'FR' : 'EN',
+                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: EduCamColors.accent),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _AboutSection extends StatelessWidget {
+  const _AboutSection();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _AboutRow(icon: Icons.download_rounded, label: 'Stockage utilise', value: '2.4 GB'),
+        const SizedBox(height: 8),
+        _AboutRow(icon: Icons.info_outline, label: 'Version', value: '1.0.0'),
+        const SizedBox(height: 8),
+        _AboutRow(icon: Icons.mail_outline, label: 'Contact', value: 'support@educam.cm'),
+      ],
+    );
+  }
+}
+
+class _AboutRow extends StatelessWidget {
+  final IconData icon; final String label; final String value;
+  const _AboutRow({required this.icon, required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        color: EduCamColors.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: EduCamColors.cardBorder, width: 0.5),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: 16, color: EduCamColors.secondaryText),
+          const SizedBox(width: 10),
+          Expanded(child: Text(label, style: const TextStyle(fontSize: 13, color: EduCamColors.primary))),
+          Text(value, style: const TextStyle(fontSize: 13, color: EduCamColors.secondaryText)),
+        ],
       ),
     );
   }
@@ -232,50 +374,6 @@ class _ClassAnalyticsRow extends StatelessWidget {
               ],
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _MenuTile extends StatelessWidget {
-  final IconData icon; final String label; final String? value; final bool hasArrow;
-  const _MenuTile({required this.icon, required this.label, this.value, this.hasArrow = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        HapticFeedback.lightImpact();
-        if (hasArrow) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('$label'),
-              behavior: SnackBarBehavior.floating,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              duration: const Duration(milliseconds: 1200),
-            ),
-          );
-        }
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        decoration: BoxDecoration(
-          color: EduCamColors.surface,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: EduCamColors.cardBorder, width: 0.5),
-        ),
-        child: Row(
-          children: [
-            Icon(icon, size: 18, color: EduCamColors.secondaryText),
-            const SizedBox(width: 12),
-            Expanded(child: Text(label, style: const TextStyle(fontSize: 14, color: EduCamColors.primary))),
-            if (value != null) Text(value!, style: const TextStyle(fontSize: 13, color: EduCamColors.secondaryText)),
-            if (hasArrow) ...[
-              const SizedBox(width: 4),
-              const Icon(Icons.chevron_right_rounded, size: 18, color: EduCamColors.secondaryText),
-            ],
-          ],
         ),
       ),
     );
