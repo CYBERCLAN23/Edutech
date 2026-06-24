@@ -3,6 +3,7 @@ import { Trash2, Search, Pencil, UserPlus, GraduationCap, School } from 'lucide-
 import { api } from '../lib/api';
 import type { AdminUser } from '../lib/types';
 import UserFormModal from '../components/UserFormModal';
+import ConfirmModal from '../components/ConfirmModal';
 
 const roleColors: Record<string, string> = {
   student: 'bg-green-50 text-green-700 border-green-200',
@@ -20,6 +21,9 @@ export default function UsersPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [modal, setModal] = useState<{ mode: 'create-student' | 'create-teacher' | 'edit'; user?: AdminUser } | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteError, setDeleteError] = useState('');
 
   const load = async () => {
     setLoading(true); setError('');
@@ -30,12 +34,18 @@ export default function UsersPage() {
 
   useEffect(() => { load(); }, []);
 
-  const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Supprimer "${name}" ? Cette action est irréversible.`)) return;
+  const handleDelete = async () => {
+    if (!deleteTarget) return;
+    setDeleting(true); setDeleteError('');
     try {
-      await api.deleteUser(id);
-      setUsers(prev => prev.filter(u => u.id !== id));
-    } catch (err: any) { alert(err.message); }
+      await api.deleteUser(deleteTarget.id);
+      setUsers(prev => prev.filter(u => u.id !== deleteTarget.id));
+      setDeleteTarget(null);
+    } catch (err: any) {
+      setDeleteError(err.message);
+    } finally {
+      setDeleting(false);
+    }
   };
 
   const filtered = users
@@ -127,7 +137,7 @@ export default function UsersPage() {
                 <Pencil size={16} />
               </button>
               <button
-                onClick={() => handleDelete(u.id, u.name)}
+                onClick={() => setDeleteTarget({ id: u.id, name: u.name })}
                 className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
               >
                 <Trash2 size={16} />
@@ -144,6 +154,19 @@ export default function UsersPage() {
           user={modal.user}
           onClose={() => setModal(null)}
           onSaved={() => { setModal(null); load(); }}
+        />
+      )}
+
+      {deleteTarget && (
+        <ConfirmModal
+          title="Supprimer l'utilisateur"
+          message={`Êtes-vous sûr de vouloir supprimer "${deleteTarget.name}" ? Cette action est irréversible.`}
+          confirmLabel="Supprimer"
+          danger
+          loading={deleting}
+          error={deleteError}
+          onConfirm={handleDelete}
+          onCancel={() => { setDeleteTarget(null); setDeleteError(''); }}
         />
       )}
     </div>
