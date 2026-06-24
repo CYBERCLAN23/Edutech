@@ -1,0 +1,15 @@
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "rootDirectory": "server",
+    "buildCommand": "npm install && npm run build",
+    "watchPatterns": ["server/**/*"]
+  },
+  "deploy": {
+    "rootDirectory": "server",
+    "startCommand": "npm start",
+    "healthcheckPath": "/api/health",
+    "healthcheckTimeout": 30,
+    "restartPolicyType": "ON_FAILURE"
+  }
+}
