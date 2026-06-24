@@ -2,13 +2,29 @@ import { Router, Request, Response } from 'express';
 import getSupabase from '../config/supabase';
 import { config } from '../config';
 import jwt from 'jsonwebtoken';
+import { body, validationResult } from 'express-validator';
 
 const sb = getSupabase();
 
 const router = Router();
 
+const validate = (req: Request, res: Response, next: any) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ success: false, error: errors.array().map(e => e.msg).join('. ') });
+  }
+  next();
+};
+
 // POST /api/auth/register
-router.post('/register', async (req: Request, res: Response) => {
+router.post('/register',
+  body('email').isEmail().withMessage('Email invalide').normalizeEmail(),
+  body('password').isLength({ min: 6, max: 100 }).withMessage('Mot de passe: 6-100 caractères'),
+  body('name').isLength({ min: 2, max: 100 }).withMessage('Nom: 2-100 caractères').trim().escape(),
+  body('role').isIn(['student', 'teacher', 'admin']).withMessage('Rôle invalide'),
+  body('class_name').optional().isLength({ max: 50 }).trim().escape(),
+  validate,
+  async (req: Request, res: Response) => {
   try {
     const { email, password, name, role, class_name } = req.body;
     if (!email || !password || !name || !role) {
@@ -54,7 +70,11 @@ router.post('/register', async (req: Request, res: Response) => {
 });
 
 // POST /api/auth/login
-router.post('/login', async (req: Request, res: Response) => {
+router.post('/login',
+  body('email').isEmail().withMessage('Email invalide').normalizeEmail(),
+  body('password').isLength({ min: 1 }).withMessage('Mot de passe requis'),
+  validate,
+  async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
