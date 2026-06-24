@@ -31,9 +31,11 @@ router.post('/register',
       return res.status(400).json({ success: false, error: 'Missing required fields' });
     }
 
-    const { data: authData, error: authError } = await sb.auth.signUp({
+    const { data: authData, error: authError } = await sb.auth.admin.createUser({
       email,
       password,
+      email_confirm: true,
+      user_metadata: { name, role, class_name },
     });
 
     if (authError) {
