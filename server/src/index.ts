@@ -12,6 +12,7 @@ import videoRoutes from './routes/video';
 import contentRoutes from './routes/content';
 import uploadRoutes from './routes/upload';
 import adminRoutes from './routes/admin';
+import renderRoutes from './routes/render';
 
 const app = express();
 
@@ -35,6 +36,7 @@ app.use('/api/video', videoRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/render', renderRoutes);
 
 // Error handling
 app.use(notFound);

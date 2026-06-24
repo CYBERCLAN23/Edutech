@@ -36,6 +36,23 @@ export async function listFiles(bucket: string, prefix: string) {
   return data;
 }
 
+export async function uploadToStorage(params: {
+  bucket: string;
+  fileName: string;
+  fileBuffer: Buffer;
+  contentType: string;
+}): Promise<{ url: string; publicUrl: string; path: string }> {
+  const { bucket, fileName, fileBuffer, contentType } = params;
+  const { data, error } = await sb.storage
+    .from(bucket)
+    .upload(fileName, fileBuffer, { contentType, upsert: true });
+
+  if (error) throw new Error(`Storage upload failed: ${error.message}`);
+
+  const { data: urlData } = sb.storage.from(bucket).getPublicUrl(data.path);
+  return { url: urlData.publicUrl, publicUrl: urlData.publicUrl, path: data.path };
+}
+
 export async function ensureBucket(bucket: string): Promise<void> {
   const { data: buckets } = await sb.storage.listBuckets();
   const exists = buckets?.some((b) => b.name === bucket);
@@ -49,6 +66,9 @@ export async function ensureBucket(bucket: string): Promise<void> {
         'video/webm',
         'application/msword',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'audio/mpeg',
+        'audio/mp3',
+        'application/json',
       ],
     });
   }
