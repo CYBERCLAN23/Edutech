@@ -1,4 +1,6 @@
-const BASE = '/api/admin';
+const API_URL = import.meta.env.VITE_API_URL || '';
+const BASE = `${API_URL}/api/admin`;
+const AUTH = `${API_URL}/api/auth`;
 
 async function fetchJSON<T>(url: string): Promise<T> {
   const token = localStorage.getItem('admin_token');
@@ -13,7 +15,7 @@ async function fetchJSON<T>(url: string): Promise<T> {
 
 export const api = {
   login: async (email: string, password: string) => {
-    const res = await fetch('/api/auth/login', {
+    const res = await fetch(`${AUTH}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
