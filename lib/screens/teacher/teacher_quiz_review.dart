@@ -73,7 +73,7 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F9FB),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF7F9FB).withValues(alpha: 0.7),
+        backgroundColor: const Color(0xFFF7F9FB).withOpacity(0.7),
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: GestureDetector(
@@ -94,7 +94,7 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
             margin: const EdgeInsets.only(right: 16),
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
-              color: const Color(0xFF00D2FF).withValues(alpha: 0.15),
+              color: const Color(0xFF00D2FF).withOpacity(0.15),
               borderRadius: BorderRadius.circular(20),
             ),
             child: const Row(
@@ -213,10 +213,10 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.7),
+        color: Colors.white.withOpacity(0.7),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -258,7 +258,7 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
             decoration: BoxDecoration(
               color: const Color(0xFFF2F4F6),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
+              border: Border.all(color: Colors.white.withOpacity(0.5)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -282,9 +282,9 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
                 SliderTheme(
                   data: SliderTheme.of(context).copyWith(
                     activeTrackColor: const Color(0xFF00677F),
-                    inactiveTrackColor: const Color(0xFFBBC9CF).withValues(alpha: 0.3),
+                    inactiveTrackColor: const Color(0xFFBBC9CF).withOpacity(0.3),
                     thumbColor: const Color(0xFF00677F),
-                    overlayColor: const Color(0xFF00677F).withValues(alpha: 0.1),
+                    overlayColor: const Color(0xFF00677F).withOpacity(0.1),
                     trackHeight: 6,
                   ),
                   child: Slider(
@@ -322,10 +322,10 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: value ? const Color(0xFF00677F).withValues(alpha: 0.04) : const Color(0xFFF2F4F6),
+        color: value ? const Color(0xFF00677F).withOpacity(0.04) : const Color(0xFFF2F4F6),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: value ? const Color(0xFF00677F).withValues(alpha: 0.3) : Colors.white.withValues(alpha: 0.5),
+          color: value ? const Color(0xFF00677F).withOpacity(0.3) : Colors.white.withOpacity(0.5),
         ),
       ),
       child: Row(
@@ -344,7 +344,7 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
             value: value,
             onChanged: onChanged,
             activeColor: const Color(0xFF00677F),
-            activeTrackColor: const Color(0xFF00677F).withValues(alpha: 0.4),
+            activeTrackColor: const Color(0xFF00677F).withOpacity(0.4),
           ),
         ],
       ),
@@ -355,10 +355,10 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.7),
+        color: Colors.white.withOpacity(0.7),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -387,7 +387,7 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
                   decoration: BoxDecoration(
                     border: Border.all(color: const Color(0xFF00677F), width: 2),
                     borderRadius: BorderRadius.circular(12),
-                    color: const Color(0xFF00677F).withValues(alpha: 0.06),
+                    color: const Color(0xFF00677F).withOpacity(0.06),
                   ),
                   child: Row(
                     children: [
@@ -414,10 +414,10 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
   Widget _buildSummaryCard() {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.7),
+        color: Colors.white.withOpacity(0.7),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -460,9 +460,9 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE0E3E5).withValues(alpha: 0.5),
+                    color: const Color(0xFFE0E3E5).withOpacity(0.5),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: const Color(0xFFBBC9CF).withValues(alpha: 0.5), style: BorderStyle.solid),
+                    border: Border.all(color: const Color(0xFFBBC9CF).withOpacity(0.5), style: BorderStyle.solid),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -470,7 +470,7 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
                       const Text('AI INSIGHTS', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, letterSpacing: 1, color: Color(0xFF3C494E))),
                       const SizedBox(height: 6),
                       Text('"The quiz focuses heavily on ${widget.subject}. Ensure students have reviewed the relevant notes."',
-                        style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic, color: const Color(0xFF191C1E).withValues(alpha: 0.8))),
+                        style: TextStyle(fontSize: 13, fontStyle: FontStyle.italic, color: const Color(0xFF191C1E).withOpacity(0.8))),
                     ],
                   ),
                 ),
@@ -493,7 +493,7 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
                       elevation: 8,
-                      shadowColor: const Color(0xFF00677F).withValues(alpha: 0.3),
+                      shadowColor: const Color(0xFF00677F).withOpacity(0.3),
                     ),
                   ),
                 ),
@@ -526,9 +526,9 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
-          color: const Color(0xFF00677F).withValues(alpha: 0.06),
+          color: const Color(0xFF00677F).withOpacity(0.06),
           borderRadius: BorderRadius.circular(24),
-          border: Border.all(color: const Color(0xFF00677F).withValues(alpha: 0.2)),
+          border: Border.all(color: const Color(0xFF00677F).withOpacity(0.2)),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -591,10 +591,10 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
                   margin: const EdgeInsets.only(right: 16),
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.7),
+                    color: Colors.white.withOpacity(0.7),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-                    boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+                    border: Border.all(color: Colors.white.withOpacity(0.5)),
+                    boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -627,10 +627,10 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           decoration: BoxDecoration(
-                            color: oe.key == q.correctIndex ? const Color(0xFF406900).withValues(alpha: 0.1) : const Color(0xFFF2F4F6),
+                            color: oe.key == q.correctIndex ? const Color(0xFF406900).withOpacity(0.1) : const Color(0xFFF2F4F6),
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: oe.key == q.correctIndex ? const Color(0xFF406900).withValues(alpha: 0.2) : Colors.transparent,
+                              color: oe.key == q.correctIndex ? const Color(0xFF406900).withOpacity(0.2) : Colors.transparent,
                             ),
                           ),
                           child: Text(
@@ -650,7 +650,7 @@ class _TeacherQuizReviewState extends State<TeacherQuizReview> {
               Container(
                 width: 120,
                 decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xFFBBC9CF).withValues(alpha: 0.3), width: 2),
+                  border: Border.all(color: const Color(0xFFBBC9CF).withOpacity(0.3), width: 2),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Center(

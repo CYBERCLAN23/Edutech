@@ -32,9 +32,9 @@ class _TeacherQuizLibraryState extends State<TeacherQuizLibrary> {
 
   Color _statusBg(QuizStatus s) {
     switch (s) {
-      case QuizStatus.active: return const Color(0xFF87D600).withValues(alpha: 0.15);
+      case QuizStatus.active: return const Color(0xFF87D600).withOpacity(0.15);
       case QuizStatus.draft: return const Color(0xFFE0E3E5);
-      case QuizStatus.completed: return const Color(0xFF00D2FF).withValues(alpha: 0.15);
+      case QuizStatus.completed: return const Color(0xFF00D2FF).withOpacity(0.15);
     }
   }
 
@@ -123,7 +123,7 @@ class _TeacherQuizLibraryState extends State<TeacherQuizLibrary> {
                           borderRadius: BorderRadius.circular(28),
                           boxShadow: [
                             BoxShadow(
-                              color: const Color(0xFF00677F).withValues(alpha: 0.2),
+                              color: const Color(0xFF00677F).withOpacity(0.2),
                               blurRadius: 16,
                               offset: const Offset(0, 8),
                             ),
@@ -153,7 +153,7 @@ class _TeacherQuizLibraryState extends State<TeacherQuizLibrary> {
                     child: Center(
                       child: Column(
                         children: [
-                          Icon(Icons.quiz_outlined, size: 56, color: const Color(0xFF6C797F).withValues(alpha: 0.3)),
+                          Icon(Icons.quiz_outlined, size: 56, color: const Color(0xFF6C797F).withOpacity(0.3)),
                           const SizedBox(height: 12),
                           const Text('No quizzes found',
                             style: TextStyle(fontSize: 15, color: Color(0xFF3C494E))),
@@ -176,12 +176,12 @@ class _TeacherQuizLibraryState extends State<TeacherQuizLibrary> {
                           child: Container(
                             padding: const EdgeInsets.all(20),
                             decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.7),
+                              color: Colors.white.withOpacity(0.7),
                               borderRadius: BorderRadius.circular(16),
-                              border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
+                              border: Border.all(color: Colors.white.withOpacity(0.5)),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withValues(alpha: 0.04),
+                                  color: Colors.black.withOpacity(0.04),
                                   blurRadius: 40,
                                   offset: const Offset(0, 10),
                                 ),
@@ -196,7 +196,7 @@ class _TeacherQuizLibraryState extends State<TeacherQuizLibrary> {
                                     Container(
                                       width: 64, height: 64,
                                       decoration: BoxDecoration(
-                                        color: _quizColor(q.subject).withValues(alpha: 0.15),
+                                        color: _quizColor(q.subject).withOpacity(0.15),
                                         borderRadius: BorderRadius.circular(16),
                                       ),
                                       child: Icon(_quizIcon(q.subject), size: 28, color: _quizColor(q.subject)),
@@ -263,7 +263,7 @@ class _TeacherQuizLibraryState extends State<TeacherQuizLibrary> {
                                             borderRadius: BorderRadius.circular(24),
                                           ),
                                           child: Icon(Icons.bar_chart_rounded, size: 20,
-                                            color: const Color(0xFF191C1E).withValues(alpha: 0.7)),
+                                            color: const Color(0xFF191C1E).withOpacity(0.7)),
                                         ),
                                         const SizedBox(width: 8),
                                         Container(
@@ -273,7 +273,7 @@ class _TeacherQuizLibraryState extends State<TeacherQuizLibrary> {
                                             borderRadius: BorderRadius.circular(24),
                                           ),
                                           child: Icon(Icons.edit_rounded, size: 20,
-                                            color: const Color(0xFF191C1E).withValues(alpha: 0.7)),
+                                            color: const Color(0xFF191C1E).withOpacity(0.7)),
                                         ),
                                       ],
                                     ),
@@ -438,10 +438,10 @@ class _StatCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.7),
+        color: Colors.white.withOpacity(0.7),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -461,7 +461,7 @@ class _StatCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(4),
               child: LinearProgressIndicator(
                 value: progress,
-                backgroundColor: progressColor!.withValues(alpha: 0.15),
+                backgroundColor: progressColor!.withOpacity(0.15),
                 valueColor: AlwaysStoppedAnimation<Color>(progressColor!),
                 minHeight: 6,
               ),
@@ -481,10 +481,10 @@ class _AISuggestionCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFF00677F).withValues(alpha: 0.06),
+        color: const Color(0xFF00677F).withOpacity(0.06),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -493,7 +493,7 @@ class _AISuggestionCard extends StatelessWidget {
             children: [
               const Icon(Icons.psychology_rounded, size: 36, color: Color(0xFF00677F)),
               const Spacer(),
-              Icon(Icons.auto_awesome_rounded, size: 80, color: const Color(0xFF00677F).withValues(alpha: 0.08)),
+              Icon(Icons.auto_awesome_rounded, size: 80, color: const Color(0xFF00677F).withOpacity(0.08)),
             ],
           ),
           const SizedBox(height: 12),

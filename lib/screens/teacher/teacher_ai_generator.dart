@@ -86,10 +86,10 @@ class _TeacherAIGeneratorState extends State<TeacherAIGenerator> {
     return Container(
       padding: EdgeInsets.all(isWide ? 48 : 24),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.7),
+        color: Colors.white.withOpacity(0.7),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
       ),
       child: Row(
         children: [
@@ -98,10 +98,10 @@ class _TeacherAIGeneratorState extends State<TeacherAIGenerator> {
               width: 200, height: 200,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFF00677F).withValues(alpha: 0.08),
+                color: const Color(0xFF00677F).withOpacity(0.08),
               ),
               child: Center(
-                child: Icon(Icons.auto_awesome_rounded, size: 100, color: const Color(0xFF00677F).withValues(alpha: 0.3)),
+                child: Icon(Icons.auto_awesome_rounded, size: 100, color: const Color(0xFF00677F).withOpacity(0.3)),
               ),
             ),
           if (isWide) const SizedBox(width: 40),
@@ -167,10 +167,10 @@ class _TeacherAIGeneratorState extends State<TeacherAIGenerator> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.7),
+        color: Colors.white.withOpacity(0.7),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +180,7 @@ class _TeacherAIGeneratorState extends State<TeacherAIGenerator> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF00D2FF).withValues(alpha: 0.2),
+                  color: const Color(0xFF00D2FF).withOpacity(0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(Icons.edit_note_rounded, size: 22, color: Color(0xFF00566A)),
@@ -300,7 +300,7 @@ class _TeacherAIGeneratorState extends State<TeacherAIGenerator> {
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
                 elevation: 8,
-                shadowColor: const Color(0xFF00677F).withValues(alpha: 0.3),
+                shadowColor: const Color(0xFF00677F).withOpacity(0.3),
               ),
             ),
           ),
@@ -351,14 +351,14 @@ class _TeacherAIGeneratorState extends State<TeacherAIGenerator> {
           Container(
             padding: const EdgeInsets.all(48),
             decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.7),
+              color: Colors.white.withOpacity(0.7),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: const Color(0xFFBBC9CF).withValues(alpha: 0.3), width: 2, style: BorderStyle.solid),
+              border: Border.all(color: const Color(0xFFBBC9CF).withOpacity(0.3), width: 2, style: BorderStyle.solid),
             ),
             child: Center(
               child: Column(
                 children: [
-                  Icon(Icons.auto_awesome_rounded, size: 64, color: const Color(0xFF6C797F).withValues(alpha: 0.3)),
+                  Icon(Icons.auto_awesome_rounded, size: 64, color: const Color(0xFF6C797F).withOpacity(0.3)),
                   const SizedBox(height: 16),
                   const Text('Enter a topic and click Generate',
                     style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Color(0xFF3C494E))),
@@ -389,10 +389,10 @@ class _TeacherAIGeneratorState extends State<TeacherAIGenerator> {
         child: Container(
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.7),
+            color: Colors.white.withOpacity(0.7),
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-            boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+            border: Border.all(color: Colors.white.withOpacity(0.5)),
+            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -403,7 +403,7 @@ class _TeacherAIGeneratorState extends State<TeacherAIGenerator> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF00D2FF).withValues(alpha: 0.15),
+                      color: const Color(0xFF00D2FF).withOpacity(0.15),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text('Question ${e.key + 1}',
@@ -428,7 +428,7 @@ class _TeacherAIGeneratorState extends State<TeacherAIGenerator> {
                         child: Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFBA1A1A).withValues(alpha: 0.1),
+                            color: const Color(0xFFBA1A1A).withOpacity(0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: const Icon(Icons.delete_rounded, size: 16, color: Color(0xFFBA1A1A)),
@@ -448,9 +448,9 @@ class _TeacherAIGeneratorState extends State<TeacherAIGenerator> {
                   margin: const EdgeInsets.only(bottom: 8),
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                   decoration: BoxDecoration(
-                    color: isCorrect ? const Color(0xFF406900).withValues(alpha: 0.08) : const Color(0xFFF2F4F6),
+                    color: isCorrect ? const Color(0xFF406900).withOpacity(0.08) : const Color(0xFFF2F4F6),
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: isCorrect ? const Color(0xFF406900).withValues(alpha: 0.3) : Colors.transparent),
+                    border: Border.all(color: isCorrect ? const Color(0xFF406900).withOpacity(0.3) : Colors.transparent),
                   ),
                   child: Row(
                     children: [
@@ -482,7 +482,7 @@ class _TeacherAIGeneratorState extends State<TeacherAIGenerator> {
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFE0E3E5).withValues(alpha: 0.3),
+                  color: const Color(0xFFE0E3E5).withOpacity(0.3),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
@@ -554,9 +554,9 @@ class _HeroBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.7),
+        color: Colors.white.withOpacity(0.7),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: const Color(0xFF00677F).withValues(alpha: 0.2)),
+        border: Border.all(color: const Color(0xFF00677F).withOpacity(0.2)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

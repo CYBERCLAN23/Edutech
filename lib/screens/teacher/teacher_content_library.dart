@@ -67,11 +67,11 @@ class _TopBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       height: 64,
       decoration: BoxDecoration(
-        color: EduCamColors.surface.withValues(alpha: 0.7),
-        border: Border(bottom: BorderSide(color: Colors.white.withValues(alpha: 0.5))),
+        color: EduCamColors.surface.withOpacity(0.7),
+        border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.5))),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: Colors.black.withOpacity(0.04),
             blurRadius: 40,
             offset: const Offset(0, 10),
           ),
@@ -224,7 +224,7 @@ class _ActionBtn extends StatelessWidget {
             colors: [const Color(0xFF00677F), const Color(0xFF055DB6)],
             begin: Alignment.topLeft, end: Alignment.bottomRight,
           ),
-          color: isSoft ? const Color(0xFF00D2FF).withValues(alpha: 0.2) : null,
+          color: isSoft ? const Color(0xFF00D2FF).withOpacity(0.2) : null,
           borderRadius: BorderRadius.circular(999),
         ),
         child: Row(
@@ -262,12 +262,12 @@ class _FolderCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: EduCamColors.surface.withValues(alpha: 0.7),
+        color: EduCamColors.surface.withOpacity(0.7),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: Colors.black.withOpacity(0.04),
             blurRadius: 40,
             offset: const Offset(0, 10),
           ),
@@ -433,12 +433,12 @@ class _FileItem extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: EduCamColors.surface.withValues(alpha: 0.7),
+        color: EduCamColors.surface.withOpacity(0.7),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
+            color: Colors.black.withOpacity(0.04),
             blurRadius: 40,
             offset: const Offset(0, 10),
           ),

@@ -186,7 +186,7 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
           Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: const Color(0xFF00677F).withValues(alpha: 0.1),
+              color: const Color(0xFF00677F).withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(Icons.arrow_back_rounded, size: 22, color: Color(0xFF00677F)),
@@ -205,10 +205,10 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.7),
+        color: Colors.white.withOpacity(0.7),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -305,9 +305,9 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF00D2FF).withValues(alpha: 0.08),
+        color: const Color(0xFF00D2FF).withOpacity(0.08),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFF00677F).withValues(alpha: 0.1)),
+        border: Border.all(color: const Color(0xFF00677F).withOpacity(0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -331,9 +331,9 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
               maxLines: 4,
               decoration: InputDecoration(
                 hintText: 'Enter topic or keywords...',
-                hintStyle: TextStyle(color: const Color(0xFF00677F).withValues(alpha: 0.5)),
+                hintStyle: TextStyle(color: const Color(0xFF00677F).withOpacity(0.5)),
                 filled: true,
-                fillColor: Colors.white.withValues(alpha: 0.4),
+                fillColor: Colors.white.withOpacity(0.4),
                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide.none),
                 contentPadding: const EdgeInsets.all(16),
               ),
@@ -382,7 +382,7 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
                       elevation: 4,
-                      shadowColor: const Color(0xFF00677F).withValues(alpha: 0.3),
+                      shadowColor: const Color(0xFF00677F).withOpacity(0.3),
                     ),
                   ),
                 ),
@@ -467,7 +467,7 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF00677F).withValues(alpha: 0.1),
+                  color: const Color(0xFF00677F).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Row(
@@ -488,13 +488,13 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
             child: Container(
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xFFBBC9CF).withValues(alpha: 0.3), width: 2),
+                border: Border.all(color: const Color(0xFFBBC9CF).withOpacity(0.3), width: 2),
                 borderRadius: BorderRadius.circular(16),
               ),
               child: Center(
                 child: Column(
                   children: [
-                    Icon(Icons.add_circle_outline_rounded, size: 48, color: const Color(0xFF6C797F).withValues(alpha: 0.5)),
+                    Icon(Icons.add_circle_outline_rounded, size: 48, color: const Color(0xFF6C797F).withOpacity(0.5)),
                     const SizedBox(height: 12),
                     const Text('Drag components here or click to add manually',
                       style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF6C797F))),
@@ -512,10 +512,10 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
               padding: const EdgeInsets.only(bottom: 16),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.7),
+                  color: Colors.white.withOpacity(0.7),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-                  boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+                  border: Border.all(color: Colors.white.withOpacity(0.5)),
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
                 ),
                 child: IntrinsicHeight(
                   child: Row(
@@ -547,7 +547,7 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
                                         child: Container(
                                           padding: const EdgeInsets.all(6),
                                           decoration: BoxDecoration(
-                                            color: const Color(0xFFBA1A1A).withValues(alpha: 0.1),
+                                            color: const Color(0xFFBA1A1A).withOpacity(0.1),
                                             borderRadius: BorderRadius.circular(8),
                                           ),
                                           child: const Icon(Icons.delete_rounded, size: 16, color: Color(0xFFBA1A1A)),
@@ -583,9 +583,9 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                       decoration: BoxDecoration(
-                                        color: isCorrect ? const Color(0xFF406900).withValues(alpha: 0.08) : const Color(0xFFF2F4F6),
+                                        color: isCorrect ? const Color(0xFF406900).withOpacity(0.08) : const Color(0xFFF2F4F6),
                                         borderRadius: BorderRadius.circular(12),
-                                        border: Border.all(color: isCorrect ? const Color(0xFF406900).withValues(alpha: 0.3) : Colors.transparent),
+                                        border: Border.all(color: isCorrect ? const Color(0xFF406900).withOpacity(0.3) : Colors.transparent),
                                       ),
                                       child: Row(
                                         children: [
@@ -641,14 +641,14 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
               child: Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xFFBBC9CF).withValues(alpha: 0.3), width: 2, style: BorderStyle.solid),
+                  border: Border.all(color: const Color(0xFFBBC9CF).withOpacity(0.3), width: 2, style: BorderStyle.solid),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Center(
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.add_circle_outline_rounded, size: 24, color: const Color(0xFF6C797F).withValues(alpha: 0.5)),
+                      Icon(Icons.add_circle_outline_rounded, size: 24, color: const Color(0xFF6C797F).withOpacity(0.5)),
                       const SizedBox(width: 8),
                       const Text('Add another question',
                         style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Color(0xFF6C797F))),
@@ -665,9 +665,9 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF65A1FE).withValues(alpha: 0.15),
+                    color: const Color(0xFF65A1FE).withOpacity(0.15),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: const Color(0xFFA9C7FF).withValues(alpha: 0.3)),
+                    border: Border.all(color: const Color(0xFFA9C7FF).withOpacity(0.3)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -686,7 +686,7 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
                         borderRadius: BorderRadius.circular(4),
                         child: LinearProgressIndicator(
                           value: 0.65,
-                          backgroundColor: const Color(0xFFD6E3FF).withValues(alpha: 0.3),
+                          backgroundColor: const Color(0xFFD6E3FF).withOpacity(0.3),
                           valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF055DB6)),
                           minHeight: 8,
                         ),
@@ -700,9 +700,9 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF87D600).withValues(alpha: 0.08),
+                    color: const Color(0xFF87D600).withOpacity(0.08),
                     borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: const Color(0xFF9FFB00).withValues(alpha: 0.2)),
+                    border: Border.all(color: const Color(0xFF9FFB00).withOpacity(0.2)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -731,8 +731,8 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: isWide ? 64 : 24, vertical: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFFF7F9FB).withValues(alpha: 0.8),
-        border: Border(top: BorderSide(color: Colors.white.withValues(alpha: 0.5))),
+        color: const Color(0xFFF7F9FB).withOpacity(0.8),
+        border: Border(top: BorderSide(color: Colors.white.withOpacity(0.5))),
       ),
       child: SafeArea(
         top: false,
@@ -749,7 +749,7 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
                   ],
                 ),
                 const SizedBox(width: 24),
-                Container(width: 1, height: 40, color: const Color(0xFFBBC9CF).withValues(alpha: 0.3)),
+                Container(width: 1, height: 40, color: const Color(0xFFBBC9CF).withOpacity(0.3)),
                 const SizedBox(width: 24),
                 GestureDetector(
                   onTap: () => HapticFeedback.lightImpact(),
@@ -800,7 +800,7 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
                       elevation: 8,
-                      shadowColor: const Color(0xFF00677F).withValues(alpha: 0.4),
+                      shadowColor: const Color(0xFF00677F).withOpacity(0.4),
                       padding: const EdgeInsets.symmetric(horizontal: 40),
                     ),
                     child: const Text('Publish Quiz', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700)),

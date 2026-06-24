@@ -60,9 +60,9 @@ class _TopBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       height: 64,
       decoration: BoxDecoration(
-        color: EduCamColors.surface.withValues(alpha: 0.7),
-        border: Border(bottom: BorderSide(color: Colors.white.withValues(alpha: 0.2))),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40)],
+        color: EduCamColors.surface.withOpacity(0.7),
+        border: Border(bottom: BorderSide(color: Colors.white.withOpacity(0.2))),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40)],
       ),
       child: Row(
         children: [
@@ -75,7 +75,7 @@ class _TopBar extends StatelessWidget {
             decoration: BoxDecoration(
               color: const Color(0xFFF2F4F6),
               borderRadius: BorderRadius.circular(999),
-              border: Border.all(color: const Color(0xFFBBC9CF).withValues(alpha: 0.3)),
+              border: Border.all(color: const Color(0xFFBBC9CF).withOpacity(0.3)),
             ),
             child: const Row(
               mainAxisSize: MainAxisSize.min,
@@ -128,10 +128,10 @@ class _StatCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: EduCamColors.surface.withValues(alpha: 0.7),
+        color: EduCamColors.surface.withOpacity(0.7),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +189,7 @@ class _StatsRow extends StatelessWidget {
                 progress: Container(
                   height: 4,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF00D2FF).withValues(alpha: 0.2),
+                    color: const Color(0xFF00D2FF).withOpacity(0.2),
                     borderRadius: BorderRadius.circular(2),
                   ),
                   child: FractionallySizedBox(
@@ -282,10 +282,10 @@ class _AIInsightCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF00D2FF).withValues(alpha: 0.1),
+        color: const Color(0xFF00D2FF).withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFF00D2FF).withValues(alpha: 0.3)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+        border: Border.all(color: const Color(0xFF00D2FF).withOpacity(0.3)),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -295,7 +295,7 @@ class _AIInsightCard extends StatelessWidget {
               Container(
                 width: 48, height: 48,
                 decoration: BoxDecoration(
-                  color: const Color(0xFF00D2FF).withValues(alpha: 0.5),
+                  color: const Color(0xFF00D2FF).withOpacity(0.5),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Icon(Icons.auto_awesome_rounded, size: 28, color: Color(0xFF00566A)),
@@ -304,7 +304,7 @@ class _AIInsightCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF00D2FF).withValues(alpha: 0.5),
+                  color: const Color(0xFF00D2FF).withOpacity(0.5),
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: const Text('Priority',
@@ -345,7 +345,7 @@ class _AIInsightCard extends StatelessWidget {
                   begin: Alignment.topLeft, end: Alignment.bottomRight,
                 ),
                 borderRadius: BorderRadius.circular(999),
-                boxShadow: [BoxShadow(color: const Color(0xFF00677F).withValues(alpha: 0.25), blurRadius: 20, offset: const Offset(0, 8))],
+                boxShadow: [BoxShadow(color: const Color(0xFF00677F).withOpacity(0.25), blurRadius: 20, offset: const Offset(0, 8))],
               ),
               child: const Text('Schedule Review',
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: Colors.white)),
@@ -372,10 +372,10 @@ class _GradeDistribution extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: EduCamColors.surface.withValues(alpha: 0.7),
+        color: EduCamColors.surface.withOpacity(0.7),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -405,7 +405,7 @@ class _GradeDistribution extends StatelessWidget {
                       Container(
                         height: 160 * g.$2,
                         decoration: BoxDecoration(
-                          color: g.$3.withValues(alpha: 0.2),
+                          color: g.$3.withOpacity(0.2),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Align(
@@ -442,10 +442,10 @@ class _PerformanceTrend extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: EduCamColors.surface.withValues(alpha: 0.7),
+        color: EduCamColors.surface.withOpacity(0.7),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+        border: Border.all(color: Colors.white.withOpacity(0.5)),
+        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -503,7 +503,7 @@ class _LineChartPainter extends CustomPainter {
       ..shader = LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [const Color(0xFF00677F).withValues(alpha: 0.15), const Color(0xFF00677F).withValues(alpha: 0.0)],
+        colors: [const Color(0xFF00677F).withOpacity(0.15), const Color(0xFF00677F).withOpacity(0.0)],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height));
 
     final path = Path()
@@ -563,10 +563,10 @@ class _StudentSegments extends StatelessWidget {
               width: w,
               child: Container(
                 decoration: BoxDecoration(
-                  color: EduCamColors.surface.withValues(alpha: 0.7),
+                  color: EduCamColors.surface.withOpacity(0.7),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-                  boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+                  border: Border.all(color: Colors.white.withOpacity(0.5)),
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -597,10 +597,10 @@ class _StudentSegments extends StatelessWidget {
               width: w,
               child: Container(
                 decoration: BoxDecoration(
-                  color: EduCamColors.surface.withValues(alpha: 0.7),
+                  color: EduCamColors.surface.withOpacity(0.7),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.5)),
-                  boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 40, offset: const Offset(0, 10))],
+                  border: Border.all(color: Colors.white.withOpacity(0.5)),
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 40, offset: const Offset(0, 10))],
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -663,8 +663,8 @@ class _StudentRow extends StatelessWidget {
               width: 36, height: 36,
               decoration: BoxDecoration(
                 color: isRisk
-                    ? const Color(0xFFFFDAD6).withValues(alpha: 0.3)
-                    : const Color(0xFF00D2FF).withValues(alpha: 0.2),
+                    ? const Color(0xFFFFDAD6).withOpacity(0.3)
+                    : const Color(0xFF00D2FF).withOpacity(0.2),
                 borderRadius: BorderRadius.circular(18),
               ),
               child: Center(
@@ -693,7 +693,7 @@ class _StudentRow extends StatelessWidget {
               decoration: BoxDecoration(
                 color: isRisk
                     ? const Color(0xFFFFDAD6)
-                    : const Color(0xFF87D600).withValues(alpha: 0.1),
+                    : const Color(0xFF87D600).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(999),
               ),
               child: Text(score,
