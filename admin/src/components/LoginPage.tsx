@@ -3,9 +3,10 @@ import { api } from '../lib/api';
 
 interface Props {
   onLogin: (user: any) => void;
+  onRegister?: () => void;
 }
 
-export default function LoginPage({ onLogin }: Props) {
+export default function LoginPage({ onLogin, onRegister }: Props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -59,6 +60,14 @@ export default function LoginPage({ onLogin }: Props) {
           >
             {loading ? 'Connexion...' : 'Se connecter'}
           </button>
+          {onRegister && (
+            <p className="text-center mt-4 text-sm text-gray-500">
+              Pas encore de compte ?{' '}
+              <button type="button" onClick={onRegister} className="text-[#4F46E5] font-medium hover:underline">
+                Créer un compte admin
+              </button>
+            </p>
+          )}
         </form>
       </div>
     </div>

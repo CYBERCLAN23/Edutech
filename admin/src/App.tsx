@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import LoginPage from './components/LoginPage';
+import RegisterPage from './components/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import UsersPage from './pages/UsersPage';
 import CoursesPage from './pages/CoursesPage';
@@ -12,6 +13,7 @@ type Page = (typeof PAGES)[number];
 
 function App() {
   const [page, setPage] = useState<Page>('dashboard');
+  const [showRegister, setShowRegister] = useState(false);
   const [user, setUser] = useState<{ name: string; email: string } | null>(() => {
     const stored = localStorage.getItem('admin_user');
     const token = localStorage.getItem('admin_token');
@@ -35,7 +37,10 @@ function App() {
     setPage('dashboard');
   };
 
-  if (!user) return <LoginPage onLogin={(u) => setUser(u)} />;
+  if (!user) {
+    if (showRegister) return <RegisterPage onLogin={(u) => setUser(u)} onBack={() => setShowRegister(false)} />;
+    return <LoginPage onLogin={(u) => setUser(u)} onRegister={() => setShowRegister(true)} />;
+  }
 
   const PageComponent = page === 'dashboard' ? DashboardPage
     : page === 'users' ? UsersPage
