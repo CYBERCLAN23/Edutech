@@ -21,7 +21,7 @@ export function subscribeToTable(
     .channel(channelName)
     .on(
       'postgres_changes' as any,
-      { event, schema: 'public', table, ...(filter ? { filter } : {}) },
+      { event, schema: 'public', table, ...(filter ? { filter } : {}) } as any,
       (payload: any) => {
         if (handler) handler(payload);
       }
