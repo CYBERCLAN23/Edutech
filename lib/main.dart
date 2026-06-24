@@ -5,6 +5,8 @@ import 'package:educam_ai/theme/app_theme.dart';
 import 'package:educam_ai/screens/splash_screen.dart';
 import 'package:educam_ai/screens/onboarding_screen.dart';
 import 'package:educam_ai/screens/role_select_screen.dart';
+import 'package:educam_ai/screens/register_screen.dart';
+import 'package:educam_ai/screens/login_screen.dart';
 import 'package:educam_ai/screens/main_shell.dart';
 import 'package:educam_ai/services/local_storage_service.dart';
 import 'package:educam_ai/services/offline_service.dart';
@@ -48,6 +50,10 @@ class EduCamApp extends StatelessWidget {
             return MaterialPageRoute(builder: (_) => const SplashScreen());
           case '/role-select':
             return MaterialPageRoute(builder: (_) => const RoleSelectScreen());
+          case '/register':
+            return MaterialPageRoute(builder: (_) => const RegisterScreen());
+          case '/login':
+            return MaterialPageRoute(builder: (_) => const LoginScreen());
           case '/onboarding':
             return MaterialPageRoute(builder: (_) => const OnboardingScreen());
           case '/home':

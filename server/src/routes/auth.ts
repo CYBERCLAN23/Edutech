@@ -21,7 +21,7 @@ router.post('/register',
   body('email').isEmail().withMessage('Email invalide').normalizeEmail(),
   body('password').isLength({ min: 6, max: 100 }).withMessage('Mot de passe: 6-100 caractères'),
   body('name').isLength({ min: 2, max: 100 }).withMessage('Nom: 2-100 caractères').trim().escape(),
-  body('role').isIn(['student', 'teacher', 'admin']).withMessage('Rôle invalide'),
+  body('role').equals('student').withMessage('Seuls les élèves peuvent s\'inscrire'),
   body('class_name').optional().isLength({ max: 50 }).trim().escape(),
   validate,
   async (req: Request, res: Response) => {

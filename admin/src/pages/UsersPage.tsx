@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Trash2, Search } from 'lucide-react';
+import { Trash2, Search, Pencil, UserPlus, GraduationCap, ChalkboardTeacher } from 'lucide-react';
 import { api } from '../lib/api';
 import type { AdminUser } from '../lib/types';
+import UserFormModal from '../components/UserFormModal';
 
 const roleColors: Record<string, string> = {
   student: 'bg-green-50 text-green-700 border-green-200',
@@ -18,6 +19,7 @@ export default function UsersPage() {
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [modal, setModal] = useState<{ mode: 'create-student' | 'create-teacher' | 'edit'; user?: AdminUser } | null>(null);
 
   const load = async () => {
     setLoading(true); setError('');
@@ -29,7 +31,7 @@ export default function UsersPage() {
   useEffect(() => { load(); }, []);
 
   const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Supprimer l'utilisateur "${name}" ? Cette action est irréversible.`)) return;
+    if (!confirm(`Supprimer "${name}" ? Cette action est irréversible.`)) return;
     try {
       await api.deleteUser(id);
       setUsers(prev => prev.filter(u => u.id !== id));
@@ -61,18 +63,33 @@ export default function UsersPage() {
           <h1 className="text-2xl font-bold text-[#0D1B2A]">Utilisateurs</h1>
           <p className="text-gray-500 mt-1">{users.length} inscrits sur la plateforme</p>
         </div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setModal({ mode: 'create-teacher' })}
+            className="flex items-center gap-2 px-4 py-2.5 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-xl text-sm font-medium hover:bg-indigo-100 transition-all"
+          >
+            <ChalkboardTeacher size={16} />
+            Professeur
+          </button>
+          <button
+            onClick={() => setModal({ mode: 'create-student' })}
+            className="flex items-center gap-2 px-4 py-2.5 bg-[#4F46E5] text-white rounded-xl text-sm font-medium hover:bg-[#4338CA] transition-all"
+          >
+            <UserPlus size={16} />
+            Élève
+          </button>
+        </div>
       </div>
 
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="grid grid-cols-4 gap-4 mb-8">
         {filters.map(f => (
-          <button
-            key={f.key ?? 'all'}
-            onClick={() => setFilter(f.key)}
-            className={`px-4 py-2 rounded-xl text-sm font-medium border transition-all ${
-              filter === f.key ? 'bg-[#4F46E5] text-white border-[#4F46E5]' : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
+          <button key={f.key ?? 'all'} onClick={() => setFilter(f.key)}
+            className={`text-left p-4 rounded-xl border transition-all ${
+              filter === f.key ? 'bg-[#4F46E5] text-white border-[#4F46E5]' : 'bg-white text-[#0D1B2A] border-gray-100 hover:shadow-sm'
             }`}
           >
-            {f.label} ({f.count})
+            <p className="text-2xl font-bold">{f.count}</p>
+            <p className="text-sm opacity-70">{f.label}</p>
           </button>
         ))}
       </div>
@@ -104,6 +121,12 @@ export default function UsersPage() {
                 {roleLabels[u.role] || u.role}
               </span>
               <button
+                onClick={() => setModal({ mode: 'edit', user: u })}
+                className="p-2 text-gray-400 hover:text-[#4F46E5] hover:bg-indigo-50 rounded-lg transition-all"
+              >
+                <Pencil size={16} />
+              </button>
+              <button
                 onClick={() => handleDelete(u.id, u.name)}
                 className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
               >
@@ -113,6 +136,15 @@ export default function UsersPage() {
           ))}
           {filtered.length === 0 && <p className="text-center py-10 text-gray-400">Aucun utilisateur trouvé</p>}
         </div>
+      )}
+
+      {modal && (
+        <UserFormModal
+          mode={modal.mode}
+          user={modal.user}
+          onClose={() => setModal(null)}
+          onSaved={() => { setModal(null); load(); }}
+        />
       )}
     </div>
   );

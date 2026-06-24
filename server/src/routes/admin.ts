@@ -1,11 +1,60 @@
 import { Router, Request, Response } from 'express';
 import { authMiddleware, requireRole } from '../middleware/auth';
 import getSupabase from '../config/supabase';
+import { config } from '../config';
+import jwt from 'jsonwebtoken';
 
 const router = Router();
 const sb = getSupabase();
 
 const allAdmin = [authMiddleware, requireRole('admin')];
+
+// POST /api/admin/users — create a teacher or admin (admin-only)
+router.post('/users', ...allAdmin, async (req: Request, res: Response) => {
+  try {
+    const { email, password, name, role, class_name } = req.body;
+    if (!email || !password || !name || !role) {
+      res.status(400).json({ success: false, error: 'Champs requis manquants' });
+      return;
+    }
+    if (!['teacher', 'admin'].includes(role)) {
+      res.status(400).json({ success: false, error: 'Rôle invalide. Utilisez teacher ou admin.' });
+      return;
+    }
+    if (password.length < 6) {
+      res.status(400).json({ success: false, error: 'Mot de passe: minimum 6 caractères' });
+      return;
+    }
+
+    const { data: authData, error: authError } = await sb.auth.admin.createUser({
+      email, password, email_confirm: true,
+      user_metadata: { name, role, class_name },
+    });
+    if (authError) { res.status(400).json({ success: false, error: authError.message }); return; }
+    if (!authData.user) { res.status(500).json({ success: false, error: 'Échec création auth' }); return; }
+
+    const { data: profile, error: profileError } = await sb
+      .from('users')
+      .insert({ id: authData.user.id, email, name, role, class_name })
+      .select()
+      .single();
+    if (profileError) {
+      await sb.auth.admin.deleteUser(authData.user.id).catch(() => {});
+      res.status(500).json({ success: false, error: profileError.message });
+      return;
+    }
+
+    const token = jwt.sign(
+      { userId: profile.id, email: profile.email, role: profile.role },
+      config.jwt.secret,
+      { expiresIn: config.jwt.expiresIn as any }
+    );
+
+    res.status(201).json({ success: true, data: { user: profile, token } });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
 
 // GET /api/admin/dashboard — platform-wide stats
 router.get('/dashboard', ...allAdmin, async (_req: Request, res: Response) => {
@@ -56,6 +105,28 @@ router.get('/users', ...allAdmin, async (req: Request, res: Response) => {
     const { data, error } = await query;
     if (error) throw new Error(error.message);
     res.json({ success: true, data: data || [] });
+  } catch (err: any) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// PUT /api/admin/users/:id — update a user
+router.put('/users/:id', ...allAdmin, async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { name, class_name, role } = req.body;
+    const updates: Record<string, any> = {};
+    if (name !== undefined) updates.name = name;
+    if (class_name !== undefined) updates.class_name = class_name || null;
+    if (role !== undefined) updates.role = role;
+    if (Object.keys(updates).length === 0) {
+      res.status(400).json({ success: false, error: 'Aucun champ à mettre à jour' });
+      return;
+    }
+    updates.updated_at = new Date().toISOString();
+    const { data, error } = await sb.from('users').update(updates).eq('id', id).select('id, name, email, role, class_name').single();
+    if (error) throw new Error(error.message);
+    res.json({ success: true, data });
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message });
   }

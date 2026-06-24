@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:educam_ai/services/auth_service.dart';
+import 'package:educam_ai/models/app_role.dart';
 
 final authServiceProvider = Provider<AuthService>((ref) => AuthService());
 
@@ -55,12 +56,14 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     try {
       final data = await _auth.login(email, password);
       final user = data['user'] as Map<String, dynamic>;
+      final role = user['role'] as String;
+      AppSession.currentRole = role == 'teacher' ? AppRole.teacher : role == 'admin' ? AppRole.admin : AppRole.student;
       state = AuthState(
         status: AuthStatus.authenticated,
         user: user,
-        isTeacher: user['role'] == 'teacher',
-        isStudent: user['role'] == 'student',
-        isAdmin: user['role'] == 'admin',
+        isTeacher: role == 'teacher',
+        isStudent: role == 'student',
+        isAdmin: role == 'admin',
       );
     } catch (e) {
       state = state.copyWith(
@@ -87,6 +90,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
         className: className,
       );
       final user = data['user'] as Map<String, dynamic>;
+      AppSession.currentRole = role == 'teacher' ? AppRole.teacher : AppRole.student;
       state = AuthState(
         status: AuthStatus.authenticated,
         user: user,
@@ -107,12 +111,14 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
     try {
       await _auth.loadSession(token);
       final user = _auth.currentUser;
+      final role = user?['role'] as String?;
+      AppSession.currentRole = role == 'teacher' ? AppRole.teacher : role == 'admin' ? AppRole.admin : AppRole.student;
       state = AuthState(
         status: AuthStatus.authenticated,
         user: user,
-        isTeacher: user?['role'] == 'teacher',
-        isStudent: user?['role'] == 'student',
-        isAdmin: user?['role'] == 'admin',
+        isTeacher: role == 'teacher',
+        isStudent: role == 'student',
+        isAdmin: role == 'admin',
       );
     } catch (e) {
       state = const AuthState(status: AuthStatus.unauthenticated);
@@ -121,6 +127,7 @@ class AuthStateNotifier extends StateNotifier<AuthState> {
 
   void logout() {
     _auth.logout();
+    AppSession.currentRole = null;
     state = const AuthState(status: AuthStatus.unauthenticated);
   }
 }

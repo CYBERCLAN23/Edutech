@@ -47,7 +47,11 @@ export const api = {
 
   getDashboard: () => fetchJSON<DashboardStats>(`${BASE}/dashboard`),
   getUsers: (role?: string) => fetchJSON<AdminUser[]>(`${BASE}/users${role ? `?role=${role}` : ''}`),
-  deleteUser: async (id: string) => { await fetchJSON(`${BASE}/users/${id}`); },
+  createUser: (body: { email: string; password: string; name: string; role: string; class_name?: string }) =>
+    fetchJSON<{ user: AdminUser; token: string }>(`${BASE}/users`, { method: 'POST', body: JSON.stringify(body) }),
+  updateUser: (id: string, body: { name?: string; class_name?: string | null; role?: string }) =>
+    fetchJSON<AdminUser>(`${BASE}/users/${id}`, { method: 'PUT', body: JSON.stringify(body) }),
+  deleteUser: (id: string) => fetchJSON(`${BASE}/users/${id}`, { method: 'DELETE' }),
   getCourses: () => fetchJSON<{ courses: AdminCourse[]; grouped: Record<string, AdminCourse[]> }>(`${BASE}/courses`),
   getActivities: (limit = 20) => fetchJSON<AdminActivity[]>(`${BASE}/activities?limit=${limit}`),
   getClassStats: () => fetchJSON<ClassStats[]>(`${BASE}/stats/classes`),
