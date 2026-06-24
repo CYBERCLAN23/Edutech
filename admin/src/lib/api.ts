@@ -47,8 +47,8 @@ export const api = {
 
   getDashboard: () => fetchJSON<DashboardStats>(`${BASE}/dashboard`),
   getUsers: (role?: string) => fetchJSON<AdminUser[]>(`${BASE}/users${role ? `?role=${role}` : ''}`),
-  createUser: (body: { email: string; password: string; name: string; role: string; class_name?: string }) =>
-    fetchJSON<{ user: AdminUser; token: string }>(`${BASE}/users`, { method: 'POST', body: JSON.stringify(body) }),
+  createUser: (body: { email?: string; password?: string; name: string; role: string; class_name?: string }) =>
+    fetchJSON<{ user: AdminUser; token: string; generatedPassword?: string }>(`${BASE}/users`, { method: 'POST', body: JSON.stringify(body) }),
   updateUser: (id: string, body: { name?: string; class_name?: string | null; role?: string }) =>
     fetchJSON<AdminUser>(`${BASE}/users/${id}`, { method: 'PUT', body: JSON.stringify(body) }),
   deleteUser: (id: string) => fetchJSON(`${BASE}/users/${id}`, { method: 'DELETE' }),

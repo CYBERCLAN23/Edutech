@@ -28,8 +28,22 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.1
+  flutter_launcher_icons: ^0.13.1
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/
+    - assets/logo.png
+    - assets/onboarding_1.png
+    - assets/onboarding_2.png
+    - assets/onboarding_3.png
+    # - assets/role_student.png  # Add when images are saved
+    # - assets/role_teacher.png  # Add when images are saved
+
+flutter_launcher_icons:
+  android: "ic_launcher"
+  ios: false
+  image_path: "assets/logo.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#0D1B2A"
+  adaptive_icon_foreground: "assets/logo.png"

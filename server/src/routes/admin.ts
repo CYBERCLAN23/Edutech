@@ -7,20 +7,41 @@ import jwt from 'jsonwebtoken';
 const router = Router();
 const sb = getSupabase();
 
+function generateEmail(name: string): string {
+  const slug = name
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s.-]/g, '')
+    .replace(/\s+/g, '.')
+    .replace(/\.+/g, '.')
+    .replace(/^\.|\.$/g, '')
+    .slice(0, 40);
+  return `${slug}@educam.cm`;
+}
+
+function generatePassword(): string {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
+  let pwd = '';
+  for (let i = 0; i < 10; i++) pwd += chars[Math.floor(Math.random() * chars.length)];
+  return pwd;
+}
+
 const allAdmin = [authMiddleware, requireRole('admin')];
 
 // POST /api/admin/users — create a teacher or admin (admin-only)
 router.post('/users', ...allAdmin, async (req: Request, res: Response) => {
   try {
-    const { email, password, name, role, class_name } = req.body;
-    if (!email || !password || !name || !role) {
-      res.status(400).json({ success: false, error: 'Champs requis manquants' });
+    let { email, password, name, role, class_name } = req.body;
+    if (!name || !role) {
+      res.status(400).json({ success: false, error: 'Nom et rôle requis' });
       return;
     }
     if (!['teacher', 'admin'].includes(role)) {
       res.status(400).json({ success: false, error: 'Rôle invalide. Utilisez teacher ou admin.' });
       return;
     }
+    if (!email) email = generateEmail(name);
+    if (!password) password = generatePassword();
     if (password.length < 6) {
       res.status(400).json({ success: false, error: 'Mot de passe: minimum 6 caractères' });
       return;
@@ -50,7 +71,7 @@ router.post('/users', ...allAdmin, async (req: Request, res: Response) => {
       { expiresIn: config.jwt.expiresIn as any }
     );
 
-    res.status(201).json({ success: true, data: { user: profile, token } });
+    res.status(201).json({ success: true, data: { user: profile, token, generatedPassword: password } });
   } catch (err: any) {
     res.status(500).json({ success: false, error: err.message });
   }

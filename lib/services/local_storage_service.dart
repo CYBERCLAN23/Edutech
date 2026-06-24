@@ -21,7 +21,12 @@ class LocalStorageService {
   late Box<String> _cache;
 
   Future<void> init() async {
-    await Hive.initFlutter();
+    try {
+      await Hive.initFlutter();
+    } catch (e) {
+      // Fallback for desktop platforms where path_provider may not work
+      Hive.init('./.hive_cache');
+    }
     _courses = await Hive.openBox<String>(_coursesBox);
     _quizzes = await Hive.openBox<String>(_quizzesBox);
     _answers = await Hive.openBox<String>(_answersBox);

@@ -5,6 +5,7 @@ import 'package:educam_ai/theme/app_theme.dart';
 import 'package:educam_ai/providers/auth_provider.dart';
 import 'package:educam_ai/services/cache_service.dart';
 import 'package:educam_ai/screens/main_shell.dart';
+import 'package:educam_ai/screens/onboarding_screen.dart';
 import 'package:educam_ai/screens/role_select_screen.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -56,7 +57,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
     }
     if (mounted) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => const RoleSelectScreen()),
+        MaterialPageRoute(builder: (_) => const OnboardingScreen()),
       );
     }
   }
@@ -119,7 +120,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                         ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(32),
-                          child: Image.asset('assets/logo.svg', fit: BoxFit.contain),
+                          child: Image.asset('assets/logo.png', fit: BoxFit.contain),
                         ),
                       ),
                     ),

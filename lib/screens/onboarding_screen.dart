@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:educam_ai/theme/app_theme.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:educam_ai/widgets/route_transition.dart';
-import 'package:educam_ai/screens/main_shell.dart';
+import 'package:educam_ai/screens/role_select_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -17,25 +17,27 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final _slides = [
     _OnboardingSlide(
-      icon: Icons.smart_toy_rounded,
-      title: 'Ton professeur\nIA personnel',
-      subtitle:
-          'TutorBot comprend tes questions en Francais, Anglais, Fulfulde ou Ewondo. Revisions illimitees, meme sans connexion.',
-      gradientColors: [EduCamColors.accent, const Color(0xFF7C3AED)],
+      title: 'Apprenez\navec l\'IA',
+      subtitle: 'Accédez à des cours personnalisés et des quiz intelligents adaptés au programme national.',
+      imageUrl: 'assets/onboarding_1.png',
+      backgroundColor: const Color(0xFFc4f05a),
+      buttonBorderColor: const Color(0xFFa855f7),
     ),
     _OnboardingSlide(
-      icon: Icons.camera_alt_rounded,
-      title: 'Corrige tes devoirs\nen un clic',
-      subtitle:
-          'Photo de ton exercice de Maths, SVT ou Physique. Correction instantanee avec explications detaillees, comme un professeur 24h/24.',
-      gradientColors: [EduCamColors.highlight, const Color(0xFFF97316)],
+      title: 'Votre tuteur IA\n24h/24',
+      subtitle: 'Posez vos questions à TutorBot et obtenez des explications claires instantanément.',
+      imageUrl: 'assets/onboarding_2.png',
+      backgroundColor: const Color(0xFFE0F2FE),
+      buttonBorderColor: const Color(0xFF4b41e1),
+      hasCurvedBackground: true,
     ),
     _OnboardingSlide(
-      icon: Icons.school_rounded,
-      title: 'Pret pour le BAC\net le BEPC',
-      subtitle:
-          'Programme officiel camerounais, sujets d\'examen et suivi personnalise. Rejoins les 10 000+ eleves qui excellent avec EduCam.',
-      gradientColors: [const Color(0xFF10B981), const Color(0xFF059669)],
+      title: 'Votre réussite\ncommence ici',
+      subtitle: 'Rejoignez des milliers d\'élèves camerounais et boostez vos résultats dès aujourd\'hui.',
+      imageUrl: 'assets/onboarding_3.png',
+      backgroundColor: const Color(0xFF00d2ff).withOpacity(0.2),
+      buttonBorderColor: const Color(0xFF00d2ff),
+      hasFloatingIcons: true,
     ),
   ];
 
@@ -48,6 +50,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           PageView.builder(
@@ -57,63 +60,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             itemBuilder: (context, index) => _SlideContent(slide: _slides[index]),
           ),
           Positioned(
-            top: MediaQuery.of(context).padding.top + 16,
-            right: 24,
-            child: _currentPage < _slides.length - 1
-                ? TextButton(
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      Navigator.of(context).pushReplacement(RouteTransition.fadeThrough(const MainShell()));
-                    },
-                    child: const Text(
-                      'Skip',
-                      style: TextStyle(
-                        color: EduCamColors.secondaryText,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  )
-                : const SizedBox.shrink(),
-          ),
-          Positioned(
-            bottom: MediaQuery.of(context).padding.bottom + 40,
-            left: 24,
-            right: 24,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    _slides.length,
-                    (index) => _DotIndicator(
-                      isActive: index == _currentPage,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 32),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      HapticFeedback.lightImpact();
-                      if (_currentPage < _slides.length - 1) {
-                        _pageController.nextPage(
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.easeInOut,
-                        );
-                      } else {
-                        Navigator.of(context).pushReplacement(RouteTransition.fadeThrough(const MainShell()));
-                      }
-                    },
-                    child: Text(
-                      _currentPage < _slides.length - 1
-                          ? 'Suivant'
-                          : 'Commencer',
-                    ),
-                  ),
-                ),
-              ],
+            bottom: MediaQuery.of(context).padding.bottom + 48,
+            left: 0,
+            right: 0,
+            child: _ActionButton(
+              onPressed: () {
+                HapticFeedback.lightImpact();
+                if (_currentPage < _slides.length - 1) {
+                  _pageController.nextPage(
+                    duration: const Duration(milliseconds: 400),
+                    curve: Curves.easeInOut,
+                  );
+                } else {
+                  Navigator.of(context).pushReplacement(RouteTransition.fadeThrough(const RoleSelectScreen()));
+                }
+              },
+              isLastSlide: _currentPage == _slides.length - 1,
+              borderColor: _slides[_currentPage].buttonBorderColor,
             ),
           ),
         ],
@@ -122,17 +85,72 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 }
 
+class _StatusBar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          '9:41',
+          style: GoogleFonts.plusJakartaSans(
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
+        Row(
+          children: [
+            Container(
+              width: 16,
+              height: 12,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              width: 16,
+              height: 12,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Container(
+              width: 24,
+              height: 12,
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.circular(2),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
 class _OnboardingSlide {
-  final IconData icon;
   final String title;
   final String subtitle;
-  final List<Color> gradientColors;
+  final String imageUrl;
+  final Color backgroundColor;
+  final Color buttonBorderColor;
+  final bool hasCurvedBackground;
+  final bool hasFloatingIcons;
 
   const _OnboardingSlide({
-    required this.icon,
     required this.title,
     required this.subtitle,
-    required this.gradientColors,
+    required this.imageUrl,
+    required this.backgroundColor,
+    required this.buttonBorderColor,
+    this.hasCurvedBackground = false,
+    this.hasFloatingIcons = false,
   });
 }
 
@@ -144,89 +162,286 @@ class _SlideContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [EduCamColors.background, Color(0xFFF1F5F9)],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            children: [
-              const Spacer(flex: 2),
-              Container(
-                width: 140,
-                height: 140,
+      color: Colors.white,
+      child: Stack(
+        children: [
+          if (slide.hasCurvedBackground)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              height: MediaQuery.of(context).size.height * 0.55,
+              child: ClipPath(
+                clipper: _CurvedBackgroundClipper(),
+                child: Container(
+                  color: slide.backgroundColor,
+                ),
+              ),
+            )
+          else if (slide.hasFloatingIcons)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              height: MediaQuery.of(context).size.height * 0.55,
+              child: Container(
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: slide.gradientColors,
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+                  color: slide.backgroundColor,
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(200),
+                    bottomRight: Radius.circular(200),
                   ),
-                  borderRadius: BorderRadius.circular(40),
-                  boxShadow: [
-                    BoxShadow(
-                      color: slide.gradientColors[0].withOpacity(0.3),
-                      blurRadius: 30,
-                      offset: const Offset(0, 12),
+                ),
+              ),
+            )
+          else
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.35,
+              left: -20,
+              right: -20,
+              height: MediaQuery.of(context).size.height * 0.3,
+              child: Transform.rotate(
+                angle: -0.17,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: slide.backgroundColor,
+                    borderRadius: BorderRadius.circular(1000),
+                  ),
+                ),
+              ),
+            ),
+          SafeArea(
+            child: Column(
+              children: [
+                const SizedBox(height: 32),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  child: Text(
+                    slide.title,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.black,
+                      height: 1.2,
+                      letterSpacing: -0.02,
                     ),
-                  ],
+                  ),
                 ),
-                child: Icon(
-                  slide.icon,
-                  size: 52,
-                  color: EduCamColors.surface,
+                const SizedBox(height: 16),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 32),
+                  child: Text(
+                    slide.subtitle,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.plusJakartaSans(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: const Color(0xFF45484a),
+                      height: 1.5,
+                    ),
+                  ),
                 ),
-              ),
-              const Spacer(flex: 2),
-              Text(
-                slide.title,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w700,
-                  color: EduCamColors.primary,
-                  height: 1.2,
+                const Spacer(),
+                if (slide.hasFloatingIcons) ...[
+                  _FloatingIcon(
+                    icon: Icons.school,
+                    color: const Color(0xFF00d2ff),
+                    top: 0,
+                    left: 32,
+                    animationDuration: 3,
+                  ),
+                  _FloatingIcon(
+                    icon: Icons.menu_book,
+                    color: const Color(0xFF0099cc),
+                    bottom: 40,
+                    right: 16,
+                    animationDuration: 4,
+                    delay: 1,
+                  ),
+                  _FloatingIcon(
+                    icon: Icons.star,
+                    color: const Color(0xFFFACC15),
+                    top: null,
+                    left: null,
+                    right: 8,
+                    bottom: 120,
+                    animationDuration: 2,
+                    isPulse: true,
+                  ),
+                ],
+                Expanded(
+                  flex: 2,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32),
+                      child: Image.asset(
+                        slide.imageUrl,
+                        width: 280,
+                        fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return const Icon(
+                            Icons.image_not_supported,
+                            size: 100,
+                            color: Colors.grey,
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
-              Text(
-                slide.subtitle,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: EduCamColors.secondaryText,
-                  height: 1.5,
-                ),
-              ),
-              const Spacer(flex: 3),
-            ],
+                const SizedBox(height: 120),
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
 }
 
-class _DotIndicator extends StatelessWidget {
-  final bool isActive;
+class _CurvedBackgroundClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(0, size.height * 0.4);
+    path.lineTo(size.width, size.height * 0.15);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+    return path;
+  }
 
-  const _DotIndicator({required this.isActive});
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+class _FloatingIcon extends StatefulWidget {
+  final IconData icon;
+  final Color color;
+  final double? top;
+  final double? bottom;
+  final double? left;
+  final double? right;
+  final int animationDuration;
+  final int delay;
+  final bool isPulse;
+
+  const _FloatingIcon({
+    required this.icon,
+    required this.color,
+    this.top,
+    this.bottom,
+    this.left,
+    this.right,
+    this.animationDuration = 3,
+    this.delay = 0,
+    this.isPulse = false,
+  });
+
+  @override
+  State<_FloatingIcon> createState() => _FloatingIconState();
+}
+
+class _FloatingIconState extends State<_FloatingIcon> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(seconds: widget.animationDuration),
+      vsync: this,
+    );
+    Future.delayed(Duration(seconds: widget.delay), () {
+      if (mounted) {
+        _controller.repeat(reverse: true);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      margin: const EdgeInsets.symmetric(horizontal: 4),
-      width: isActive ? 28 : 8,
-      height: 8,
-      decoration: BoxDecoration(
-        color: isActive ? EduCamColors.accent : EduCamColors.cardBorder,
-        borderRadius: BorderRadius.circular(4),
+    return Positioned(
+      top: widget.top,
+      bottom: widget.bottom,
+      left: widget.left,
+      right: widget.right,
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return Transform.translate(
+            offset: Offset(0, widget.isPulse ? 0 : _controller.value * 20),
+            child: Opacity(
+              opacity: widget.isPulse ? 0.6 + _controller.value * 0.4 : 0.8,
+              child: Icon(
+                widget.icon,
+                color: widget.color,
+                size: widget.isPulse ? 24 : (widget.icon == Icons.school ? 32 : 24),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _ActionButton extends StatelessWidget {
+  final VoidCallback onPressed;
+  final bool isLastSlide;
+  final Color borderColor;
+
+  const _ActionButton({
+    required this.onPressed,
+    required this.isLastSlide,
+    required this.borderColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          width: isLastSlide ? null : 64,
+          height: isLastSlide ? 56 : 64,
+          decoration: BoxDecoration(
+            color: isLastSlide ? borderColor : Colors.black,
+            borderRadius: isLastSlide ? BorderRadius.circular(9999) : BorderRadius.circular(16),
+          ),
+          child: isLastSlide
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Commencer',
+                      style: GoogleFonts.plusJakartaSans(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    const Icon(
+                      Icons.chevron_right,
+                      color: Colors.white,
+                      size: 20,
+                    ),
+                  ],
+                )
+              : const Icon(
+                  Icons.chevron_right,
+                  color: Colors.white,
+                  size: 24,
+                ),
+        ),
       ),
     );
   }
