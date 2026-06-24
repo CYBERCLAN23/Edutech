@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:educam_ai/theme/app_theme.dart';
-import 'package:educam_ai/models/app_role.dart';
-import 'package:educam_ai/widgets/offline_pill.dart';
 import 'package:educam_ai/widgets/stagger_item.dart';
 import 'package:educam_ai/widgets/skeleton_loader.dart';
 import 'package:educam_ai/screens/tutorbot_screen.dart';
@@ -11,11 +9,6 @@ import 'package:educam_ai/screens/student/student_documents.dart';
 import 'package:educam_ai/screens/student/student_course_detail.dart';
 import 'package:educam_ai/providers/course_provider.dart';
 import 'package:educam_ai/providers/auth_provider.dart';
-import 'package:educam_ai/providers/connectivity_provider.dart';
-import 'package:educam_ai/services/course_service.dart';
-import 'package:educam_ai/services/local_storage_service.dart';
-import 'package:educam_ai/services/offline_service.dart';
-import 'package:educam_ai/services/notification_service.dart';
 
 class StudentDashboard extends ConsumerStatefulWidget {
   const StudentDashboard({super.key});
@@ -52,17 +45,24 @@ class _StudentDashboardState extends ConsumerState<StudentDashboard> {
 
     return Scaffold(
       body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: () => ref.read(coursesProvider.notifier).loadCourses(),
-          child: coursesAsync.when(
-            loading: () => const SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              padding: EdgeInsets.only(top: 16),
-              child: DashboardSkeleton(),
+        child: Column(
+          children: [
+            const _TopBar(),
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: () => ref.read(coursesProvider.notifier).loadCourses(),
+                child: coursesAsync.when(
+                  loading: () => const SingleChildScrollView(
+                    physics: BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(top: 16),
+                    child: DashboardSkeleton(),
+                  ),
+                  error: (e, _) => _buildError(e),
+                  data: (courses) => _buildDashboard(courses, authState),
+                ),
+              ),
             ),
-            error: (e, _) => _buildError(e),
-            data: (courses) => _buildDashboard(courses, authState),
-          ),
+          ],
         ),
       ),
     );
@@ -74,7 +74,6 @@ class _StudentDashboardState extends ConsumerState<StudentDashboard> {
       padding: const EdgeInsets.only(top: 16),
       child: Column(
         children: [
-          const _Header(userName: ''),
           const SizedBox(height: 40),
           Center(
             child: Padding(
@@ -117,63 +116,47 @@ class _StudentDashboardState extends ConsumerState<StudentDashboard> {
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.only(top: 16),
+      padding: const EdgeInsets.only(top: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          StaggerItem(index: 0, child: _Header(userName: userName)),
+          StaggerItem(index: 0, child: _GreetingSection(userName: userName)),
           const SizedBox(height: 20),
-          StaggerItem(index: 1, child: _GreetingSection(userName: userName, courseCount: courses.length, stats: stats)),
-          const SizedBox(height: 20),
-          StaggerItem(index: 2, child: _StatsRow(stats: stats)),
+          StaggerItem(index: 1, child: const _HeroBanner()),
+          const SizedBox(height: 24),
+          StaggerItem(index: 2, child: _StatsGrid(stats: stats)),
+          const SizedBox(height: 24),
+          StaggerItem(index: 3, child: const _QuickAccess()),
           const SizedBox(height: 24),
           StaggerItem(
-            index: 3,
+            index: 4,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text('Nouveautes des profs', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: EduCamColors.primary)),
-                    SizedBox(height: 2),
-                    Text('3 nouvelles activites', style: TextStyle(fontSize: 13, color: EduCamColors.secondaryText)),
-                  ]),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                      color: EduCamColors.highlight.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: const Text('NOUVEAU', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: EduCamColors.highlight)),
-                  ),
+                  const Text("Continuer l'apprentissage",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
+                  Text('Voir tout',
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: EduCamColors.accent)),
                 ],
               ),
             ),
           ),
           const SizedBox(height: 12),
-          const StaggerItem(index: 4, child: _TeacherUpdates()),
+          StaggerItem(index: 5, child: _ContinueLearning(courses: courses)),
           const SizedBox(height: 24),
-          const StaggerItem(
-            index: 5,
-            child: _SectionHeader(title: 'Continuer l\'apprentissage', subtitle: 'Reprends la ou tu t\'es arrete'),
+          StaggerItem(
+            index: 6,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text('Devoirs a venir',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
+            ),
           ),
           const SizedBox(height: 12),
-          StaggerItem(index: 6, child: _ContinueLearning(courses: courses)),
-          const SizedBox(height: 24),
-          const StaggerItem(
-            index: 7,
-            child: _SectionHeader(title: 'Devoirs a rendre', subtitle: 'Echeance proche'),
-          ),
-          const SizedBox(height: 12),
-          StaggerItem(index: 8, child: _UpcomingAssignments(courses: courses)),
-          const SizedBox(height: 24),
-          const StaggerItem(
-            index: 9,
-            child: _SectionHeader(title: 'Acces rapide', subtitle: 'Outils intelligents'),
-          ),
-          const SizedBox(height: 12),
-          const StaggerItem(index: 10, child: _QuickAccessSection()),
+          StaggerItem(index: 7, child: _UpcomingAssignments(courses: courses)),
           const SizedBox(height: 32),
         ],
       ),
@@ -225,124 +208,185 @@ class _DashboardStats {
   });
 }
 
-class _Header extends StatelessWidget {
-  final String userName;
-  const _Header({required this.userName});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 40, height: 40,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [EduCamColors.accent, Color(0xFF7C3AED)],
-                    begin: Alignment.topLeft, end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Center(child: Text('EA', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700, color: EduCamColors.surface))),
-              ),
-              const SizedBox(width: 12),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('EduCam AI', style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: EduCamColors.primary)),
-                  _RoleBadgeStudent(),
-                ],
-              ),
-            ],
-          ),
-          Row(
-            children: [
-              const OfflinePill(),
-              const SizedBox(width: 8),
-              GestureDetector(
-                onTap: () {
-                  HapticFeedback.mediumImpact();
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const StudentDocuments()));
-                },
-                child: Container(
-                  width: 40, height: 40,
-                  decoration: BoxDecoration(
-                    color: EduCamColors.surface,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: EduCamColors.cardBorder, width: 0.5),
-                  ),
-                  child: const Icon(Icons.folder_rounded, size: 20, color: EduCamColors.primary),
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _RoleBadgeStudent extends StatelessWidget {
-  const _RoleBadgeStudent();
+class _TopBar extends StatelessWidget {
+  const _TopBar();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(color: EduCamColors.accent.withOpacity(0.1), borderRadius: BorderRadius.circular(4)),
-      child: const Text('ELEVE', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w700, color: EduCamColors.accent, letterSpacing: 1)),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      height: 64,
+      decoration: BoxDecoration(
+        color: EduCamColors.surface,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 12,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 32, height: 32,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [EduCamColors.accent, Color(0xFF7C3AED)],
+                begin: Alignment.topLeft, end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: const Center(child: Text('EA', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: EduCamColors.surface))),
+          ),
+          const SizedBox(width: 12),
+          const Text('EduCam AI', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: EduCamColors.primary)),
+          const Spacer(),
+          GestureDetector(
+            onTap: () {
+              HapticFeedback.lightImpact();
+            },
+            child: Container(
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: const Icon(Icons.notifications_outlined, size: 24, color: EduCamColors.primary),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
 class _GreetingSection extends StatelessWidget {
   final String userName;
-  final int courseCount;
-  final _DashboardStats stats;
-  const _GreetingSection({required this.userName, required this.courseCount, required this.stats});
+  const _GreetingSection({required this.userName});
 
   @override
   Widget build(BuildContext context) {
-    final hour = DateTime.now().hour;
-    final greeting = hour < 12 ? 'Bonjour' : hour < 17 ? 'Bon apres-midi' : 'Bonsoir';
-    final subtitle = '$courseCount cours en cours, ${stats.assignmentCount} devoirs a rendre';
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('$greeting, $userName', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: EduCamColors.primary)),
+          Text.rich(
+            TextSpan(
+              text: 'Bonjour, ',
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.w700, color: EduCamColors.primary),
+              children: [
+                TextSpan(text: userName),
+                TextSpan(text: ' ', style: TextStyle(fontSize: 24)),
+                TextSpan(text: '\u{1F44B}'),
+              ],
+            ),
+          ),
           const SizedBox(height: 4),
-          Text(subtitle, style: const TextStyle(fontSize: 14, color: EduCamColors.secondaryText)),
+          const Text("Pret a exceller aujourd'hui ?",
+            style: TextStyle(fontSize: 16, color: EduCamColors.secondaryText)),
         ],
       ),
     );
   }
 }
 
-class _StatsRow extends StatelessWidget {
+class _HeroBanner extends StatelessWidget {
+  const _HeroBanner();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16),
+      height: 140,
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFDDBA).withOpacity(0.25),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFC4C6CC).withOpacity(0.3)),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF0D1B2A).withOpacity(0.05),
+            blurRadius: 20,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(20),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.6,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Code, Build, Solve.',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
+                  const SizedBox(height: 4),
+                  const Text("Turn your biggest ideas into real-world solutions today.",
+                    style: TextStyle(fontSize: 13, color: EduCamColors.secondaryText),
+                    maxLines: 2, overflow: TextOverflow.ellipsis),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            right: -16,
+            bottom: -8,
+            child: SizedBox(
+              width: 180,
+              height: 140,
+              child: Icon(Icons.auto_awesome_rounded, size: 100,
+                color: EduCamColors.accent.withOpacity(0.08)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StatsGrid extends StatelessWidget {
   final _DashboardStats stats;
-  const _StatsRow({required this.stats});
+  const _StatsGrid({required this.stats});
 
   @override
   Widget build(BuildContext context) {
     final avgStr = stats.average > 0 ? stats.average.toStringAsFixed(1) : '--';
     final hoursStr = stats.weekHours > 0 ? '${stats.weekHours.toStringAsFixed(0)}h' : '--';
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Row(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
         children: [
-          _StatCard(icon: Icons.menu_book_rounded, value: '${stats.courseCount}', label: 'Cours', color: EduCamColors.accent),
-          const SizedBox(width: 10),
-          _StatCard(icon: Icons.assignment_rounded, value: '${stats.assignmentCount}', label: 'Devoirs', color: EduCamColors.highlight),
-          const SizedBox(width: 10),
-          _StatCard(icon: Icons.grade_rounded, value: avgStr, label: 'Moyenne', color: EduCamColors.success),
-          const SizedBox(width: 10),
-          _StatCard(icon: Icons.timer_rounded, value: hoursStr, label: 'Cette semaine', color: EduCamColors.subjectPhysique),
+          Row(
+            children: [
+              Expanded(child: _StatCard(
+                value: '${stats.courseCount}', label: 'Cours',
+                borderColor: EduCamColors.accent, icon: Icons.school, iconColor: EduCamColors.accent,
+              )),
+              const SizedBox(width: 12),
+              Expanded(child: _StatCard(
+                value: '${stats.assignmentCount}', label: 'Devoirs',
+                borderColor: EduCamColors.error, icon: Icons.assignment_late, iconColor: EduCamColors.error,
+              )),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Row(
+            children: [
+              Expanded(child: _StatCard(
+                value: avgStr, label: 'Moyenne',
+                borderColor: EduCamColors.success, icon: Icons.trending_up, iconColor: EduCamColors.success,
+              )),
+              const SizedBox(width: 12),
+              Expanded(child: _StatCard(
+                value: hoursStr, label: "Temps d'Etude",
+                borderColor: const Color(0xFFFFB95F), icon: Icons.timer, iconColor: EduCamColors.highlight,
+              )),
+            ],
+          ),
         ],
       ),
     );
@@ -350,88 +394,174 @@ class _StatsRow extends StatelessWidget {
 }
 
 class _StatCard extends StatelessWidget {
-  final IconData icon; final String value; final String label; final Color color;
-  const _StatCard({required this.icon, required this.value, required this.label, required this.color});
+  final String value;
+  final String label;
+  final Color borderColor;
+  final IconData icon;
+  final Color iconColor;
+
+  const _StatCard({
+    required this.value, required this.label,
+    required this.borderColor, required this.icon, required this.iconColor,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: EduCamColors.surface,
-          borderRadius: BorderRadius.circular(14),
-          border: Border.all(color: EduCamColors.cardBorder, width: 0.5),
-        ),
-        child: Column(children: [
-          Icon(icon, size: 18, color: color),
-          const SizedBox(height: 6),
-          Text(value, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: color)),
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: EduCamColors.surface,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: const Color(0xFFC4C6CC).withOpacity(0.3)),
+        boxShadow: [
+          BoxShadow(
+            color: const Color(0xFF0D1B2A).withOpacity(0.05),
+            blurRadius: 20,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.infinity,
+            height: 2,
+            decoration: BoxDecoration(
+              color: borderColor,
+              borderRadius: BorderRadius.circular(1),
+            ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Icon(icon, size: 16, color: iconColor),
+              const Spacer(),
+            ],
+          ),
           const SizedBox(height: 2),
-          Text(label, style: const TextStyle(fontSize: 10, color: EduCamColors.secondaryText)),
-        ]),
+          Text(value,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
+          const SizedBox(height: 2),
+          Text(label,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: EduCamColors.secondaryText)),
+        ],
       ),
     );
   }
 }
 
-class _TeacherUpdates extends StatelessWidget {
-  const _TeacherUpdates();
-
-  static final _updates = [
-    {'teacher': 'M. Nkwi', 'subject': 'Mathematiques', 'action': 'a publie un nouveau sujet d\'annales BAC 2024', 'icon': Icons.assignment_rounded, 'color': EduCamColors.subjectMaths, 'time': 'Il y a 2h'},
-    {'teacher': 'Mme Eyanga', 'subject': 'SVT', 'action': 'a ajoute un exercice sur la genetique', 'icon': Icons.biotech_rounded, 'color': EduCamColors.subjectSVT, 'time': 'Il y a 5h'},
-    {'teacher': 'M. Beti', 'subject': 'Histoire-Geo', 'action': 'a mis en ligne un cours sur la colonisation', 'icon': Icons.public_rounded, 'color': EduCamColors.subjectHistoire, 'time': 'Hier'},
-  ];
+class _QuickAccess extends StatelessWidget {
+  const _QuickAccess();
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 132,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        itemCount: _updates.length,
-        itemBuilder: (_, i) {
-          final u = _updates[i];
-          return GestureDetector(
-            onTap: () => HapticFeedback.lightImpact(),
-            child: Container(
-              width: 240,
-              margin: const EdgeInsets.only(right: 12),
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: EduCamColors.surface,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: (u['color'] as Color).withOpacity(0.15), width: 0.5),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text('Acces Rapide',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
+          const SizedBox(height: 14),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _QuickAccessButton(
+                icon: Icons.smart_toy,
+                label: 'TutorBot',
+                bgColor: const Color(0xFFE2DFFF),
+                iconColor: EduCamColors.accent,
+                onTap: () {
+                  HapticFeedback.mediumImpact();
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const TutorBotScreen()));
+                },
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(children: [
-                    Container(
-                      width: 28, height: 28,
-                      decoration: BoxDecoration(color: (u['color'] as Color).withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
-                      child: Icon(u['icon'] as IconData, size: 14, color: u['color'] as Color),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(child: Text(u['teacher'] as String, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: EduCamColors.primary))),
-                    Text(u['time'] as String, style: const TextStyle(fontSize: 10, color: EduCamColors.secondaryText)),
-                  ]),
-                  const SizedBox(height: 8),
-                  Text('${u['subject']}: ${u['action']}', style: const TextStyle(fontSize: 12, color: EduCamColors.secondaryText, height: 1.3), maxLines: 2),
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(color: (u['color'] as Color).withOpacity(0.06), borderRadius: BorderRadius.circular(6)),
-                    child: Text('Voir', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: (u['color'] as Color).withOpacity(0.7))),
-                  ),
-                ],
+              _QuickAccessButton(
+                icon: Icons.fact_check,
+                label: 'Correction',
+                bgColor: const Color(0xFFFCD34D).withOpacity(0.3),
+                iconColor: const Color(0xFFD97706),
+                onTap: () {
+                  HapticFeedback.lightImpact();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Correction - Bientot disponible'),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(10))),
+                    margin: EdgeInsets.fromLTRB(16, 0, 16, 20),
+                  ));
+                },
               ),
+              _QuickAccessButton(
+                icon: Icons.folder,
+                label: 'Docs',
+                bgColor: const Color(0xFFD8B4FE).withOpacity(0.3),
+                iconColor: const Color(0xFF7E22CE),
+                onTap: () {
+                  HapticFeedback.mediumImpact();
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const StudentDocuments()));
+                },
+              ),
+              _QuickAccessButton(
+                icon: Icons.play_circle,
+                label: 'Videos',
+                bgColor: const Color(0xFFFCA5A5).withOpacity(0.3),
+                iconColor: const Color(0xFFB91C1C),
+                onTap: () {
+                  HapticFeedback.lightImpact();
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text('Choisis d\'abord un cours dans l\'onglet Cours'),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(10))),
+                    margin: EdgeInsets.fromLTRB(16, 0, 16, 20),
+                  ));
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _QuickAccessButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color bgColor;
+  final Color iconColor;
+  final VoidCallback onTap;
+
+  const _QuickAccessButton({
+    required this.icon, required this.label,
+    required this.bgColor, required this.iconColor, required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            width: 56, height: 56,
+            decoration: BoxDecoration(
+              color: bgColor,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.04),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
-          );
-        },
+            child: Icon(icon, size: 24, color: iconColor),
+          ),
+          const SizedBox(height: 6),
+          Text(label,
+            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: EduCamColors.secondaryText)),
+        ],
       ),
     );
   }
@@ -442,17 +572,17 @@ class _ContinueLearning extends StatelessWidget {
   const _ContinueLearning({required this.courses});
 
   static const _defaultColors = [
-    EduCamColors.subjectMaths,
-    EduCamColors.subjectSVT,
-    EduCamColors.subjectHistoire,
-    EduCamColors.subjectPhysique,
+    EduCamColors.accent,
+    Color(0xFF0EA5E9),
+    EduCamColors.highlight,
+    EduCamColors.success,
   ];
 
   static const _defaultIcons = [
-    Icons.functions_rounded,
-    Icons.biotech_rounded,
-    Icons.public_rounded,
-    Icons.science_rounded,
+    Icons.calculate,
+    Icons.science,
+    Icons.public,
+    Icons.biotech,
   ];
 
   Color _colorFor(dynamic value, int index) {
@@ -490,7 +620,7 @@ class _ContinueLearning extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: courses.length,
         itemBuilder: (context, index) {
           final c = courses[index];
@@ -502,7 +632,7 @@ class _ContinueLearning extends StatelessWidget {
           final progress = totalLessons > 0 ? completedLessons / totalLessons : 0.0;
 
           final name = (c['subject_name'] ?? c['subjectName'] ?? c['name'] ?? 'Cours') as String;
-          final lesson = c['current_lesson'] ?? c['lesson'] ?? 'Lecon en cours';
+          final lesson = c['current_lesson'] ?? c['lesson'] ?? 'Lecon';
 
           return GestureDetector(
             onTap: () {
@@ -517,38 +647,67 @@ class _ContinueLearning extends StatelessWidget {
               ));
             },
             child: Container(
-              width: 190,
+              width: 240,
               margin: const EdgeInsets.only(right: 12),
-              padding: const EdgeInsets.all(18),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: EduCamColors.surface,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: EduCamColors.cardBorder, width: 0.5),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: const Color(0xFFC4C6CC).withOpacity(0.3)),
+                boxShadow: [
+                  BoxShadow(
+                    color: const Color(0xFF0D1B2A).withOpacity(0.05),
+                    blurRadius: 20,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(children: [
-                    Container(
-                      width: 36, height: 36,
-                      decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
-                      child: Icon(icon, size: 18, color: color),
-                    ),
-                    const Spacer(),
-                    Text('${(progress * 100).round()}%', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: color)),
-                  ]),
-                  const SizedBox(height: 12),
-                  Text(name, style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
-                  const SizedBox(height: 4),
-                  Text('Lecon: $lesson', style: const TextStyle(fontSize: 11, color: EduCamColors.secondaryText), maxLines: 1, overflow: TextOverflow.ellipsis),
-                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Container(
+                        width: 40, height: 40,
+                        decoration: BoxDecoration(
+                          color: color.withOpacity(0.15),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Icon(icon, size: 20, color: color),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(name,
+                              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
+                            Text(lesson,
+                              style: const TextStyle(fontSize: 12, color: EduCamColors.secondaryText),
+                              maxLines: 1, overflow: TextOverflow.ellipsis),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text('Progression',
+                        style: TextStyle(fontSize: 12, color: EduCamColors.secondaryText)),
+                      Text('${(progress * 100).round()}%',
+                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700, color: EduCamColors.primary)),
+                    ],
+                  ),
+                  const SizedBox(height: 6),
                   ClipRRect(
-                    borderRadius: BorderRadius.circular(3),
+                    borderRadius: BorderRadius.circular(4),
                     child: LinearProgressIndicator(
                       value: progress,
-                      backgroundColor: EduCamColors.progressTrack,
+                      backgroundColor: const Color(0xFFECEFF0),
                       valueColor: AlwaysStoppedAnimation<Color>(color),
-                      minHeight: 4,
+                      minHeight: 8,
                     ),
                   ),
                 ],
@@ -592,14 +751,13 @@ class _UpcomingAssignments extends StatelessWidget {
 
     if (assignments.isEmpty) {
       assignments.addAll([
-        {'title': 'Exercice: Derivees', 'course': 'Mathematiques', 'due': 'Demain', 'color': EduCamColors.subjectMaths, 'urgent': true},
-        {'title': 'Dissertation: Colonisation', 'course': 'Histoire-Geo', 'due': 'Dans 3 jours', 'color': EduCamColors.subjectHistoire, 'urgent': false},
-        {'title': 'Compte rendu TP', 'course': 'SVT', 'due': 'Dans 5 jours', 'color': EduCamColors.subjectSVT, 'urgent': false},
+        {'title': 'Dissertation d\'Histoire', 'course': 'A rendre', 'due': 'Demain, 08:00', 'color': EduCamColors.error, 'urgent': true},
+        {'title': 'Exercices de SVT', 'course': 'A rendre', 'due': 'Mercredi', 'color': EduCamColors.highlight, 'urgent': false},
       ]);
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         children: assignments.asMap().entries.map((e) {
           final a = e.value;
@@ -608,28 +766,51 @@ class _UpcomingAssignments extends StatelessWidget {
             child: GestureDetector(
               onTap: () => HapticFeedback.lightImpact(),
               child: Container(
-                width: double.infinity, padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: EduCamColors.surface, borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: (a['urgent'] as bool) ? EduCamColors.error.withOpacity(0.2) : EduCamColors.cardBorder, width: 0.5),
-                ),
-                child: Row(children: [
-                  Container(width: 4, height: 40, decoration: BoxDecoration(color: a['color'] as Color, borderRadius: BorderRadius.circular(2))),
-                  const SizedBox(width: 14),
-                  Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                    Text(a['title'] as String, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
-                    Text(a['course'] as String, style: const TextStyle(fontSize: 12, color: EduCamColors.secondaryText)),
-                  ])),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                      color: (a['urgent'] as bool) ? EduCamColors.error.withOpacity(0.1) : EduCamColors.accent.withOpacity(0.1),
-                      borderRadius: BorderRadius.circular(8),
+                  color: EduCamColors.surface,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: const Color(0xFFC4C6CC).withOpacity(0.3)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF0D1B2A).withOpacity(0.05),
+                      blurRadius: 20,
+                      offset: const Offset(0, 4),
                     ),
-                    child: Text(a['due'] as String, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600,
-                        color: (a['urgent'] as bool) ? EduCamColors.error : EduCamColors.accent)),
-                  ),
-                ]),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 6, height: 40,
+                      decoration: BoxDecoration(
+                        color: (a['urgent'] as bool) ? EduCamColors.error : const Color(0xFFF59E0B),
+                        borderRadius: BorderRadius.circular(3),
+                      ),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(a['title'] as String,
+                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
+                          Text(a['due'] as String,
+                            style: const TextStyle(fontSize: 12, color: EduCamColors.secondaryText)),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 32, height: 32,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: const Color(0xFFC4C6CC)),
+                      ),
+                      child: Icon(Icons.arrow_forward_ios, size: 12,
+                        color: const Color(0xFFC4C6CC)),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
@@ -650,117 +831,3 @@ class _UpcomingAssignments extends StatelessWidget {
     return fallback;
   }
 }
-
-class _QuickAccessSection extends StatelessWidget {
-  const _QuickAccessSection();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        children: [
-          Row(children: [
-            Expanded(child: _QuickToolCard(
-              icon: Icons.smart_toy_rounded, title: 'TutorBot', subtitle: 'Pose une question',
-              color: EduCamColors.accent,
-              onTap: () {
-                HapticFeedback.mediumImpact();
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const TutorBotScreen()));
-              },
-            )),
-            const SizedBox(width: 12),
-            Expanded(child: _QuickToolCard(
-              icon: Icons.camera_alt_rounded, title: 'CopyCorrector', subtitle: 'Corrige un devoir',
-              color: EduCamColors.highlight,
-              onTap: () {
-                HapticFeedback.lightImpact();
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('CopyCorrector - Prends une photo de ton devoir'),
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(10))),
-                  margin: EdgeInsets.fromLTRB(16, 0, 16, 20),
-                ));
-              },
-            )),
-          ]),
-          const SizedBox(height: 10),
-          Row(children: [
-            Expanded(child: _QuickToolCard(
-              icon: Icons.folder_rounded, title: 'Documents', subtitle: 'Mes fichiers',
-              color: EduCamColors.subjectPhysique,
-              onTap: () {
-                HapticFeedback.mediumImpact();
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const StudentDocuments()));
-              },
-            )),
-            const SizedBox(width: 12),
-            Expanded(child: _QuickToolCard(
-              icon: Icons.auto_awesome_rounded, title: 'Video Cours', subtitle: 'Convertir en video',
-              color: EduCamColors.subjectSVT,
-              onTap: () {
-                HapticFeedback.lightImpact();
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text('Choisis d\'abord un cours dans l\'onglet Cours'),
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(10))),
-                  margin: EdgeInsets.fromLTRB(16, 0, 16, 20),
-                ));
-              },
-            )),
-          ]),
-        ],
-      ),
-    );
-  }
-}
-
-class _QuickToolCard extends StatelessWidget {
-  final IconData icon; final String title; final String subtitle; final Color color; final VoidCallback onTap;
-  const _QuickToolCard({required this.icon, required this.title, required this.subtitle, required this.color, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: EduCamColors.surface,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: EduCamColors.cardBorder, width: 0.5),
-        ),
-        child: Row(children: [
-          Container(width: 40, height: 40,
-            decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
-            child: Icon(icon, size: 18, color: color),
-          ),
-          const SizedBox(width: 12),
-          Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
-            Text(subtitle, style: const TextStyle(fontSize: 11, color: EduCamColors.secondaryText)),
-          ])),
-          Icon(Icons.chevron_right_rounded, size: 16, color: color.withOpacity(0.5)),
-        ]),
-      ),
-    );
-  }
-}
-
-class _SectionHeader extends StatelessWidget {
-  final String title; final String subtitle;
-  const _SectionHeader({required this.title, required this.subtitle});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: EduCamColors.primary)),
-        const SizedBox(height: 2),
-        Text(subtitle, style: const TextStyle(fontSize: 13, color: EduCamColors.secondaryText)),
-      ]),
-    );
-  }
-}
-
