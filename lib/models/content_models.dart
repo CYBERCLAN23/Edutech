@@ -80,6 +80,8 @@ class ExerciseQuestion {
   const ExerciseQuestion({required this.text, required this.points});
 }
 
+enum QuizStatus { active, draft, completed }
+
 class Quiz {
   final String id;
   final String courseId;
@@ -87,6 +89,15 @@ class Quiz {
   final List<QuizQuestion> questions;
   final int timeLimitMinutes;
   final DateTime createdAt;
+  final QuizStatus status;
+  final String subject;
+  final String difficulty;
+  final double avgScore;
+  final int studentCount;
+  final int totalStudents;
+  final IconData icon;
+  final Color color;
+  final String? dueDate;
 
   const Quiz({
     required this.id,
@@ -95,7 +106,24 @@ class Quiz {
     required this.questions,
     required this.timeLimitMinutes,
     required this.createdAt,
+    this.status = QuizStatus.draft,
+    this.subject = '',
+    this.difficulty = 'Intermediate',
+    this.avgScore = 0,
+    this.studentCount = 0,
+    this.totalStudents = 0,
+    this.icon = Icons.quiz_rounded,
+    this.color = Colors.blue,
+    this.dueDate,
   });
+
+  String get statusLabel {
+    switch (status) {
+      case QuizStatus.active: return 'Active';
+      case QuizStatus.draft: return 'Draft';
+      case QuizStatus.completed: return 'Completed';
+    }
+  }
 }
 
 class QuizQuestion {

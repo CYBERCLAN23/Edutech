@@ -6,8 +6,8 @@ import UserFormModal from '../components/UserFormModal';
 import ConfirmModal from '../components/ConfirmModal';
 
 const roleColors: Record<string, string> = {
-  student: 'bg-green-50 text-green-700 border-green-200',
-  teacher: 'bg-indigo-50 text-indigo-700 border-indigo-200',
+  student: 'bg-tertiary/10 text-tertiary border-tertiary/20',
+  teacher: 'bg-secondary/10 text-secondary border-secondary/20',
   admin: 'bg-amber-50 text-amber-700 border-amber-200',
 };
 const roleLabels: Record<string, string> = {
@@ -70,20 +70,20 @@ export default function UsersPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-[#0D1B2A]">Utilisateurs</h1>
-          <p className="text-gray-500 mt-1">{users.length} inscrits sur la plateforme</p>
+          <h1 className="text-2xl font-bold text-primary">Utilisateurs</h1>
+          <p className="text-on-surface-variant mt-1">{users.length} inscrits sur la plateforme</p>
         </div>
         <div className="flex gap-2">
           <button
             onClick={() => setModal({ mode: 'create-teacher' })}
-            className="flex items-center gap-2 px-4 py-2.5 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-xl text-sm font-medium hover:bg-indigo-100 transition-all"
+            className="flex items-center gap-2 px-4 py-2.5 bg-secondary/10 text-secondary border border-secondary/20 rounded-xl text-sm font-medium hover:bg-secondary/20 transition-all"
           >
             <School size={16} />
             Professeur
           </button>
           <button
             onClick={() => setModal({ mode: 'create-student' })}
-            className="flex items-center gap-2 px-4 py-2.5 bg-[#4F46E5] text-white rounded-xl text-sm font-medium hover:bg-[#4338CA] transition-all"
+            className="flex items-center gap-2 px-4 py-2.5 bg-primary text-white rounded-xl text-sm font-medium hover:brightness-110 transition-all soft-gradient"
           >
             <UserPlus size={16} />
             Élève
@@ -94,8 +94,8 @@ export default function UsersPage() {
       <div className="grid grid-cols-4 gap-4 mb-8">
         {filters.map(f => (
           <button key={f.key ?? 'all'} onClick={() => setFilter(f.key)}
-            className={`text-left p-4 rounded-xl border transition-all ${
-              filter === f.key ? 'bg-[#4F46E5] text-white border-[#4F46E5]' : 'bg-white text-[#0D1B2A] border-gray-100 hover:shadow-sm'
+            className={`text-left p-4 rounded-xl border transition-all glass-card ${
+              filter === f.key ? 'bg-primary text-white border-primary' : 'text-on-surface border-outline-variant/20'
             }`}
           >
             <p className="text-2xl font-bold">{f.count}</p>
@@ -105,46 +105,46 @@ export default function UsersPage() {
       </div>
 
       <div className="relative mb-6">
-        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+        <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-outline" />
         <input
           type="text" placeholder="Rechercher par nom ou email..." value={search} onChange={e => setSearch(e.target.value)}
-          className="w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-xl focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]/20 outline-none text-sm"
+          className="w-full pl-11 pr-4 py-3 bg-white border border-outline-variant rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
         />
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-[#4F46E5] border-t-transparent rounded-full" /></div>
+        <div className="flex justify-center py-20"><div className="animate-spin w-8 h-8 border-4 border-primary border-t-transparent rounded-full" /></div>
       ) : error ? (
-        <div className="text-center py-20"><p className="text-red-500 mb-4">{error}</p><button onClick={load} className="px-6 py-2 bg-[#4F46E5] text-white rounded-xl">Réessayer</button></div>
+        <div className="text-center py-20"><p className="text-error mb-4">{error}</p><button onClick={load} className="px-6 py-2 bg-primary text-white rounded-xl soft-gradient">Réessayer</button></div>
       ) : (
         <div className="space-y-2">
           {filtered.map(u => (
-            <div key={u.id} className="bg-white rounded-xl p-4 border border-gray-100 hover:shadow-sm transition-shadow flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-[#4F46E5] flex items-center justify-center text-white text-sm font-bold shrink-0">
+            <div key={u.id} className="glass-card rounded-xl p-4 border border-outline-variant/10 hover:shadow-sm transition-shadow flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold shrink-0">
                 {u.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-[#0D1B2A] truncate">{u.name}</p>
-                <p className="text-xs text-gray-400 truncate">{u.email}{u.class_name ? ` · ${u.class_name}` : ''}</p>
+                <p className="text-sm font-medium text-on-surface truncate">{u.name}</p>
+                <p className="text-xs text-on-surface-variant truncate">{u.email}{u.class_name ? ` · ${u.class_name}` : ''}</p>
               </div>
               <span className={`px-3 py-1 rounded-lg text-xs font-medium border ${roleColors[u.role] || ''}`}>
                 {roleLabels[u.role] || u.role}
               </span>
               <button
                 onClick={() => setModal({ mode: 'edit', user: u })}
-                className="p-2 text-gray-400 hover:text-[#4F46E5] hover:bg-indigo-50 rounded-lg transition-all"
+                className="p-2 text-outline hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
               >
                 <Pencil size={16} />
               </button>
               <button
                 onClick={() => setDeleteTarget({ id: u.id, name: u.name })}
-                className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                className="p-2 text-outline hover:text-error hover:bg-error-container/20 rounded-lg transition-all"
               >
                 <Trash2 size={16} />
               </button>
             </div>
           ))}
-          {filtered.length === 0 && <p className="text-center py-10 text-gray-400">Aucun utilisateur trouvé</p>}
+          {filtered.length === 0 && <p className="text-center py-10 text-on-surface-variant">Aucun utilisateur trouvé</p>}
         </div>
       )}
 

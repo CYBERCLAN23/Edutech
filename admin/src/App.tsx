@@ -48,7 +48,7 @@ function App() {
     : SettingsPage;
 
   return (
-    <div className="flex min-h-screen bg-[#F8FAFC]">
+    <div className="flex min-h-screen bg-surface">
       <Sidebar active={page} onNavigate={(id) => setPage(id as Page)} onLogout={handleLogout} user={user} />
       <main className="flex-1 p-8 overflow-auto">
         <PageComponent />

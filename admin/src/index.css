@@ -2,4 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-body { font-family: 'Inter', system-ui, sans-serif; }
+body {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.04);
+}
+
+.soft-gradient {
+  background: linear-gradient(135deg, #00677f, #055db6);
+}
+
+.soft-gradient:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 103, 127, 0.25);
+}
+
+.soft-shadow {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+}

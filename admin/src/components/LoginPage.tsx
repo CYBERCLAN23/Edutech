@@ -27,43 +27,43 @@ export default function LoginPage({ onLogin, onRegister }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-[#4F46E5] rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-primary/20">
             <span className="text-white text-2xl font-bold">EA</span>
           </div>
-          <h1 className="text-2xl font-bold text-[#0D1B2A]">EduCam AI</h1>
-          <p className="text-gray-500 mt-1">Espace Administration</p>
+          <h1 className="text-2xl font-bold text-primary">EduCam AI</h1>
+          <p className="text-on-surface-variant mt-1">Espace Administration</p>
         </div>
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+        <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-8">
           <div className="mb-5">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+            <label className="block text-sm font-medium text-on-surface mb-2">Email</label>
             <input
               type="email" value={email} onChange={e => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
               placeholder="admin@educam.cm" required
             />
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Mot de passe</label>
+            <label className="block text-sm font-medium text-on-surface mb-2">Mot de passe</label>
             <input
               type="password" value={password} onChange={e => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-[#4F46E5] focus:ring-2 focus:ring-[#4F46E5]/20 outline-none transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
               placeholder="••••••••" required
             />
           </div>
-          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+          {error && <p className="text-error text-sm mb-4">{error}</p>}
           <button
             type="submit" disabled={loading}
-            className="w-full py-3 bg-[#4F46E5] text-white rounded-xl font-medium hover:bg-[#4338CA] transition-colors disabled:opacity-50"
+            className="w-full py-3 bg-primary text-white rounded-xl font-medium hover:brightness-110 transition-all disabled:opacity-50 soft-gradient"
           >
             {loading ? 'Connexion...' : 'Se connecter'}
           </button>
           {onRegister && (
-            <p className="text-center mt-4 text-sm text-gray-500">
+            <p className="text-center mt-4 text-sm text-on-surface-variant">
               Pas encore de compte ?{' '}
-              <button type="button" onClick={onRegister} className="text-[#4F46E5] font-medium hover:underline">
+              <button type="button" onClick={onRegister} className="text-primary font-medium hover:underline">
                 Créer un compte admin
               </button>
             </p>
