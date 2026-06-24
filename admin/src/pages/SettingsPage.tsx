@@ -59,7 +59,7 @@ export default function SettingsPage() {
           <div className="space-y-4">
             <div className="flex items-center justify-between p-3 rounded-xl hover:bg-gray-50 transition-colors">
               <div className="flex items-center gap-3">
-                <Bell size={18} className="text-gray-500" />
+                <Bell size={18} />
                 <div>
                   <p className="text-sm font-medium text-[#0D1B2A]">Notifications</p>
                   <p className="text-xs text-gray-400">Alertes et mises à jour</p>

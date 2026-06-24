@@ -4,16 +4,15 @@ export interface DashboardStats {
   totalTeachers: number;
   totalAdmins: number;
   totalCourses: number;
-  totalActivities: number;
   totalChatMessages: number;
+  totalActivities: number;
   averageGrade: number;
-  lastWeek: string;
 }
 
 export interface AdminUser {
   id: string;
-  email: string;
   name: string;
+  email: string;
   role: 'student' | 'teacher' | 'admin';
   class_name?: string;
   created_at: string;
@@ -26,22 +25,22 @@ export interface AdminCourse {
   teacher_id: string;
   total_lessons: number;
   completed_lessons: number;
-  users?: { name: string; email: string };
+  users?: { name: string };
+}
+
+export interface AdminActivity {
+  id: string;
+  type: 'quiz' | 'exercice' | 'cours';
+  title: string;
+  subject_name: string;
+  score: number;
+  total: number;
+  users?: { name: string };
+  created_at: string;
 }
 
 export interface ClassStats {
   className: string;
   studentCount: number;
   averageGrade: number;
-}
-
-export interface AdminActivity {
-  id: string;
-  type: string;
-  subject_name: string;
-  title: string;
-  score: number;
-  total: number;
-  created_at: string;
-  users?: { name: string; class_name: string };
 }
