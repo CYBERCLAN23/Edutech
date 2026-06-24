@@ -44,6 +44,9 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Hive cache
+.hive_cache/
+
 # Server
 /server/node_modules/
 /server/dist/
