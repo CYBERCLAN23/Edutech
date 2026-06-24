@@ -1,6 +1,7 @@
 import type { DashboardStats, AdminUser, AdminCourse, AdminActivity, ClassStats } from './types';
 
-const API_URL = import.meta.env.VITE_API_URL || '';
+const RAILWAY_URL = 'https://edutech-production-4e49.up.railway.app';
+const API_URL = import.meta.env.VITE_API_URL || RAILWAY_URL;
 const BASE = `${API_URL}/api/admin`;
 const AUTH = `${API_URL}/api/auth`;
 
