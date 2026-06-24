@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Trash2, Search, Pencil, UserPlus, GraduationCap, ChalkboardTeacher } from 'lucide-react';
+import { Trash2, Search, Pencil, UserPlus, GraduationCap, School } from 'lucide-react';
 import { api } from '../lib/api';
 import type { AdminUser } from '../lib/types';
 import UserFormModal from '../components/UserFormModal';
@@ -68,7 +68,7 @@ export default function UsersPage() {
             onClick={() => setModal({ mode: 'create-teacher' })}
             className="flex items-center gap-2 px-4 py-2.5 bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-xl text-sm font-medium hover:bg-indigo-100 transition-all"
           >
-            <ChalkboardTeacher size={16} />
+            <School size={16} />
             Professeur
           </button>
           <button
