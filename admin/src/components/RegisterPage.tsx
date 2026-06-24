@@ -39,7 +39,7 @@ export default function RegisterPage({ onLogin, onBack }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-background dark:bg-[#0A0F1A] flex items-center justify-center p-4 transition-colors">
+    <div className="min-h-screen bg-background dark:bg-dark-bg flex items-center justify-center p-4 transition-colors">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-primary/20">
@@ -50,32 +50,32 @@ export default function RegisterPage({ onLogin, onBack }: Props) {
               <circle cx="20" cy="19" r="2" fill="#00d2ff"/>
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-primary dark:text-white">{rm.title}</h1>
-          <p className="text-on-surface-variant dark:text-white/60 mt-1">{rm.subtitle}</p>
+          <h1 className="text-2xl font-bold text-primary dark:text-dark-text">{rm.title}</h1>
+          <p className="text-on-surface-variant dark:text-dark-text-secondary mt-1">{rm.subtitle}</p>
         </div>
-        <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-8 dark:bg-white/5">
+        <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-8">
           <div className="mb-4">
-            <label className="block text-sm font-medium text-on-surface dark:text-white/80 mb-2">{rm.name}</label>
+            <label className="block text-sm font-medium text-on-surface dark:text-dark-text mb-2">{rm.name}</label>
             <input type="text" value={name} onChange={e => setName(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-white/20 bg-white dark:bg-white/5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all dark:text-white"
+              className="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-dark-border bg-white dark:bg-dark-surface focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all dark:text-dark-text"
               placeholder={rm.namePlaceholder} required />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-on-surface dark:text-white/80 mb-2">{rm.email}</label>
+            <label className="block text-sm font-medium text-on-surface dark:text-dark-text mb-2">{rm.email}</label>
             <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-white/20 bg-white dark:bg-white/5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all dark:text-white"
+              className="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-dark-border bg-white dark:bg-dark-surface focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all dark:text-dark-text"
               placeholder={rm.emailPlaceholder} required />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-on-surface dark:text-white/80 mb-2">{rm.password}</label>
+            <label className="block text-sm font-medium text-on-surface dark:text-dark-text mb-2">{rm.password}</label>
             <input type="password" value={password} onChange={e => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-white/20 bg-white dark:bg-white/5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all dark:text-white"
+              className="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-dark-border bg-white dark:bg-dark-surface focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all dark:text-dark-text"
               placeholder={rm.passwordPlaceholder} required minLength={6} />
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-medium text-on-surface dark:text-white/80 mb-2">{rm.code}</label>
+            <label className="block text-sm font-medium text-on-surface dark:text-dark-text mb-2">{rm.code}</label>
             <input type="password" value={code} onChange={e => setCode(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-white/20 bg-white dark:bg-white/5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all dark:text-white"
+              className="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-dark-border bg-white dark:bg-dark-surface focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all dark:text-dark-text"
               placeholder={rm.codePlaceholder} required />
           </div>
           {error && <p className="text-error text-sm mb-4">{error}</p>}
@@ -84,7 +84,7 @@ export default function RegisterPage({ onLogin, onBack }: Props) {
             {loading ? rm.loading : rm.register}
           </button>
           <button type="button" onClick={onBack}
-            className="w-full py-3 text-on-surface-variant dark:text-white/60 rounded-xl font-medium hover:bg-surface-container dark:hover:bg-white/5 transition-colors">
+            className="w-full py-3 text-on-surface-variant dark:text-dark-text-secondary rounded-xl font-medium hover:bg-surface-container dark:hover:bg-dark-container transition-colors">
             {rm.backToLogin}
           </button>
         </form>

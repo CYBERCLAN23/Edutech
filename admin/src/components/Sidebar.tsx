@@ -30,13 +30,13 @@ export default function Sidebar({ active, onNavigate, onLogout, user }: Props) {
   const { lang, t, toggle: toggleLang } = useLang();
 
   return (
-    <aside className="w-72 bg-surface-container-low dark:bg-[#0F172A] min-h-screen flex flex-col shadow-xl transition-colors">
+    <aside className="w-72 bg-surface-container-low dark:bg-dark-surface min-h-screen flex flex-col shadow-xl transition-colors">
       <div className="p-8 pb-4">
         <div className="flex items-center gap-3 mb-10">
           <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
             {eduCamLogoSvg}
           </div>
-          <span className="text-xl font-bold text-primary dark:text-white">EduCam AI</span>
+          <span className="text-xl font-bold text-primary dark:text-dark-text">EduCam AI</span>
         </div>
 
         <nav className="space-y-2">
@@ -47,7 +47,7 @@ export default function Sidebar({ active, onNavigate, onLogout, user }: Props) {
               className={`w-full flex items-center gap-4 px-4 py-3 rounded-full text-sm font-medium transition-all ${
                 active === id
                   ? 'bg-secondary-container text-on-primary-container font-bold dark:bg-secondary/20 dark:text-primary-light'
-                  : 'text-on-surface-variant dark:text-white/60 hover:bg-surface-container-high dark:hover:bg-white/5 hover:translate-x-1'
+                  : 'text-on-surface-variant dark:text-dark-text-secondary hover:bg-surface-container-high dark:hover:bg-dark-container hover:translate-x-1'
               }`}
             >
               <Icon size={20} />
@@ -58,38 +58,38 @@ export default function Sidebar({ active, onNavigate, onLogout, user }: Props) {
       </div>
 
       <div className="px-6 space-y-2">
-        <div className="flex items-center gap-2 p-2 rounded-xl bg-surface-container dark:bg-white/5">
+        <div className="flex items-center gap-2 p-2 rounded-xl bg-surface-container dark:bg-dark-container">
           <button
             onClick={toggleTheme}
             className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-medium transition-all"
           >
-            <Sun size={14} className={theme === 'light' ? 'text-primary' : 'text-outline dark:text-white/40'} />
-            <span className={theme === 'light' ? 'text-primary font-bold' : 'text-outline dark:text-white/40'}>{t.light}</span>
+            <Sun size={14} className={theme === 'light' ? 'text-primary' : 'text-outline dark:text-dark-text-muted'} />
+            <span className={theme === 'light' ? 'text-primary font-bold' : 'text-outline dark:text-dark-text-muted'}>{t.light}</span>
           </button>
           <button
             onClick={toggleLang}
             className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg text-xs font-medium transition-all"
           >
-            <Languages size={14} className="text-outline dark:text-white/40" />
-            <span className="text-outline dark:text-white/40">{lang === 'fr' ? 'FR' : 'EN'}</span>
+            <Languages size={14} className="text-outline dark:text-dark-text-muted" />
+            <span className="text-outline dark:text-dark-text-muted">{lang === 'fr' ? 'FR' : 'EN'}</span>
           </button>
         </div>
       </div>
 
       {user && (
         <div className="mt-auto p-6">
-          <div className="flex items-center gap-3 p-3 bg-surface-container-lowest dark:bg-white/5 rounded-2xl">
-            <div className="w-10 h-10 rounded-full bg-outline-variant flex items-center justify-center text-on-surface-variant dark:text-white font-bold text-sm shrink-0">
+          <div className="flex items-center gap-3 p-3 bg-surface-container-lowest dark:bg-dark-container rounded-2xl">
+            <div className="w-10 h-10 rounded-full bg-outline-variant flex items-center justify-center text-on-surface-variant dark:text-dark-text font-bold text-sm shrink-0">
               {user.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
             </div>
             <div className="flex flex-col min-w-0">
-              <span className="text-sm font-bold text-on-surface dark:text-white truncate">{user.name}</span>
-              <span className="text-[10px] text-outline dark:text-white/40 uppercase tracking-wider">{t.nav.admin}</span>
+              <span className="text-sm font-bold text-on-surface dark:text-dark-text truncate">{user.name}</span>
+              <span className="text-[10px] text-outline dark:text-dark-text-muted uppercase tracking-wider">{t.nav.admin}</span>
             </div>
           </div>
           <button
             onClick={onLogout}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-full text-sm font-medium text-on-surface-variant dark:text-white/60 hover:bg-error-container/20 hover:text-error transition-all mt-3"
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-full text-sm font-medium text-on-surface-variant dark:text-dark-text-secondary hover:bg-error-container/20 hover:text-error transition-all mt-3"
           >
             <LogOut size={18} />
             {t.nav.logout}

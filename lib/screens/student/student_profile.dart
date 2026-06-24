@@ -207,16 +207,16 @@ class _SettingsSection extends ConsumerWidget {
   }
 }
 
-class _ThemeToggleTile extends StatelessWidget {
+class _ThemeToggleTile extends ConsumerWidget {
   final bool isDark;
   const _ThemeToggleTile({required this.isDark});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
         HapticFeedback.lightImpact();
-        context.read(themeModeProvider.notifier).toggle();
+        ref.read(themeModeProvider.notifier).toggle();
       },
       child: Row(
         children: [
@@ -230,7 +230,7 @@ class _ThemeToggleTile extends StatelessWidget {
           ),
           const SizedBox(width: 12),
           Expanded(child: Text(isDark ? 'Mode sombre' : 'Mode clair', style: const TextStyle(fontSize: 14, color: EduCamColors.primary))),
-          _Switch(value: isDark, onChanged: (_) => context.read(themeModeProvider.notifier).toggle()),
+          _Switch(value: isDark, onChanged: (_) => ref.read(themeModeProvider.notifier).toggle()),
         ],
       ),
     );

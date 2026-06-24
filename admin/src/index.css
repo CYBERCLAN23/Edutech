@@ -13,6 +13,13 @@ body {
   box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.04);
 }
 
+.dark .glass-card {
+  background: #111111;
+  border: 1px solid #2a2a2a;
+  box-shadow: 0 10px 40px 0 rgba(0, 0, 0, 0.4);
+  backdrop-filter: none;
+}
+
 .soft-gradient {
   background: linear-gradient(135deg, #00677f, #055db6);
 }

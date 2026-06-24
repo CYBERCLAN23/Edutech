@@ -30,7 +30,7 @@ export default function LoginPage({ onLogin, onRegister }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-background dark:bg-[#0A0F1A] flex items-center justify-center p-4 transition-colors">
+    <div className="min-h-screen bg-background dark:bg-dark-bg flex items-center justify-center p-4 transition-colors">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-primary rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-primary/20">
@@ -41,23 +41,23 @@ export default function LoginPage({ onLogin, onRegister }: Props) {
               <circle cx="20" cy="19" r="2" fill="#00d2ff"/>
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-primary dark:text-white">{lm.title}</h1>
-          <p className="text-on-surface-variant dark:text-white/60 mt-1">{lm.subtitle}</p>
+          <h1 className="text-2xl font-bold text-primary dark:text-dark-text">{lm.title}</h1>
+          <p className="text-on-surface-variant dark:text-dark-text-secondary mt-1">{lm.subtitle}</p>
         </div>
-        <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-8 dark:bg-white/5">
+        <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-8">
           <div className="mb-5">
-            <label className="block text-sm font-medium text-on-surface dark:text-white/80 mb-2">{lm.email}</label>
+            <label className="block text-sm font-medium text-on-surface dark:text-dark-text mb-2">{lm.email}</label>
             <input
               type="email" value={email} onChange={e => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-white/20 bg-white dark:bg-white/5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all dark:text-white"
+              className="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-dark-border bg-white dark:bg-dark-surface focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all dark:text-dark-text"
               placeholder={lm.emailPlaceholder} required
             />
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-medium text-on-surface dark:text-white/80 mb-2">{lm.password}</label>
+            <label className="block text-sm font-medium text-on-surface dark:text-dark-text mb-2">{lm.password}</label>
             <input
               type="password" value={password} onChange={e => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-white/20 bg-white dark:bg-white/5 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all dark:text-white"
+              className="w-full px-4 py-3 rounded-xl border border-outline-variant dark:border-dark-border bg-white dark:bg-dark-surface focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all dark:text-dark-text"
               placeholder={lm.passwordPlaceholder} required
             />
           </div>
@@ -69,7 +69,7 @@ export default function LoginPage({ onLogin, onRegister }: Props) {
             {loading ? lm.loading : lm.login}
           </button>
           {onRegister && (
-            <p className="text-center mt-4 text-sm text-on-surface-variant dark:text-white/60">
+            <p className="text-center mt-4 text-sm text-on-surface-variant dark:text-dark-text-secondary">
               {lm.noAccount}{' '}
               <button type="button" onClick={onRegister} className="text-primary font-medium hover:underline">
                 {lm.createAccount}

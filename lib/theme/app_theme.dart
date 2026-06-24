@@ -20,9 +20,9 @@ class EduCamColors {
   static const Color subjectFrancais = Color(0xFFEC4899);
   static const Color subjectAnglais = Color(0xFF06B6D4);
 
-  static const Color darkPrimary = Color(0xFF0F172A);
-  static const Color darkSurface = Color(0xFF1E293B);
-  static const Color darkBackground = Color(0xFF0A0F1A);
+  static const Color darkPrimary = Color(0xFF000000);
+  static const Color darkSurface = Color(0xFF111111);
+  static const Color darkBackground = Color(0xFF000000);
 }
 
 class EduCamTheme {
@@ -117,7 +117,7 @@ class EduCamTheme {
           ),
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: EduCamColors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -226,7 +226,7 @@ class EduCamTheme {
           height: 1.2,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: EduCamColors.darkSurface,
         elevation: 0,
         shape: RoundedRectangleBorder(

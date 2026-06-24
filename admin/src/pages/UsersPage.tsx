@@ -74,8 +74,8 @@ export default function UsersPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-primary dark:text-white">{um.title}</h1>
-          <p className="text-on-surface-variant dark:text-white/60 mt-1">{users.length} {um.subtitle}</p>
+          <h1 className="text-2xl font-bold text-primary dark:text-dark-text">{um.title}</h1>
+          <p className="text-on-surface-variant dark:text-dark-text-secondary mt-1">{users.length} {um.subtitle}</p>
         </div>
         <div className="flex gap-2">
           <button
@@ -98,8 +98,8 @@ export default function UsersPage() {
       <div className="grid grid-cols-4 gap-4 mb-8">
         {filters.map(f => (
           <button key={f.key ?? 'all'} onClick={() => setFilter(f.key)}
-            className={`text-left p-4 rounded-xl border transition-all glass-card dark:bg-white/5 ${
-              filter === f.key ? 'bg-primary text-white border-primary' : 'text-on-surface dark:text-white border-outline-variant/20'
+            className={`text-left p-4 rounded-xl border transition-all glass-card dark:bg-dark-surface ${
+              filter === f.key ? 'bg-primary text-white border-primary' : 'text-on-surface dark:text-dark-text border-outline-variant/20'
             }`}
           >
             <p className="text-2xl font-bold">{f.count}</p>
@@ -112,7 +112,7 @@ export default function UsersPage() {
         <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-outline" />
         <input
           type="text" placeholder={um.search} value={search} onChange={e => setSearch(e.target.value)}
-          className="w-full pl-11 pr-4 py-3 bg-white dark:bg-white/5 border border-outline-variant dark:border-white/20 rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm dark:text-white"
+          className="w-full pl-11 pr-4 py-3 bg-white dark:bg-dark-surface border border-outline-variant dark:border-dark-border rounded-xl focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm dark:text-dark-text"
         />
       </div>
 
@@ -123,32 +123,32 @@ export default function UsersPage() {
       ) : (
         <div className="space-y-2">
           {filtered.map(u => (
-            <div key={u.id} className="glass-card dark:bg-white/5 rounded-xl p-4 border border-outline-variant/10 hover:shadow-sm transition-shadow flex items-center gap-4">
+            <div key={u.id} className="glass-card dark:bg-dark-surface rounded-xl p-4 border border-outline-variant/10 hover:shadow-sm transition-shadow flex items-center gap-4">
               <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white text-sm font-bold shrink-0">
                 {u.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-on-surface dark:text-white truncate">{u.name}</p>
-                <p className="text-xs text-on-surface-variant dark:text-white/60 truncate">{u.email}{u.class_name ? ` · ${u.class_name}` : ''}</p>
+                <p className="text-sm font-medium text-on-surface dark:text-dark-text truncate">{u.name}</p>
+                <p className="text-xs text-on-surface-variant dark:text-dark-text-secondary truncate">{u.email}{u.class_name ? ` · ${u.class_name}` : ''}</p>
               </div>
               <span className={`px-3 py-1 rounded-lg text-xs font-medium border ${roleColors[u.role] || ''}`}>
                 {roleLabels[u.role] || u.role}
               </span>
               <button
                 onClick={() => setModal({ mode: 'edit', user: u })}
-                className="p-2 text-outline dark:text-white/40 hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
+                className="p-2 text-outline dark:text-dark-text-muted hover:text-primary hover:bg-primary/10 rounded-lg transition-all"
               >
                 <Pencil size={16} />
               </button>
               <button
                 onClick={() => setDeleteTarget({ id: u.id, name: u.name })}
-                className="p-2 text-outline dark:text-white/40 hover:text-error hover:bg-error-container/20 rounded-lg transition-all"
+                className="p-2 text-outline dark:text-dark-text-muted hover:text-error hover:bg-error-container/20 rounded-lg transition-all"
               >
                 <Trash2 size={16} />
               </button>
             </div>
           ))}
-          {filtered.length === 0 && <p className="text-center py-10 text-on-surface-variant dark:text-white/40">{um.noResults}</p>}
+          {filtered.length === 0 && <p className="text-center py-10 text-on-surface-variant dark:text-dark-text-secondary">{um.noResults}</p>}
         </div>
       )}
 

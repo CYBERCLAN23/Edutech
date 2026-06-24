@@ -58,10 +58,10 @@ export default function DashboardPage() {
     <div>
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-primary dark:text-white">{dm.title}</h1>
-          <p className="text-on-surface-variant dark:text-white/60 mt-1">{dm.subtitle}</p>
+          <h1 className="text-2xl font-bold text-primary dark:text-dark-text">{dm.title}</h1>
+          <p className="text-on-surface-variant dark:text-dark-text-secondary mt-1">{dm.subtitle}</p>
         </div>
-        <button onClick={load} className="flex items-center gap-2 px-4 py-2 text-sm text-on-surface-variant dark:text-white/60 hover:text-primary border border-outline-variant dark:border-white/20 rounded-xl hover:border-primary transition-all glass-card">
+        <button onClick={load} className="flex items-center gap-2 px-4 py-2 text-sm text-on-surface-variant dark:text-dark-text-secondary hover:text-primary border border-outline-variant dark:border-dark-border rounded-xl hover:border-primary transition-all glass-card">
           <RefreshCw size={16} /> {dm.refresh}
         </button>
       </div>
@@ -77,8 +77,8 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="glass-card rounded-2xl p-6 dark:bg-white/5">
-          <h2 className="text-lg font-semibold text-on-surface dark:text-white mb-4">{dm.classPerf}</h2>
+        <div className="glass-card rounded-2xl p-6">
+          <h2 className="text-lg font-semibold text-on-surface dark:text-dark-text mb-4">{dm.classPerf}</h2>
           {chartData.length > 0 ? (
             <ResponsiveContainer width="100%" height={250}>
               <BarChart data={chartData}>
@@ -89,20 +89,20 @@ export default function DashboardPage() {
                 <Bar dataKey="Moyenne" fill="#00677f" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
-          ) : <p className="text-on-surface-variant dark:text-white/40 text-sm">{dm.noData}</p>}
+          ) : <p className="text-on-surface-variant dark:text-dark-text-secondary text-sm">{dm.noData}</p>}
         </div>
 
-        <div className="glass-card rounded-2xl p-6 dark:bg-white/5">
-          <h2 className="text-lg font-semibold text-on-surface dark:text-white mb-4">{dm.classes}</h2>
+        <div className="glass-card rounded-2xl p-6">
+          <h2 className="text-lg font-semibold text-on-surface dark:text-dark-text mb-4">{dm.classes}</h2>
           <div className="space-y-3">
             {classStats.map(cs => {
               const color = cs.averageGrade >= 12 ? 'text-tertiary' : cs.averageGrade >= 8 ? 'text-amber-600' : 'text-error';
               const bg = cs.averageGrade >= 12 ? 'bg-tertiary/10' : cs.averageGrade >= 8 ? 'bg-amber-50' : 'bg-error-container/30';
               return (
-                <div key={cs.className} className="flex items-center justify-between p-4 rounded-xl border border-outline-variant/10 hover:shadow-sm transition-shadow glass-card dark:bg-white/5">
+                <div key={cs.className} className="flex items-center justify-between p-4 rounded-xl border border-outline-variant/10 hover:shadow-sm transition-shadow glass-card">
                   <div>
-                    <p className="font-medium text-on-surface dark:text-white">{cs.className}</p>
-                    <p className="text-sm text-on-surface-variant dark:text-white/60">{cs.studentCount} {dm.students}</p>
+                    <p className="font-medium text-on-surface dark:text-dark-text">{cs.className}</p>
+                    <p className="text-sm text-on-surface-variant dark:text-dark-text-secondary">{cs.studentCount} {dm.students}</p>
                   </div>
                   <div className={`px-3 py-1.5 rounded-lg ${bg}`}>
                     <span className={`font-bold ${color}`}>{cs.averageGrade}/20</span>
@@ -110,33 +110,33 @@ export default function DashboardPage() {
                 </div>
               );
             })}
-            {classStats.length === 0 && <p className="text-on-surface-variant dark:text-white/40 text-sm">{dm.noClass}</p>}
+            {classStats.length === 0 && <p className="text-on-surface-variant dark:text-dark-text-secondary text-sm">{dm.noClass}</p>}
           </div>
         </div>
       </div>
 
-      <div className="glass-card rounded-2xl p-6 dark:bg-white/5">
-        <h2 className="text-lg font-semibold text-on-surface dark:text-white mb-4">{dm.recentActivity}</h2>
+      <div className="glass-card rounded-2xl p-6">
+        <h2 className="text-lg font-semibold text-on-surface dark:text-dark-text mb-4">{dm.recentActivity}</h2>
         {activities.length > 0 ? (
           <div className="space-y-3">
             {activities.map(a => (
-              <div key={a.id} className="flex items-center gap-4 p-3 rounded-xl hover:bg-surface-container dark:hover:bg-white/5 transition-colors">
+              <div key={a.id} className="flex items-center gap-4 p-3 rounded-xl hover:bg-surface-container dark:hover:bg-dark-container transition-colors">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white text-sm font-bold ${
                   a.type === 'quiz' ? 'bg-amber-500' : a.type === 'exercice' ? 'bg-tertiary' : 'bg-primary'
                 }`}>
                   {a.type === 'quiz' ? 'Q' : a.type === 'exercice' ? 'E' : 'C'}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-on-surface dark:text-white truncate">{a.title}</p>
-                  <p className="text-xs text-on-surface-variant dark:text-white/60">
+                  <p className="text-sm font-medium text-on-surface dark:text-dark-text truncate">{a.title}</p>
+                  <p className="text-xs text-on-surface-variant dark:text-dark-text-secondary">
                     {a.users?.name ?? dm.anonymous} · {a.subject_name} · {a.score}/{a.total}
                   </p>
                 </div>
-                <span className="text-xs text-on-surface-variant dark:text-white/40">{new Date(a.created_at).toLocaleDateString()}</span>
+                <span className="text-xs text-on-surface-variant dark:text-dark-text-muted">{new Date(a.created_at).toLocaleDateString()}</span>
               </div>
             ))}
           </div>
-        ) : <p className="text-on-surface-variant dark:text-white/40 text-sm">{dm.noActivity}</p>}
+        ) : <p className="text-on-surface-variant dark:text-dark-text-secondary text-sm">{dm.noActivity}</p>}
       </div>
     </div>
   );
