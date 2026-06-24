@@ -210,7 +210,7 @@ class _AdminCoursesState extends ConsumerState<AdminCourses> {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: EduCamColors.accent.withValues(alpha: 0.1),
+                    color: EduCamColors.accent.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(Icons.menu_book_rounded, size: 18, color: EduCamColors.accent),
@@ -255,7 +255,7 @@ class _AdminCoursesState extends ConsumerState<AdminCourses> {
                   width: 36,
                   height: 36,
                   decoration: BoxDecoration(
-                    color: EduCamColors.highlight.withValues(alpha: 0.1),
+                    color: EduCamColors.highlight.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Icon(Icons.group_rounded, size: 18, color: EduCamColors.highlight),
@@ -304,7 +304,7 @@ class _AdminCoursesState extends ConsumerState<AdminCourses> {
           children: [
             Container(height: 16, width: 160, decoration: BoxDecoration(color: EduCamColors.progressTrack, borderRadius: BorderRadius.circular(4))),
             const SizedBox(height: 12),
-            Container(height: 12, width: double.infinity, decoration: BoxDecoration(color: EduCamColors.progressTrack.withValues(alpha: 0.5), borderRadius: BorderRadius.circular(4))),
+            Container(height: 12, width: double.infinity, decoration: BoxDecoration(color: EduCamColors.progressTrack.withOpacity(0.5), borderRadius: BorderRadius.circular(4))),
           ],
         ),
       ),
@@ -337,7 +337,7 @@ class _AdminCoursesState extends ConsumerState<AdminCourses> {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: EduCamColors.accent.withValues(alpha: 0.1),
+                color: EduCamColors.accent.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(icon, size: 18, color: EduCamColors.accent),

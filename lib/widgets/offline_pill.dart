@@ -17,8 +17,8 @@ class OfflinePill extends ConsumerWidget {
     final bgColor = isOnline ? EduCamColors.success : EduCamColors.highlight;
     final label = isOnline ? 'En ligne' : 'Hors ligne';
     final borderColor = isOnline
-        ? EduCamColors.success.withValues(alpha: 0.3)
-        : EduCamColors.highlight.withValues(alpha: 0.3);
+        ? EduCamColors.success.withOpacity(0.3)
+        : EduCamColors.highlight.withOpacity(0.3);
 
     return Container(
       padding: EdgeInsets.symmetric(horizontal: compact ? 8 : 10, vertical: compact ? 3 : 4),

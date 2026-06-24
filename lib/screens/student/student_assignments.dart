@@ -39,7 +39,7 @@ class StudentAssignments extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: EduCamColors.accent.withValues(alpha: 0.1),
+                            color: EduCamColors.accent.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Icon(Icons.filter_list_rounded, size: 20, color: EduCamColors.accent),
@@ -112,7 +112,7 @@ class StudentAssignments extends StatelessWidget {
                   Container(
                     width: 40, height: 40,
                     decoration: BoxDecoration(
-                      color: (a['color'] as Color).withValues(alpha: 0.1),
+                      color: (a['color'] as Color).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Icon(Icons.description_rounded, size: 18, color: a['color'] as Color),
@@ -131,7 +131,7 @@ class StudentAssignments extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
-                      color: urgent ? EduCamColors.error.withValues(alpha: 0.1) : EduCamColors.success.withValues(alpha: 0.1),
+                      color: urgent ? EduCamColors.error.withOpacity(0.1) : EduCamColors.success.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
@@ -184,7 +184,7 @@ class StudentAssignments extends StatelessWidget {
                   Container(
                     width: 36, height: 36,
                     decoration: BoxDecoration(
-                      color: (g['color'] as Color).withValues(alpha: 0.1),
+                      color: (g['color'] as Color).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Icon(Icons.grade_rounded, size: 16, color: g['color'] as Color),

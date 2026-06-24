@@ -25,7 +25,7 @@ class AiAvatar extends StatelessWidget {
         borderRadius: BorderRadius.circular(size * 0.3),
         boxShadow: [
           BoxShadow(
-            color: EduCamColors.accent.withValues(alpha: 0.3),
+            color: EduCamColors.accent.withOpacity(0.3),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -48,7 +48,7 @@ class _AiMarkPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = EduCamColors.surface.withValues(alpha: 0.9)
+      ..color = EduCamColors.surface.withOpacity(0.9)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0
       ..strokeCap = StrokeCap.round;
@@ -63,7 +63,7 @@ class _AiMarkPainter extends CustomPainter {
     canvas.drawPath(path, paint);
 
     final dotPaint = Paint()
-      ..color = EduCamColors.surface.withValues(alpha: 0.9)
+      ..color = EduCamColors.surface.withOpacity(0.9)
       ..style = PaintingStyle.fill;
 
     canvas.drawCircle(

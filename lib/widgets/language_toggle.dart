@@ -32,7 +32,7 @@ class _LanguageToggleState extends State<LanguageToggle> {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
             decoration: BoxDecoration(
               color: isSelected
-                  ? EduCamColors.accent.withValues(alpha: 0.1)
+                  ? EduCamColors.accent.withOpacity(0.1)
                   : Colors.transparent,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(

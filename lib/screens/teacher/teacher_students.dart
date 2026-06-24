@@ -133,7 +133,7 @@ class _TeacherStudentsState extends State<TeacherStudents> {
                               color: selected ? EduCamColors.surface : EduCamColors.background,
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(
-                                color: selected ? color.withValues(alpha: 0.3) : EduCamColors.cardBorder,
+                                color: selected ? color.withOpacity(0.3) : EduCamColors.cardBorder,
                                 width: selected ? 1 : 0.5,
                               ),
                             ),
@@ -177,9 +177,9 @@ class _TeacherStudentsState extends State<TeacherStudents> {
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                             decoration: BoxDecoration(
-                              color: selected ? color.withValues(alpha: 0.1) : EduCamColors.surface,
+                              color: selected ? color.withOpacity(0.1) : EduCamColors.surface,
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: selected ? color.withValues(alpha: 0.3) : EduCamColors.cardBorder, width: 0.5),
+                              border: Border.all(color: selected ? color.withOpacity(0.3) : EduCamColors.cardBorder, width: 0.5),
                             ),
                             child: Text(subj, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: selected ? color : EduCamColors.secondaryText)),
                           ),
@@ -231,9 +231,9 @@ class _TeacherStudentsState extends State<TeacherStudents> {
                     child: Center(
                       child: Column(
                         children: [
-                          Icon(Icons.people_outline_rounded, size: 48, color: EduCamColors.secondaryText.withValues(alpha: 0.4)),
+                          Icon(Icons.people_outline_rounded, size: 48, color: EduCamColors.secondaryText.withOpacity(0.4)),
                           const SizedBox(height: 12),
-                          Text('Aucun eleve trouve', style: TextStyle(fontSize: 15, color: EduCamColors.secondaryText.withValues(alpha: 0.6))),
+                          Text('Aucun eleve trouve', style: TextStyle(fontSize: 15, color: EduCamColors.secondaryText.withOpacity(0.6))),
                         ],
                       ),
                     ),
@@ -277,7 +277,7 @@ class _TeacherStudentsState extends State<TeacherStudents> {
                               Container(
                                 width: 40, height: 40,
                                 decoration: BoxDecoration(
-                                  color: statusColor.withValues(alpha: 0.08),
+                                  color: statusColor.withOpacity(0.08),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Center(
@@ -309,7 +309,7 @@ class _TeacherStudentsState extends State<TeacherStudents> {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                                 decoration: BoxDecoration(
-                                  color: grade != null ? _subjectColor(grade.subjectName).withValues(alpha: 0.08) : Colors.transparent,
+                                  color: grade != null ? _subjectColor(grade.subjectName).withOpacity(0.08) : Colors.transparent,
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                                 child: Text(

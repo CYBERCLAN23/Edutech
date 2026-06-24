@@ -121,7 +121,7 @@ class _StudentCourseDetailState extends State<StudentCourseDetail> {
                     Row(children: [
                       Container(
                         width: 36, height: 36,
-                        decoration: BoxDecoration(color: widget.courseColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
+                        decoration: BoxDecoration(color: widget.courseColor.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
                         child: Icon(m.type == ContentType.video ? Icons.play_circle_rounded : Icons.picture_as_pdf_rounded, size: 18, color: widget.courseColor),
                       ),
                       const SizedBox(width: 12),
@@ -230,7 +230,7 @@ class _StudentCourseDetailState extends State<StudentCourseDetail> {
                           Row(children: [
                             Container(
                               width: 40, height: 40,
-                              decoration: BoxDecoration(color: widget.courseColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
+                              decoration: BoxDecoration(color: widget.courseColor.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
                               child: Icon(Icons.quiz_rounded, size: 18, color: widget.courseColor),
                             ),
                             const SizedBox(width: 14),
@@ -267,7 +267,7 @@ class _StudentCourseDetailState extends State<StudentCourseDetail> {
             ]),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(color: EduCamColors.highlight.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(6)),
+              decoration: BoxDecoration(color: EduCamColors.highlight.withOpacity(0.1), borderRadius: BorderRadius.circular(6)),
               child: const Text('NOUVEAU', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: EduCamColors.highlight)),
             ),
           ],
@@ -291,7 +291,7 @@ class _StudentCourseDetailState extends State<StudentCourseDetail> {
                   Row(children: [
                     Container(
                       width: 36, height: 36,
-                      decoration: BoxDecoration(color: EduCamColors.error.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(10)),
+                      decoration: BoxDecoration(color: EduCamColors.error.withOpacity(0.08), borderRadius: BorderRadius.circular(10)),
                       child: const Icon(Icons.assignment_rounded, size: 18, color: EduCamColors.error),
                     ),
                     const SizedBox(width: 12),
@@ -320,7 +320,7 @@ class _StudentCourseDetailState extends State<StudentCourseDetail> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
             decoration: BoxDecoration(
-              color: EduCamColors.success.withValues(alpha: 0.1),
+              color: EduCamColors.success.withOpacity(0.1),
               borderRadius: BorderRadius.circular(4),
             ),
             child: Row(
@@ -356,7 +356,7 @@ class _StudentCourseDetailState extends State<StudentCourseDetail> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
-                color: EduCamColors.accent.withValues(alpha: 0.1),
+                color: EduCamColors.accent.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Row(
@@ -377,9 +377,9 @@ class _StudentCourseDetailState extends State<StudentCourseDetail> {
     return Padding(
       padding: const EdgeInsets.only(top: 40),
       child: Center(child: Column(children: [
-        Icon(Icons.inbox_rounded, size: 48, color: EduCamColors.secondaryText.withValues(alpha: 0.3)),
+        Icon(Icons.inbox_rounded, size: 48, color: EduCamColors.secondaryText.withOpacity(0.3)),
         const SizedBox(height: 12),
-        Text(msg, style: TextStyle(fontSize: 14, color: EduCamColors.secondaryText.withValues(alpha: 0.6))),
+        Text(msg, style: TextStyle(fontSize: 14, color: EduCamColors.secondaryText.withOpacity(0.6))),
       ])),
     );
   }
@@ -411,7 +411,7 @@ class _ActionChip extends StatelessWidget {
                     decoration: BoxDecoration(color: EduCamColors.cardBorder, borderRadius: BorderRadius.circular(2))),
                   Container(
                     width: 64, height: 64,
-                    decoration: BoxDecoration(color: EduCamColors.highlight.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(20)),
+                    decoration: BoxDecoration(color: EduCamColors.highlight.withOpacity(0.1), borderRadius: BorderRadius.circular(20)),
                     child: const Icon(Icons.auto_awesome_rounded, size: 28, color: EduCamColors.highlight),
                   ),
                   const SizedBox(height: 16),
@@ -428,7 +428,7 @@ class _ActionChip extends StatelessWidget {
                     child: Container(
                       width: double.infinity, padding: const EdgeInsets.symmetric(vertical: 14),
                       decoration: BoxDecoration(
-                        color: EduCamColors.highlight.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12),
+                        color: EduCamColors.highlight.withOpacity(0.1), borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Center(child: Text('Fermer', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: EduCamColors.highlight))),
                     ),
@@ -465,9 +465,9 @@ class _ActionChip extends StatelessWidget {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.play_circle_rounded, size: 48, color: color.withValues(alpha: 0.4)),
+                          Icon(Icons.play_circle_rounded, size: 48, color: color.withOpacity(0.4)),
                           const SizedBox(height: 8),
-                          Text('Apercu du cours', style: TextStyle(fontSize: 13, color: color.withValues(alpha: 0.6))),
+                          Text('Apercu du cours', style: TextStyle(fontSize: 13, color: color.withOpacity(0.6))),
                         ],
                       ),
                     ),
@@ -478,7 +478,7 @@ class _ActionChip extends StatelessWidget {
                     child: Container(
                       width: double.infinity, padding: const EdgeInsets.symmetric(vertical: 14),
                       decoration: BoxDecoration(
-                        color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12),
+                        color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(12),
                       ),
                       child: Center(child: Text('Continuer', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: color))),
                     ),
@@ -500,7 +500,7 @@ class _ActionChip extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
         decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.08),
+          color: color.withOpacity(0.08),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(

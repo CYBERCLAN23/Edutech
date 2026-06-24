@@ -293,7 +293,7 @@ class _SettingToggle extends StatelessWidget {
           Container(
             width: 36, height: 36,
             decoration: BoxDecoration(
-              color: EduCamColors.accent.withValues(alpha: 0.08),
+              color: EduCamColors.accent.withOpacity(0.08),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(icon, size: 18, color: EduCamColors.accent),
@@ -334,7 +334,7 @@ class _Switch extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(11),
-              boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 3)],
+              boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 3)],
             ),
           ),
         ),

@@ -117,7 +117,7 @@ class EduCamTheme {
           ),
         ),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         color: EduCamColors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -226,7 +226,7 @@ class EduCamTheme {
           height: 1.2,
         ),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         color: EduCamColors.darkSurface,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -246,7 +246,7 @@ class EduCamTheme {
 
   static List<BoxShadow> get softShadow => [
         BoxShadow(
-          color: Colors.black.withValues(alpha: 0.06),
+          color: Colors.black.withOpacity(0.06),
           blurRadius: 20,
           offset: const Offset(0, 4),
         ),
@@ -254,7 +254,7 @@ class EduCamTheme {
 
   static List<BoxShadow> get elevatedShadow => [
         BoxShadow(
-          color: Colors.black.withValues(alpha: 0.08),
+          color: Colors.black.withOpacity(0.08),
           blurRadius: 24,
           offset: const Offset(0, 8),
         ),

@@ -138,7 +138,7 @@ class _TypeCard extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(vertical: 20),
         decoration: BoxDecoration(
-          color: selected ? EduCamColors.accent.withValues(alpha: 0.08) : EduCamColors.surface,
+          color: selected ? EduCamColors.accent.withOpacity(0.08) : EduCamColors.surface,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
             color: selected ? EduCamColors.accent : EduCamColors.cardBorder,

@@ -27,10 +27,10 @@ class EmptyState extends StatelessWidget {
               width: 80,
               height: 80,
               decoration: BoxDecoration(
-                color: EduCamColors.accent.withValues(alpha: 0.08),
+                color: EduCamColors.accent.withOpacity(0.08),
                 borderRadius: BorderRadius.circular(24),
               ),
-              child: Icon(icon, size: 36, color: EduCamColors.accent.withValues(alpha: 0.5)),
+              child: Icon(icon, size: 36, color: EduCamColors.accent.withOpacity(0.5)),
             ),
             const SizedBox(height: 20),
             Text(

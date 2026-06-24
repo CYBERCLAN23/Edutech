@@ -120,7 +120,7 @@ class HomeScreen extends StatelessWidget {
                                 vertical: 6,
                               ),
                               decoration: BoxDecoration(
-                                color: EduCamColors.success.withValues(alpha: 0.1),
+                                color: EduCamColors.success.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: const Row(
@@ -252,7 +252,7 @@ class _RoleBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
@@ -375,7 +375,7 @@ class _QuickActionCard extends StatelessWidget {
               width: 44,
               height: 44,
               decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.1),
+                color: color.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(icon, color: color, size: 22),
@@ -519,7 +519,7 @@ class _RecentActivitySection extends StatelessWidget {
                       width: 40,
                       height: 40,
                       decoration: BoxDecoration(
-                        color: (a['color'] as Color).withValues(alpha: 0.1),
+                        color: (a['color'] as Color).withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Icon(
@@ -556,10 +556,10 @@ class _RecentActivitySection extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
                         color: a['status'] == 'Termine'
-                            ? EduCamColors.success.withValues(alpha: 0.1)
+                            ? EduCamColors.success.withOpacity(0.1)
                             : a['status'] == 'En cours'
-                                ? EduCamColors.accent.withValues(alpha: 0.1)
-                                : EduCamColors.highlight.withValues(alpha: 0.1),
+                                ? EduCamColors.accent.withOpacity(0.1)
+                                : EduCamColors.highlight.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(

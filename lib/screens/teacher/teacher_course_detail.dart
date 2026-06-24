@@ -199,10 +199,10 @@ class _ContentList extends StatelessWidget {
                     Container(
                       width: 80, height: 80,
                       decoration: BoxDecoration(
-                        color: EduCamColors.accent.withValues(alpha: 0.08),
+                        color: EduCamColors.accent.withOpacity(0.08),
                         borderRadius: BorderRadius.circular(24),
                       ),
-                      child: Icon(emptyIcon, size: 36, color: EduCamColors.accent.withValues(alpha: 0.5)),
+                      child: Icon(emptyIcon, size: 36, color: EduCamColors.accent.withOpacity(0.5)),
                     ),
                     const SizedBox(height: 20),
                     Text(emptyTitle, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
@@ -246,7 +246,7 @@ class _MaterialTile extends StatelessWidget {
           Container(
             width: 44, height: 44,
             decoration: BoxDecoration(
-              color: (isVideo ? EduCamColors.accent : EduCamColors.highlight).withValues(alpha: 0.1),
+              color: (isVideo ? EduCamColors.accent : EduCamColors.highlight).withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(isVideo ? Icons.play_circle_rounded : Icons.picture_as_pdf_rounded, size: 22, color: isVideo ? EduCamColors.accent : EduCamColors.highlight),
@@ -289,7 +289,7 @@ class _ExerciseTile extends StatelessWidget {
           Container(
             width: 44, height: 44,
             decoration: BoxDecoration(
-              color: EduCamColors.subjectMaths.withValues(alpha: 0.1),
+              color: EduCamColors.subjectMaths.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(Icons.edit_note_rounded, size: 22, color: EduCamColors.subjectMaths),
@@ -330,7 +330,7 @@ class _QuizTile extends StatelessWidget {
           Container(
             width: 44, height: 44,
             decoration: BoxDecoration(
-              color: EduCamColors.highlight.withValues(alpha: 0.1),
+              color: EduCamColors.highlight.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(Icons.quiz_rounded, size: 22, color: EduCamColors.highlight),
@@ -371,7 +371,7 @@ class _ExamTile extends StatelessWidget {
           Container(
             width: 44, height: 44,
             decoration: BoxDecoration(
-              color: EduCamColors.subjectSVT.withValues(alpha: 0.1),
+              color: EduCamColors.subjectSVT.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(Icons.history_edu_rounded, size: 22, color: EduCamColors.subjectSVT),

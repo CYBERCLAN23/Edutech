@@ -221,9 +221,9 @@ class _WelcomeContent extends StatelessWidget {
         label: Text(name, style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: color)),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          side: BorderSide(color: color.withValues(alpha: 0.3)),
+          side: BorderSide(color: color.withOpacity(0.3)),
         ),
-        backgroundColor: color.withValues(alpha: 0.08),
+        backgroundColor: color.withOpacity(0.08),
         onPressed: () => onSubjectTap(name),
       );
     }).toList();

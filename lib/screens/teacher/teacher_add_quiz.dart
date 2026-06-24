@@ -164,7 +164,7 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
                           Container(
                             width: 28, height: 28,
                             decoration: BoxDecoration(
-                              color: EduCamColors.highlight.withValues(alpha: 0.1),
+                              color: EduCamColors.highlight.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Center(child: Text('${i + 1}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: EduCamColors.highlight))),
@@ -176,7 +176,7 @@ class _TeacherAddQuizState extends State<TeacherAddQuiz> {
                             child: Container(
                               padding: const EdgeInsets.all(6),
                               decoration: BoxDecoration(
-                                color: EduCamColors.error.withValues(alpha: 0.1),
+                                color: EduCamColors.error.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: const Icon(Icons.delete_rounded, size: 16, color: EduCamColors.error),

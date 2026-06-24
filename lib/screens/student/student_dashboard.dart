@@ -142,7 +142,7 @@ class _StudentDashboardState extends ConsumerState<StudentDashboard> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
-                      color: EduCamColors.highlight.withValues(alpha: 0.1),
+                      color: EduCamColors.highlight.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Text('NOUVEAU', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: EduCamColors.highlight)),
@@ -293,7 +293,7 @@ class _RoleBadgeStudent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(color: EduCamColors.accent.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(4)),
+      decoration: BoxDecoration(color: EduCamColors.accent.withOpacity(0.1), borderRadius: BorderRadius.circular(4)),
       child: const Text('ELEVE', style: TextStyle(fontSize: 9, fontWeight: FontWeight.w700, color: EduCamColors.accent, letterSpacing: 1)),
     );
   }
@@ -404,7 +404,7 @@ class _TeacherUpdates extends StatelessWidget {
               decoration: BoxDecoration(
                 color: EduCamColors.surface,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: (u['color'] as Color).withValues(alpha: 0.15), width: 0.5),
+                border: Border.all(color: (u['color'] as Color).withOpacity(0.15), width: 0.5),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -412,7 +412,7 @@ class _TeacherUpdates extends StatelessWidget {
                   Row(children: [
                     Container(
                       width: 28, height: 28,
-                      decoration: BoxDecoration(color: (u['color'] as Color).withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
+                      decoration: BoxDecoration(color: (u['color'] as Color).withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
                       child: Icon(u['icon'] as IconData, size: 14, color: u['color'] as Color),
                     ),
                     const SizedBox(width: 8),
@@ -424,8 +424,8 @@ class _TeacherUpdates extends StatelessWidget {
                   const SizedBox(height: 8),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(color: (u['color'] as Color).withValues(alpha: 0.06), borderRadius: BorderRadius.circular(6)),
-                    child: Text('Voir', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: (u['color'] as Color).withValues(alpha: 0.7))),
+                    decoration: BoxDecoration(color: (u['color'] as Color).withOpacity(0.06), borderRadius: BorderRadius.circular(6)),
+                    child: Text('Voir', style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: (u['color'] as Color).withOpacity(0.7))),
                   ),
                 ],
               ),
@@ -531,7 +531,7 @@ class _ContinueLearning extends StatelessWidget {
                   Row(children: [
                     Container(
                       width: 36, height: 36,
-                      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
+                      decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
                       child: Icon(icon, size: 18, color: color),
                     ),
                     const Spacer(),
@@ -611,7 +611,7 @@ class _UpcomingAssignments extends StatelessWidget {
                 width: double.infinity, padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: EduCamColors.surface, borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: (a['urgent'] as bool) ? EduCamColors.error.withValues(alpha: 0.2) : EduCamColors.cardBorder, width: 0.5),
+                  border: Border.all(color: (a['urgent'] as bool) ? EduCamColors.error.withOpacity(0.2) : EduCamColors.cardBorder, width: 0.5),
                 ),
                 child: Row(children: [
                   Container(width: 4, height: 40, decoration: BoxDecoration(color: a['color'] as Color, borderRadius: BorderRadius.circular(2))),
@@ -623,7 +623,7 @@ class _UpcomingAssignments extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
-                      color: (a['urgent'] as bool) ? EduCamColors.error.withValues(alpha: 0.1) : EduCamColors.accent.withValues(alpha: 0.1),
+                      color: (a['urgent'] as bool) ? EduCamColors.error.withOpacity(0.1) : EduCamColors.accent.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(a['due'] as String, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600,
@@ -732,7 +732,7 @@ class _QuickToolCard extends StatelessWidget {
         ),
         child: Row(children: [
           Container(width: 40, height: 40,
-            decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
             child: Icon(icon, size: 18, color: color),
           ),
           const SizedBox(width: 12),
@@ -740,7 +740,7 @@ class _QuickToolCard extends StatelessWidget {
             Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: EduCamColors.primary)),
             Text(subtitle, style: const TextStyle(fontSize: 11, color: EduCamColors.secondaryText)),
           ])),
-          Icon(Icons.chevron_right_rounded, size: 16, color: color.withValues(alpha: 0.5)),
+          Icon(Icons.chevron_right_rounded, size: 16, color: color.withOpacity(0.5)),
         ]),
       ),
     );

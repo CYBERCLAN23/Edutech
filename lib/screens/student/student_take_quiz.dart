@@ -100,7 +100,7 @@ class _StudentTakeQuizState extends ConsumerState<StudentTakeQuiz> {
                   width: 100, height: 100,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: passed ? EduCamColors.success.withValues(alpha: 0.1) : EduCamColors.error.withValues(alpha: 0.1),
+                    color: passed ? EduCamColors.success.withOpacity(0.1) : EduCamColors.error.withOpacity(0.1),
                   ),
                   child: Center(
                     child: Text('$_score/20', style: TextStyle(fontSize: 28, fontWeight: FontWeight.w800,
@@ -119,7 +119,7 @@ class _StudentTakeQuizState extends ConsumerState<StudentTakeQuiz> {
                     child: Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
-                        color: EduCamColors.highlight.withValues(alpha: 0.1),
+                        color: EduCamColors.highlight.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(
@@ -140,7 +140,7 @@ class _StudentTakeQuizState extends ConsumerState<StudentTakeQuiz> {
                     decoration: BoxDecoration(
                       color: EduCamColors.surface,
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: EduCamColors.error.withValues(alpha: 0.2), width: 1),
+                      border: Border.all(color: EduCamColors.error.withOpacity(0.2), width: 1),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,7 +148,7 @@ class _StudentTakeQuizState extends ConsumerState<StudentTakeQuiz> {
                         Row(children: [
                           Container(
                             padding: const EdgeInsets.all(6),
-                            decoration: BoxDecoration(color: EduCamColors.error.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)),
+                            decoration: BoxDecoration(color: EduCamColors.error.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
                             child: const Icon(Icons.auto_awesome_rounded, size: 16, color: EduCamColors.error),
                           ),
                           const SizedBox(width: 8),
@@ -165,9 +165,9 @@ class _StudentTakeQuizState extends ConsumerState<StudentTakeQuiz> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.play_circle_rounded, size: 48, color: EduCamColors.error.withValues(alpha: 0.4)),
+                                Icon(Icons.play_circle_rounded, size: 48, color: EduCamColors.error.withOpacity(0.4)),
                                 const SizedBox(height: 8),
-                                Text('Video explicative disponible', style: TextStyle(fontSize: 13, color: EduCamColors.error.withValues(alpha: 0.6))),
+                                Text('Video explicative disponible', style: TextStyle(fontSize: 13, color: EduCamColors.error.withOpacity(0.6))),
                                 const SizedBox(height: 4),
                                 Text('Correction detaillee pas-a-pas', style: const TextStyle(fontSize: 11, color: EduCamColors.secondaryText)),
                               ],
@@ -188,7 +188,7 @@ class _StudentTakeQuizState extends ConsumerState<StudentTakeQuiz> {
                               decoration: BoxDecoration(
                                 color: EduCamColors.background,
                                 borderRadius: BorderRadius.circular(10),
-                                border: Border.all(color: correct ? EduCamColors.success.withValues(alpha: 0.3) : EduCamColors.error.withValues(alpha: 0.3)),
+                                border: Border.all(color: correct ? EduCamColors.success.withOpacity(0.3) : EduCamColors.error.withOpacity(0.3)),
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,7 +219,7 @@ class _StudentTakeQuizState extends ConsumerState<StudentTakeQuiz> {
                   child: Container(
                     width: double.infinity, padding: const EdgeInsets.symmetric(vertical: 14),
                     decoration: BoxDecoration(
-                      color: _cc.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12),
+                      color: _cc.withOpacity(0.1), borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(child: Text('Retour aux cours', style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: _cc))),
                   ),
@@ -264,7 +264,7 @@ class _StudentTakeQuizState extends ConsumerState<StudentTakeQuiz> {
               const SizedBox(height: 24),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(color: _cc.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(6)),
+                decoration: BoxDecoration(color: _cc.withOpacity(0.1), borderRadius: BorderRadius.circular(6)),
                 child: Text('Question ${_currentQ + 1}', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: _cc)),
               ),
               const SizedBox(height: 12),
@@ -283,10 +283,10 @@ class _StudentTakeQuizState extends ConsumerState<StudentTakeQuiz> {
                       width: double.infinity,
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: selected ? _cc.withValues(alpha: 0.06) : EduCamColors.surface,
+                        color: selected ? _cc.withOpacity(0.06) : EduCamColors.surface,
                         borderRadius: BorderRadius.circular(14),
                         border: Border.all(
-                          color: selected ? _cc.withValues(alpha: 0.3) : EduCamColors.cardBorder,
+                          color: selected ? _cc.withOpacity(0.3) : EduCamColors.cardBorder,
                           width: selected ? 1 : 0.5,
                         ),
                       ),

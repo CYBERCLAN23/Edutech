@@ -132,7 +132,7 @@ class _RoleBadge extends StatelessWidget {
     final color = role == AppRole.teacher ? EduCamColors.highlight : EduCamColors.accent;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(4)),
+      decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(4)),
       child: Text(label, style: TextStyle(fontSize: 9, fontWeight: FontWeight.w700, color: color, letterSpacing: 1)),
     );
   }
@@ -246,7 +246,7 @@ class _RecentSubmissions extends StatelessWidget {
                       Container(
                         width: 40, height: 40,
                         decoration: BoxDecoration(
-                          color: (s['color'] as Color).withValues(alpha: 0.1),
+                          color: (s['color'] as Color).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Icon(Icons.person_rounded, size: 18, color: s['color'] as Color),
@@ -265,8 +265,8 @@ class _RecentSubmissions extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                         decoration: BoxDecoration(
                           color: s['status'] == 'Corrige'
-                              ? EduCamColors.success.withValues(alpha: 0.1)
-                              : EduCamColors.error.withValues(alpha: 0.1),
+                              ? EduCamColors.success.withOpacity(0.1)
+                              : EduCamColors.error.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(
@@ -327,7 +327,7 @@ class _ClassOverview extends StatelessWidget {
                       Container(
                         width: 44, height: 44,
                         decoration: BoxDecoration(
-                          color: (c['color'] as Color).withValues(alpha: 0.1),
+                          color: (c['color'] as Color).withOpacity(0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Center(
@@ -424,7 +424,7 @@ class _ActionCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(width: 42, height: 42,
-              decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+              decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
               child: Icon(icon, size: 20, color: color),
             ),
             const SizedBox(height: 14),

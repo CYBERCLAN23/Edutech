@@ -150,7 +150,7 @@ class _TeacherAddExerciseState extends State<TeacherAddExercise> {
                           Container(
                             width: 28, height: 28,
                             decoration: BoxDecoration(
-                              color: EduCamColors.accent.withValues(alpha: 0.1),
+                              color: EduCamColors.accent.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Center(child: Text('${i + 1}', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w700, color: EduCamColors.accent))),
@@ -162,7 +162,7 @@ class _TeacherAddExerciseState extends State<TeacherAddExercise> {
                             child: Container(
                               padding: const EdgeInsets.all(6),
                               decoration: BoxDecoration(
-                                color: EduCamColors.error.withValues(alpha: 0.1),
+                                color: EduCamColors.error.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: const Icon(Icons.delete_rounded, size: 16, color: EduCamColors.error),

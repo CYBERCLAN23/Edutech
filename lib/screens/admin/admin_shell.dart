@@ -33,7 +33,7 @@ class _AdminShellState extends State<AdminShell> {
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: EduCamColors.surface,
-          boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 16, offset: const Offset(0, -2))],
+          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.06), blurRadius: 16, offset: const Offset(0, -2))],
         ),
         child: SafeArea(
           child: Padding(
@@ -72,7 +72,7 @@ class _NavItem extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
-          color: selected ? EduCamColors.accent.withValues(alpha: 0.1) : Colors.transparent,
+          color: selected ? EduCamColors.accent.withOpacity(0.1) : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(

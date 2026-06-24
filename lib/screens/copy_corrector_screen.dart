@@ -87,10 +87,10 @@ class _CopyCorrectorScreenState extends State<CopyCorrectorScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: EduCamColors.success.withValues(alpha: 0.1),
+                  color: EduCamColors.success.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(20),
                   border: Border.all(
-                    color: EduCamColors.success.withValues(alpha: 0.3),
+                    color: EduCamColors.success.withOpacity(0.3),
                   ),
                 ),
                 child: const Row(
@@ -182,7 +182,7 @@ class _CopyCorrectorScreenState extends State<CopyCorrectorScreen> {
                 borderRadius: BorderRadius.circular(24),
                 boxShadow: [
                   BoxShadow(
-                    color: EduCamColors.accent.withValues(alpha: 0.3),
+                    color: EduCamColors.accent.withOpacity(0.3),
                     blurRadius: 24,
                     offset: const Offset(0, 8),
                   ),
@@ -195,7 +195,7 @@ class _CopyCorrectorScreenState extends State<CopyCorrectorScreen> {
                     width: 72,
                     height: 72,
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
+                      color: Colors.white.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: const Icon(
@@ -218,7 +218,7 @@ class _CopyCorrectorScreenState extends State<CopyCorrectorScreen> {
                     'Ou importe depuis la galerie',
                     style: TextStyle(
                       fontSize: 14,
-                      color: Colors.white.withValues(alpha: 0.8),
+                      color: Colors.white.withOpacity(0.8),
                     ),
                   ),
                 ],
@@ -237,10 +237,10 @@ class _CopyCorrectorScreenState extends State<CopyCorrectorScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: EduCamColors.highlight.withValues(alpha: 0.08),
+        color: EduCamColors.highlight.withOpacity(0.08),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: EduCamColors.highlight.withValues(alpha: 0.15),
+          color: EduCamColors.highlight.withOpacity(0.15),
         ),
       ),
       child: Column(
@@ -330,7 +330,7 @@ class _CopyCorrectorScreenState extends State<CopyCorrectorScreen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: EduCamColors.success.withValues(alpha: 0.1),
+                  color: EduCamColors.success.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: const Row(
@@ -359,7 +359,7 @@ class _CopyCorrectorScreenState extends State<CopyCorrectorScreen> {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  gradeColor.withValues(alpha: 0.1),
+                  gradeColor.withOpacity(0.1),
                   EduCamColors.surface,
                 ],
                 begin: Alignment.topLeft,
@@ -367,7 +367,7 @@ class _CopyCorrectorScreenState extends State<CopyCorrectorScreen> {
               ),
               borderRadius: BorderRadius.circular(20),
               border: Border.all(
-                color: gradeColor.withValues(alpha: 0.2),
+                color: gradeColor.withOpacity(0.2),
               ),
             ),
             child: Column(
@@ -449,10 +449,10 @@ class _CopyCorrectorScreenState extends State<CopyCorrectorScreen> {
             width: double.infinity,
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: EduCamColors.accent.withValues(alpha: 0.05),
+              color: EduCamColors.accent.withOpacity(0.05),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                color: EduCamColors.accent.withValues(alpha: 0.1),
+                color: EduCamColors.accent.withOpacity(0.1),
               ),
             ),
             child: Column(
@@ -520,8 +520,8 @@ class _CorrectionItem extends StatelessWidget {
             height: 20,
             decoration: BoxDecoration(
               color: isCorrect
-                  ? EduCamColors.success.withValues(alpha: 0.1)
-                  : EduCamColors.error.withValues(alpha: 0.1),
+                  ? EduCamColors.success.withOpacity(0.1)
+                  : EduCamColors.error.withOpacity(0.1),
               borderRadius: BorderRadius.circular(6),
             ),
             child: Icon(
@@ -564,7 +564,7 @@ class _PraiseItem extends StatelessWidget {
             width: 20,
             height: 20,
             decoration: BoxDecoration(
-              color: EduCamColors.highlight.withValues(alpha: 0.1),
+              color: EduCamColors.highlight.withOpacity(0.1),
               borderRadius: BorderRadius.circular(6),
             ),
             child: const Icon(

@@ -92,7 +92,7 @@ class _StudentDocumentsState extends State<StudentDocuments> {
                         child: Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: EduCamColors.accent.withValues(alpha: 0.1),
+                            color: EduCamColors.accent.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: const Icon(Icons.upload_rounded, size: 22, color: EduCamColors.accent),
@@ -180,7 +180,7 @@ class _StudentDocumentsState extends State<StudentDocuments> {
                                 Container(
                                   width: 40, height: 40,
                                   decoration: BoxDecoration(
-                                    color: (d['color'] as Color).withValues(alpha: 0.1),
+                                    color: (d['color'] as Color).withOpacity(0.1),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Icon(d['icon'] as IconData, size: 18, color: d['color'] as Color),
@@ -197,10 +197,10 @@ class _StudentDocumentsState extends State<StudentDocuments> {
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                                   decoration: BoxDecoration(
-                                    color: (d['color'] as Color).withValues(alpha: 0.06),
+                                    color: (d['color'] as Color).withOpacity(0.06),
                                     borderRadius: BorderRadius.circular(6),
                                   ),
-                                  child: Text(d['cat'] as String, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: (d['color'] as Color).withValues(alpha: 0.7))),
+                                  child: Text(d['cat'] as String, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500, color: (d['color'] as Color).withOpacity(0.7))),
                                 ),
                               ],
                             ),
@@ -278,7 +278,7 @@ class _UploadOption extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Container(width: 40, height: 40, decoration: BoxDecoration(color: color.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(10)),
+            Container(width: 40, height: 40, decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
               child: Icon(icon, size: 18, color: color),
             ),
             const SizedBox(width: 14),

@@ -31,7 +31,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(6),
       ),
       child: Text(
@@ -307,7 +307,7 @@ class _SettingsToggle extends StatelessWidget {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: EduCamColors.accent.withValues(alpha: 0.08),
+            color: EduCamColors.accent.withOpacity(0.08),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(icon, size: 20, color: EduCamColors.accent),
@@ -382,7 +382,7 @@ class _CustomSwitch extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.1),
+                  color: Colors.black.withOpacity(0.1),
                   blurRadius: 4,
                 ),
               ],
@@ -413,7 +413,7 @@ class _StorageRow extends StatelessWidget {
           width: 36,
           height: 36,
           decoration: BoxDecoration(
-            color: EduCamColors.accent.withValues(alpha: 0.06),
+            color: EduCamColors.accent.withOpacity(0.06),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(icon, size: 18, color: EduCamColors.secondaryText),
@@ -462,7 +462,7 @@ class _AboutRow extends StatelessWidget {
           width: 36,
           height: 36,
           decoration: BoxDecoration(
-            color: EduCamColors.accent.withValues(alpha: 0.08),
+            color: EduCamColors.accent.withOpacity(0.08),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(icon, size: 18, color: EduCamColors.accent),

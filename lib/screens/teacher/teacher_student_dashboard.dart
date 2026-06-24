@@ -135,7 +135,7 @@ class _TeacherStudentDashboardState extends State<TeacherStudentDashboard> {
                         width: 56, height: 56,
                         decoration: BoxDecoration(
                           gradient: LinearGradient(
-                            colors: [sc.withValues(alpha: 0.15), sc.withValues(alpha: 0.05)],
+                            colors: [sc.withOpacity(0.15), sc.withOpacity(0.05)],
                             begin: Alignment.topLeft, end: Alignment.bottomRight,
                           ),
                           borderRadius: BorderRadius.circular(16),
@@ -158,7 +158,7 @@ class _TeacherStudentDashboardState extends State<TeacherStudentDashboard> {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                         decoration: BoxDecoration(
-                          color: sc.withValues(alpha: 0.08),
+                          color: sc.withOpacity(0.08),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: Text(_statusLabel(avg), style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: sc)),
@@ -199,7 +199,7 @@ class _TeacherStudentDashboardState extends State<TeacherStudentDashboard> {
                           Container(
                             padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
-                              color: EduCamColors.error.withValues(alpha: 0.1),
+                              color: EduCamColors.error.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(6),
                             ),
                             child: const Icon(Icons.auto_awesome_rounded, size: 16, color: EduCamColors.error),
@@ -222,7 +222,7 @@ class _TeacherStudentDashboardState extends State<TeacherStudentDashboard> {
                               color: EduCamColors.surface,
                               borderRadius: BorderRadius.circular(16),
                               border: Border.all(
-                                color: color.withValues(alpha: 0.2),
+                                color: color.withOpacity(0.2),
                                 width: r.urgency >= 3 ? 1 : 0.5,
                               ),
                             ),
@@ -235,7 +235,7 @@ class _TeacherStudentDashboardState extends State<TeacherStudentDashboard> {
                                     Container(
                                       width: 32, height: 32,
                                       decoration: BoxDecoration(
-                                        color: color.withValues(alpha: 0.1),
+                                        color: color.withOpacity(0.1),
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       child: Icon(r.icon, size: 16, color: color),
@@ -252,12 +252,12 @@ class _TeacherStudentDashboardState extends State<TeacherStudentDashboard> {
                                           Container(
                                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                                             decoration: BoxDecoration(
-                                              color: EduCamColors.accent.withValues(alpha: 0.06),
+                                              color: EduCamColors.accent.withOpacity(0.06),
                                               borderRadius: BorderRadius.circular(6),
                                             ),
                                             child: Text(
                                               'Sujet: ${r.topic}',
-                                              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: EduCamColors.accent.withValues(alpha: 0.8)),
+                                              style: TextStyle(fontSize: 11, fontWeight: FontWeight.w500, color: EduCamColors.accent.withOpacity(0.8)),
                                             ),
                                           ),
                                         ],
@@ -273,7 +273,7 @@ class _TeacherStudentDashboardState extends State<TeacherStudentDashboard> {
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(vertical: 10),
                                       decoration: BoxDecoration(
-                                        color: color.withValues(alpha: 0.1),
+                                        color: color.withOpacity(0.1),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: Row(
@@ -399,7 +399,7 @@ class _TeacherStudentDashboardState extends State<TeacherStudentDashboard> {
                                 Container(
                                   width: 32, height: 32,
                                   decoration: BoxDecoration(
-                                    color: statusColor.withValues(alpha: 0.08),
+                                    color: statusColor.withOpacity(0.08),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Icon(icon, size: 16, color: statusColor),
@@ -419,7 +419,7 @@ class _TeacherStudentDashboardState extends State<TeacherStudentDashboard> {
                                   Container(
                                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                                     decoration: BoxDecoration(
-                                      color: statusColor.withValues(alpha: 0.08),
+                                      color: statusColor.withOpacity(0.08),
                                       borderRadius: BorderRadius.circular(6),
                                     ),
                                     child: Text(
@@ -505,7 +505,7 @@ class _StatCard extends StatelessWidget {
               if (suffix.isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 3, left: 2),
-                  child: Text(suffix, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color.withValues(alpha: 0.6))),
+                  child: Text(suffix, style: TextStyle(fontSize: 11, fontWeight: FontWeight.w600, color: color.withOpacity(0.6))),
                 ),
             ],
           ),

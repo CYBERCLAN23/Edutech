@@ -126,7 +126,7 @@ class StudentCourses extends ConsumerWidget {
                   Row(children: [
                     Container(
                       width: 44, height: 44,
-                      decoration: BoxDecoration(color: (c['color'] as Color).withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+                      decoration: BoxDecoration(color: (c['color'] as Color).withOpacity(0.1), borderRadius: BorderRadius.circular(12)),
                       child: Icon(c['icon'] as IconData, size: 22, color: c['color'] as Color),
                     ),
                     const SizedBox(width: 14),

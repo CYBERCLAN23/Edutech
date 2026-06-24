@@ -54,7 +54,7 @@ class TeacherCourses extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: EduCamColors.accent.withValues(alpha: 0.1),
+                            color: EduCamColors.accent.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Icon(Icons.add_rounded, size: 20, color: EduCamColors.accent),
@@ -120,7 +120,7 @@ class _CourseCard extends StatelessWidget {
                 Container(
                   width: 44, height: 44,
                   decoration: BoxDecoration(
-                    color: course.color.withValues(alpha: 0.1),
+                    color: course.color.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(course.icon, size: 22, color: course.color),
@@ -185,7 +185,7 @@ class _ActionChip extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.08),
+        color: color.withOpacity(0.08),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
