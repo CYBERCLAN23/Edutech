@@ -117,7 +117,7 @@ class EduCamTheme {
           ),
         ),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         color: EduCamColors.surface,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -226,7 +226,7 @@ class EduCamTheme {
           height: 1.2,
         ),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: CardTheme(
         color: EduCamColors.darkSurface,
         elevation: 0,
         shape: RoundedRectangleBorder(
