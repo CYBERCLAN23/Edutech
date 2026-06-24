@@ -23,6 +23,7 @@ class EduCamColors {
   static const Color darkPrimary = Color(0xFF000000);
   static const Color darkSurface = Color(0xFF111111);
   static const Color darkBackground = Color(0xFF000000);
+  static const Color darkMutedText = Color(0xFF808080);  // WCAG AA compliant (5.32:1 on black)
 }
 
 class EduCamTheme {
@@ -216,7 +217,7 @@ class EduCamTheme {
         bodySmall: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w400,
-          color: EduCamColors.secondaryText,
+          color: EduCamColors.darkMutedText,  // WCAG AA compliant
           height: 1.4,
         ),
         labelLarge: TextStyle(
