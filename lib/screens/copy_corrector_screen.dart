@@ -134,7 +134,7 @@ class _CopyCorrectorScreenState extends State<CopyCorrectorScreen> {
                 ),
                 const SizedBox(height: 8),
                 DropdownButtonFormField<String>(
-                  initialValue: _selectedSubject,
+                  value: _selectedSubject,
                   decoration: const InputDecoration(
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 16, vertical: 14),
