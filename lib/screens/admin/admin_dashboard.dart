@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:educam_ai/theme/app_theme.dart';
 import 'package:educam_ai/services/admin_service.dart';
 
-class AdminDashboard extends ConsumerStatefulWidget {
+class AdminDashboard extends StatefulWidget {
   const AdminDashboard({super.key});
 
   @override
-  ConsumerState<AdminDashboard> createState() => _AdminDashboardState();
+  State<AdminDashboard> createState() => _AdminDashboardState();
 }
 
-class _AdminDashboardState extends ConsumerState<AdminDashboard> {
+class _AdminDashboardState extends State<AdminDashboard> {
   Map<String, dynamic>? _data;
   bool _loading = true;
   String? _error;
@@ -26,7 +25,7 @@ class _AdminDashboardState extends ConsumerState<AdminDashboard> {
     if (!mounted) return;
     setState(() { _loading = true; _error = null; });
     try {
-      final d = await ref.read(adminServiceProvider).getDashboard();
+      final d = await AdminService().getDashboard();
       if (mounted) setState(() { _data = d; _loading = false; });
     } catch (e) {
       if (mounted) setState(() { _error = e.toString(); _loading = false; });
@@ -35,7 +34,7 @@ class _AdminDashboardState extends ConsumerState<AdminDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    final statCards = [
+    final stats = [
       ('Utilisateurs', _data?['totalUsers'] ?? 0, Icons.people_rounded, EduCamColors.accent),
       ('Élèves', _data?['totalStudents'] ?? 0, Icons.school_rounded, EduCamColors.success),
       ('Professeurs', _data?['totalTeachers'] ?? 0, Icons.person_rounded, EduCamColors.highlight),
@@ -51,7 +50,16 @@ class _AdminDashboardState extends ConsumerState<AdminDashboard> {
       body: _loading
         ? const Center(child: CircularProgressIndicator())
         : _error != null
-          ? Center(child: Text(_error!, style: const TextStyle(color: Colors.red)))
+          ? Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(_error!, style: const TextStyle(color: Colors.red)),
+                  const SizedBox(height: 12),
+                  ElevatedButton(onPressed: _load, child: const Text('Réessayer')),
+                ],
+              ),
+            )
           : ListView(
               padding: const EdgeInsets.all(16),
               children: [
@@ -64,23 +72,26 @@ class _AdminDashboardState extends ConsumerState<AdminDashboard> {
                     crossAxisSpacing: 12,
                     mainAxisSpacing: 12,
                   ),
-                  itemCount: statCards.length,
-                  itemBuilder: (_, i) => Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: statCards.$4.withOpacity(0.08),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Icon(statCards.$3, color: statCards.$4, size: 24),
-                        const Spacer(),
-                        Text('${statCards.$2}', style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.w700, color: EduCamColors.primary)),
-                        Text(statCards.$1, style: GoogleFonts.poppins(fontSize: 12, color: EduCamColors.secondaryText)),
-                      ],
-                    ),
-                  ),
+                  itemCount: stats.length,
+                  itemBuilder: (_, i) {
+                    final (label, value, icon, color) = stats[i];
+                    return Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: color.withOpacity(0.08),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Icon(icon, color: color, size: 24),
+                          const Spacer(),
+                          Text('$value', style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.w700, color: EduCamColors.primary)),
+                          Text(label, style: GoogleFonts.poppins(fontSize: 12, color: EduCamColors.secondaryText)),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

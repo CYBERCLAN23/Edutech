@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:educam_ai/theme/app_theme.dart';
 import 'package:educam_ai/services/admin_service.dart';
 
-class AdminUsers extends ConsumerStatefulWidget {
+class AdminUsers extends StatefulWidget {
   const AdminUsers({super.key});
 
   @override
-  ConsumerState<AdminUsers> createState() => _AdminUsersState();
+  State<AdminUsers> createState() => _AdminUsersState();
 }
 
-class _AdminUsersState extends ConsumerState<AdminUsers> {
+class _AdminUsersState extends State<AdminUsers> {
   List<dynamic> _users = [];
   bool _loading = true;
   String? _error;
@@ -26,7 +25,7 @@ class _AdminUsersState extends ConsumerState<AdminUsers> {
     if (!mounted) return;
     setState(() { _loading = true; _error = null; });
     try {
-      final users = await ref.read(adminServiceProvider).getUsers();
+      final users = await AdminService().getUsers();
       if (mounted) setState(() { _users = users; _loading = false; });
     } catch (e) {
       if (mounted) setState(() { _error = e.toString(); _loading = false; });
