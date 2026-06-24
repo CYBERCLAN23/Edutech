@@ -16,6 +16,7 @@ import contentRoutes from './routes/content';
 import uploadRoutes from './routes/upload';
 import adminRoutes from './routes/admin';
 import renderRoutes from './routes/render';
+import setupRoutes from './routes/setup';
 
 validateEnv();
 
@@ -51,6 +52,7 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/render', aiLimiter, renderRoutes);
+app.use('/api/setup', setupRoutes);
 
 app.get('/api/health', (_req, res) => {
   res.json({ success: true, data: { status: 'ok', timestamp: new Date().toISOString() } });
